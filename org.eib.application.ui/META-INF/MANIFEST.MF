@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ui
+Bundle-SymbolicName: org.eib.application.ui; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eib.application.ui.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ resource/mysql-connector-java-5.1.13-bin.jar,
+ resource/ojdbc14.jar,
+ resource/ojdbc6.jar,
+ resource/poi-3.8-beta4-20110826.jar,
+ resource/sqljdbc4.jar,
+ resource/xmlbeans-2.3.0.jar,
+ lib/log4j-1.2.11.jar,
+ lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar,
+ lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar,
+ lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar
+Export-Package: org.eib.application.ui.views,
+ org.eib.common,
+ org.eib.database,
+ org.eib.thread
