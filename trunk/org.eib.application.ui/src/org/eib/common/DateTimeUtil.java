@@ -15,6 +15,7 @@ public class DateTimeUtil {
 		String _datetime="";
 		
 		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss,dd/MM/yyyy");
+		
 		Date date = new Date();
 		_datetime= dateFormat.format(date);
 		return _datetime;		
