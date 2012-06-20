@@ -1,0 +1,168 @@
+<view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="bottom"
+               id="org.eib.application.ui.views.LightweightConsoleView">
+         </view>
+		 
+		 
+		 
+		 
+		 E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project
+		 E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\
+		 
+		 
+		 plugin
+		 
+		 <?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            icon="icons/alt_window_16.gif">
+         <run
+               class="org.eib.application.ui.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eib.application.ui.WorkPerspective"
+            id="org.eib.application.ui.perspectivework"
+            name="Work">
+      </perspective>
+      <perspective
+            class="org.eib.application.ui.SourcePerspective"
+            id="org.eib.application.ui.perspectivesource"
+            name="Source">
+      </perspective>
+      <perspective
+            name="Query"
+            class="org.eib.application.ui.Perspective"
+            id="org.eib.application.ui.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eib.application.ui.View"
+            icon="icons/alt_window_16.gif"
+            id="org.eib.application.ui.view"
+            name="Query to Execl">
+      </view>
+      <view
+            class="org.eib.application.ui.views.ViewServer"
+            id="org.eib.application.ui.ViewServer"
+            name="Server">
+      </view>
+      <view
+			name="Progress View"
+			icon="icons/pview.gif"
+			category="org.eclipse.ui"
+			class="org.eclipse.ui.ExtensionFactory:progressView"
+			id="org.eclipse.ui.views.ProgressView">
+	  </view>
+	  <view
+         allowMultiple="true"
+         class="org.eib.application.ui.views.LightweightConsoleView"
+         id="org.eib.application.ui.views.LightweightConsoleView"
+         name="Log">
+	  </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="top"
+               id="org.eib.application.ui.view">
+         </view>
+         
+         <view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="bottom"
+               id="org.eib.application.ui.views.LightweightConsoleView">
+         </view>
+         <!-- AAA --> 
+         <!-- 
+         <view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="bottom"
+               id="org.eib.application.ui.views.LightweightConsoleView">
+         </view>
+          -->    		 
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
+            </command>
+         </menu>
+          <menu
+               label="Option">            
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eib.application.ui.product1"
+            name="Query to excel">
+         <property
+               name="appName"
+               value="Query to excel">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/alt_window_16.gif">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+   </extension>
+
+</plugin>
+		 
+		 
+		 
+		 
+		 source.. = src/
+output.. = bin/
+bin.includes = plugin.xml,\
+               META-INF/,\
+               .,\
+               resource/mysql-connector-java-5.1.13-bin.jar,\
+               resource/ojdbc14.jar,\
+               resource/ojdbc6.jar,\
+               resource/poi-3.8-beta4-20110826.jar,\
+               resource/sqljdbc4.jar,\
+               resource/xmlbeans-2.3.0.jar,\
+               resource/log4j.properties,\
+               lib/log4j-1.2.11.jar,\
+               lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar,\
+               lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar,\
+               lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar
+               
+               
+               -vmargs -Dlog4j.configuration=D:\Export\log4j.properties
+		 

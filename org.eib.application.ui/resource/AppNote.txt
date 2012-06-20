@@ -1,0 +1,5 @@
+ 
+ 
+  
+  AppMessageBox msg = new AppMessageBox("Tieu de","Thong bao");
+  msg.getErrorMessageBox();      
