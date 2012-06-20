@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            icon="icons/alt_window_16.gif">
+         <run
+               class="org.eib.application.ui.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eib.application.ui.WorkPerspective"
+            id="org.eib.application.ui.perspectivework"
+            name="Work">
+      </perspective>
+      <perspective
+            class="org.eib.application.ui.SourcePerspective"
+            id="org.eib.application.ui.perspectivesource"
+            name="Source">
+      </perspective>
+      <perspective
+            name="Query"
+            class="org.eib.application.ui.Perspective"
+            id="org.eib.application.ui.perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eib.application.ui.views.View"
+            icon="icons/alt_window_16.gif"
+            id="org.eib.application.ui.view"
+            name="Query to Execl">
+      </view>
+      <view
+            class="org.eib.application.ui.views.ViewServer"
+            id="org.eib.application.ui.ViewServer"
+            name="Server">
+      </view>
+      <view
+			name="Progress View"
+			icon="icons/pview.gif"
+			category="org.eclipse.ui"
+			class="org.eclipse.ui.ExtensionFactory:progressView"
+			id="org.eclipse.ui.views.ProgressView">
+	  </view>
+	  <view
+         allowMultiple="true"
+         class="org.eib.application.ui.views.LightweightConsoleView"
+         id="org.eib.application.ui.views.LightweightConsoleView"
+         name="Log">
+	  </view>
+   <view
+         class="org.eib.application.ui.views.MultiScriptView"
+         id="org.eib.application.ui.views.MultiScriptView"
+         name="Run Multi Script">
+   </view>
+   <view
+         class="org.eib.application.ui.views.MultiProgressView"
+         id="org.eib.application.ui.views.MultiProgress"
+         name="Multi ProgressBar">
+   </view>
+   <view
+         class="org.eib.application.ui.views.TellerView"
+         id="org.eib.application.ui.views.TellerView"
+         name="Report to Excel">
+   </view>
+   <view
+         allowMultiple="true"
+         class="org.eib.application.ui.views.TestView"
+         id="org.eib.application.ui.views.TestView"
+         name="Test View"
+         restorable="true">
+   </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <!-- Run 1 script View -->
+         <!--
+         <view
+               standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="top"
+               id="org.eib.application.ui.view">
+         </view>
+         -->
+         
+         
+         <!-- Multi Script View      
+         <view
+         	   standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="left"
+               id="org.eib.application.ui.views.MultiScriptView">
+         </view>-->  
+         
+         <!-- Teller View -->   
+		 <view
+         	   standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="left"
+               id="org.eib.application.ui.views.TellerView">
+         </view>   
+                                   
+         <!-- Consolde View bottom        
+         <view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="right"
+               id="org.eib.application.ui.views.LightweightConsoleView">
+         </view>      --> 
+         
+         <!-- Test View  
+         <view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="right"
+               id="org.eib.application.ui.views.TestView">
+         </view>    -->               
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit">
+            </command>
+         </menu>
+          <menu
+               label="Option">            
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eib.application.ui.product1"
+            name="Query to excel">
+         <property
+               name="appName"
+               value="Query to excel">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/alt_window_16.gif">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            default="false"
+            id="org.eib.application.ui.editor1"
+            name="test">
+      </editor>
+   </extension>
+
+</plugin>
