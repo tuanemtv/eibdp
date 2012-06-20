@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eib.common.AppCommon;
 import org.eib.common.JavaUtil;
 import org.eib.common.QueryServer;
@@ -26,21 +25,13 @@ import org.eib.database.CommandQuery;
 import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
 import org.xml.sax.SAXException;
-import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -283,7 +274,7 @@ public class TellerView extends ViewPart {
 		//lay thong tin
 		_app = new AppCommon();
 		try {
-			ResourceBundle rb = ResourceBundle.getBundle("app");
+			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
 			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
 			_app.getAppCom(rb.getString("app_configure_url")+"app.xml",rb.getString("app_configure_common"));
 			txtOutUrl.setText(_app.get_outurl());
