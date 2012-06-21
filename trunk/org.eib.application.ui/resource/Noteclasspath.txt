@@ -1,0 +1,86 @@
+O may lam viec
+
+--Truoc khi sua
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="resource"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/com.swtxml.ide_0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/com.swtxml_0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/commons-net-3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/commons-net-ftp-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/dom4j-2.0.0-ALPHA-2.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/log4jpr.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.swt.win32.win32.x86_3.7.2.v3740f.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.swt_3.7.2.v3740f.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-examples-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-excelant-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-ooxml-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-ooxml-schemas-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-scratchpad-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/postgresql-8.3-604.jdbc3.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+
+
+Sau khi sua
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/ojdbc14.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/ojdbc6.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/poi-3.8-beta4-20110826.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/sqljdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/xmlbeans-2.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="resource/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="src" path="resource"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/com.swtxml.ide_0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/com.swtxml_0.0.7.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/commons-net-3.1.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/commons-net-ftp-2.0.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/dom4j-2.0.0-ALPHA-2.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/log4jpr.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.swt.win32.win32.x86_3.7.2.v3740f.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.swt_3.7.2.v3740f.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-examples-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-excelant-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-ooxml-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-ooxml-schemas-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/poi-scratchpad-3.8-beta4-20110826.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/postgresql-8.3-604.jdbc3.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="D:/Report to Excel/Lib/libs/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+
