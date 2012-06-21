@@ -3,6 +3,9 @@ package org.eib.application.ui.views;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -18,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eib.common.AppCommon;
 import org.eib.common.JavaUtil;
 import org.eib.common.QueryServer;
@@ -25,13 +29,21 @@ import org.eib.database.CommandQuery;
 import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
 import org.xml.sax.SAXException;
+import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.DateTime;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -84,6 +96,7 @@ public class TellerView extends ViewPart {
 					//Chon
 					setinitializeControl(false);
 					System.out.println("Chon bao cao");
+					
 					for (int i=0; i< _query.length; i++){
 						if (cboReport.getText().equals(_query[i].get_querynm())){
 							styledTxtDesc.setText(_query[i].get_description());
@@ -134,7 +147,7 @@ public class TellerView extends ViewPart {
 		dTtodt.setBounds(315, 43, 93, 24);
 		
 		cboCN = new Combo(grpTiuCh, SWT.NONE);
-		cboCN.setItems(new String[] {"1000 - H\u1ED9i s\u1EDF", "2000 - S\u1EDF giao d\u1ECBch 1", "9999 - T\u1EA5t c\u1EA3"});
+		cboCN.setItems(new String[] {"1000 - EXIMBANK HOI SO", "1001 - EIB HA NOI", "1002 - EIB DA NANG", "1003 - EIB CAN THO", "1004 - EIB CHO LON", "1007 - EIB HOA BINH", "1012 - EIB QUAN 10", "1015 - EIB QUAN 11", "1200 - EIB NHA TRANG", "1201 - EIB BUON MA THUOT", "1202 - EIB DA LAT", "1400 - EIB TAN DINH", "1401 - EIB SAI GON", "1402 - EIB QUAN 4", "1403 - EIB QUAN 7", "1404 - EIB CONG HOA", "1500 - EIB TAY DO", "1501 - EIB MY THO", "1502 - EIB AN GIANG", "1503 - EIB LONG AN", "1504 - EIB BAC LIEU", "1600 - EIB HUNG VUONG", "1601 - EIB QUANG NGAI", "1602 - EIB VINH", "1603 - EIB HAI PHONG", "1604 - EIB HUE", "1700 - EIB LANG HA", "1701 - EIB LONG BIEN", "1702 - EIB HAI BA TRUNG", "1703 - EIB DONG DA", "1704 - EIB CAU GIAY", "1800 - EIB BINH DUONG", "1801 - EIB DONG NAI", "1802 - EIB THU DUC", "1803 - EIB BA RIA - VUNG TAU", "1900 - EIB QUANG NINH", "1901 - EIB QUANG NAM", "2000 - EIB SO GIAO DICH 1", "2100 - EIB BINH PHU", "2101 - EIB PHU MY HUNG", "2102 - EIB TAN SON NHAT", "2103 - EIB BINH TAN", "2104 - EIB QUAN 3", "9999 - All Branch"});
 		cboCN.setBounds(72, 18, 181, 23);
 		
 		Label lblCnQi = new Label(grpTiuCh, SWT.NONE);
@@ -142,7 +155,7 @@ public class TellerView extends ViewPart {
 		lblCnQi.setText("CN Q \u0110\u1ED5i");
 		
 		cboCNQD = new Combo(grpTiuCh, SWT.NONE);
-		cboCNQD.setItems(new String[] {"1000 - H\u1ED9i s\u1EDF", "2000 - S\u1EDF giao d\u1ECBch 1", "9999 - T\u1EA5t c\u1EA3"});
+		cboCNQD.setItems(new String[] {"1000 - EXIMBANK HOI SO", "1001 - EIB HA NOI", "1002 - EIB DA NANG", "1003 - EIB CAN THO", "1004 - EIB CHO LON", "1007 - EIB HOA BINH", "1012 - EIB QUAN 10", "1015 - EIB QUAN 11", "1200 - EIB NHA TRANG", "1201 - EIB BUON MA THUOT", "1202 - EIB DA LAT", "1400 - EIB TAN DINH", "1401 - EIB SAI GON", "1402 - EIB QUAN 4", "1403 - EIB QUAN 7", "1404 - EIB CONG HOA", "1500 - EIB TAY DO", "1501 - EIB MY THO", "1502 - EIB AN GIANG", "1503 - EIB LONG AN", "1504 - EIB BAC LIEU", "1600 - EIB HUNG VUONG", "1601 - EIB QUANG NGAI", "1602 - EIB VINH", "1603 - EIB HAI PHONG", "1604 - EIB HUE", "1700 - EIB LANG HA", "1701 - EIB LONG BIEN", "1702 - EIB HAI BA TRUNG", "1703 - EIB DONG DA", "1704 - EIB CAU GIAY", "1800 - EIB BINH DUONG", "1801 - EIB DONG NAI", "1802 - EIB THU DUC", "1803 - EIB BA RIA - VUNG TAU", "1900 - EIB QUANG NINH", "1901 - EIB QUANG NAM", "2000 - EIB SO GIAO DICH 1", "2100 - EIB BINH PHU", "2101 - EIB PHU MY HUNG", "2102 - EIB TAN SON NHAT", "2103 - EIB BINH TAN", "2104 - EIB QUAN 3", "9999 - All Branch"});
 		cboCNQD.setBounds(72, 45, 181, 23);
 		
 		Label lblPgd = new Label(grpTiuCh, SWT.NONE);
@@ -178,7 +191,7 @@ public class TellerView extends ViewPart {
 		lblLoiTin.setText("Lo\u1EA1i ti\u1EC1n");
 		
 		cboCCY = new Combo(grpTiuCh, SWT.NONE);
-		cboCCY.setItems(new String[] {"VND", "USD", "GD1"});
+		cboCCY.setItems(new String[] {"AUD", "CAD", "CHF", "CNY", "DEM", "DKK", "EUR", "FRF", "GBP", "GD1", "GD2", "GD3", "GD4", "HKD", "IDR", "JPY", "KRW", "MYR", "NOK", "NZD", "SEK", "SGD", "THB", "USD", "VND", "ZAR"});
 		cboCCY.setBounds(475, 18, 91, 23);
 		
 		Label lblKh = new Label(grpTiuCh, SWT.NONE);
@@ -209,6 +222,11 @@ public class TellerView extends ViewPart {
 						
 						String _filename="";
 						
+						//Them ngay he thong lay bao cao
+						DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+						Date date = new Date();
+						_filename =dateFormat.format(date);
+						
 						TreeMap<String, String> _tMap = new TreeMap<String, String>();
 						//_tMap = _query[i].get_define();
 						Set<Entry<String, String>> set = _query[i].get_define().entrySet();
@@ -220,7 +238,8 @@ public class TellerView extends ViewPart {
 							//logger.info(me.getKey() + ": "+me.getValue());
 							//showControl(me.getKey().substring(3));
 							//getTextControl
-							_tMap.put(me.getKey(), getTextControl(me.getKey().substring(3)));
+							_tMap.put(me.getKey(), "'"+getTextControl(me.getKey().substring(3))+"'");
+							//_tMap.put(me.getKey().substring(3), getTextControl(me.getKey().substring(3)));							
 							_filename = _filename +"_"+ getTextControl(me.getKey().substring(3));
 						}
 						
@@ -231,6 +250,7 @@ public class TellerView extends ViewPart {
 						JavaUtil.showHashMap(_tMap);
 						_query[i].set_define(_tMap);//Tham so nhap							
 						_query[i].setquery();//Set lai cau script lay
+						System.out.print("query= "+ _query[i].get_exquery());
 						CommandQuery.set_Excelrow(_app.get_excelrows());
 						CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
 					}
