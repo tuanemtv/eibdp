@@ -13,7 +13,7 @@ public class GetFileList {
 	public static void main(String args[]){
 		 //File file = new File("D:\\20090610_SVN Client\\Local Project\\Script\\DP\\");  
 		 //File file = new File("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\File Configure\\Tong script\\Tong script\\DP\\"); //LN  
-			File file = new File("K:\\20120620\\Live\\"); //LN
+			File file = new File("D:\\Query to Excel\\Total Result\\20120621\\"); //LN
 			//Long lastModified = file.lastModified();
 			 //Date date = new Date(lastModified);
 			 
