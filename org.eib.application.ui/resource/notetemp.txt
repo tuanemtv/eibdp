@@ -1,0 +1,3152 @@
+/*************************************************************************
+* Source Name   : bs_dpdaccb20005.pc  
+* Description   : Auto TRanfer for TKGG
+*
+* Created By    : TTLHANG 
+* Date          : 01/2009
+*************************************************************************
+* 1st Modification
+*   Name        : 
+*   Date        : 
+*   Change Desc.: 
+*************************************************************************
+[20120621]-[GG]: Tiet kiem tich luy tien luong
+*************************************************************************/
+
+#include <stdio.h>
+#include <string.h>
+#include <fml32.h>
+#include <Usysfl32.h>
+#include <atmi.h>
+#include <macro.h>
+#include "rcfldtbl.tux.h"
+#include "keb.fld.h"
+
+#define MAX_ROWS 100
+
+/* Include RACE Architecture headers */
+#include <kebcom1.h>
+#include <common.h>
+
+extern RACE_Globals *gVars[RACE_MAX_APPS];
+
+
+#include <dplib.h>
+#include <f_dpda01.h>
+#include <f_dpda02.h>
+#include <f_dpsv01.h>
+#include <f_dpsv02.h>
+#include <f_dpta02.h>
+#include <f_dpsa01.h>
+#include <f_dpvn.h>                               /* LMJ 20021119   */
+#include <f_dpsc01.h>				/*TVK 20080218 */
+#include "/keb/gl/include/gl_common.h"
+#include <override.h>
+#include <common.h>			//%%K
+
+EXEC SQL INCLUDE SQLCA.H;
+EXEC SQL INCLUDE OSSTPARM.H;
+EXEC SQL INCLUDE DP.H;
+EXEC SQL INCLUDE FTN.H;
+EXEC SQL INCLUDE "/keb/gl/include/journal.h";
+EXEC SQL INCLUDE "/keb/dp/include/dpftn.h";
+EXEC SQL INCLUDE "/keb/ln/include/lnfunc.h";
+EXEC SQL INCLUDE common.h;
+
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void	bs_dpdaccb20005(TPSVCINFO *transb) 
+{
+
+	int     i, j, z, nIdx;
+	char    errmsg[100];
+	int     retcd, errcd;		//%%K
+	
+	char tmp_commission[24];
+	
+	size_t  buf_len, msg_len;
+	FBFR32  *transf;
+	
+	short             nID = RACE_COM_GLOBAL_INDEX_INIT;
+	RACE_Boolean_t    bAuthorized;
+	RACE_Resource_t   szSvcName;
+	RACE_Function_t   szThisFunction, pszThisFunction, pLabel;
+	RACE_Return_t     nRet;
+	RACE_User_t       szUserName;
+	
+	/* LSJ 20030324  */
+	//    struct VNDPAY_ST  vp;       /* LMJ 20021119, VND Payment under 1USD  */
+	/* Oracle Host variable     */
+	EXEC SQL BEGIN DECLARE SECTION;
+	short   idct[MAX_ROWS];
+	int     nOcc;
+
+	/* User define variable	     */
+	struct dp_s_input   	stinput;
+	struct dp_s_brmst   	stbrmst;
+	struct dp_s_cust    	stcust;
+	struct dp_s_dptp    	stdptp;
+	struct dp_s_idxacct  	stidxacct;
+	struct dp_s_dmdmst  	stdmdmst;
+	struct dp_s_trlst   	sttrlst;
+	struct dp_s_commlst 	stcommlst;
+	struct dp_s_buscd   	stbuscd;
+	struct dp_s_ovrd    	stovrd;
+	struct dp_s_output  	stoutput;
+	struct dp_s_taxcal      sttaxcal;
+	struct dp_s_ccyspec     stccyspec;
+	struct dp_s_taxlst      sttaxlst;
+	struct cs_brcdinfo      stBrcdInfo;
+	struct cs_exrtinfo      st_exrtinfo;
+	struct cs_brbusday      stbrbusday;
+	struct rt_input         stdpinput;
+	struct rt_return        stdpoutput;
+	struct cs_lcltime   	stLclTime;
+	struct OSSTPARM         osstparm;
+	
+	struct cs_autocnt2      stautocnt2;
+	struct cs_taxhistdt     sttaxhistdt;
+	struct cs_taxamtrt      sttaxamtrt;
+	struct cs_ccycd         stccycd;
+	struct cs_deptget       stDeptGet;
+	
+	struct stJournal        stjnal;
+	struct stSlip           stSp;
+	struct TRLOG            trlog;
+	struct  cs_exchginfo stExchgInfo; 
+	struct dp_s_trodlmt   sttrodlmt;
+	struct at_s_lockhist   stlockhist;
+	struct  dp_xinput   dpInput;
+    struct  dp_xoutput  dpOutput;
+    struct dp_s_autotran      stautotran;
+	struct dp_s_maptcode      stmaptcode; //20120621 
+	struct dp_s_logdp 		  stlogdp;//20120621 
+
+	char	tmp_bfbalance[24], temp_amt[24], tmp_str[2], covrdflag, tmp_totcomm[24], tmp_trtype2[4], tmp_amt[24];
+	int     idx, ovrd_return;
+	char    ls_avlamt[24], tmp_totdpamt[24], tmp_totodamt[24];
+	char    tmp_year[5],   tmp_rrsptax[24];
+	char    lc_trtype[4],  lc_trtype2[4];	
+	char    tmp_trccyamt[24], tmp_rrsppay[24];
+	char    tmp_lclamt[24],   tmp_taxamt[24];
+	int     tmp_slipseq = 0,  tmp_count = 0;
+	int		tmp_count2 = 0;		    //%%K
+	int     ln_rrspcnt = 0;
+	char    scashier_yn[2];         //kkj
+	double	dblBsRt;			    //%%K
+	char   h_brcd[5];
+	char    tmp_fndamt[24];         //%%K3
+	char    tmp_bfbalance2[24];     //%%K3
+	char    tmp_diff[24];           //%%K3
+	char        h_dptpcd[4];
+	char 	tmp_curbal[24];
+	char    h_minamt[24];
+	char 	h_curbal[24];
+	char 	h_dpamt[24];
+	char	tmp_dt[9];
+	char	h_lockflg[2];
+	char    h_acctseq[7];
+	char    h_idxacno[16];
+	char    h_acctnopaid[16];
+	char    h_ccycd[4];
+	char    h_crtuser[12];
+	char    h_brcd1[5];
+	char    h_tranacctno[16];
+	int total ,ll_sqlcode;
+	char   h_trdt[9];
+	char    sFuncNm[30];
+	char    h_wdavlfnd[24];
+	varchar  h_error[101];
+	int     ll_flag = 0 ;	
+	char		h_acctccydpamt[23+1] ;
+	long     h_seq = 0 ;
+	char      h_trtm[7];
+	char      h_pretrandt[8+1],h_custseq[10]; 
+	char h_maxvaluedt[9];
+	char h_max30valuedt[9];
+	char     h_sub_valuedt[3];
+	char     h_sub_maxvaluedt[3];
+	
+	char   lc_newmatdt[9];               /* New Maturity Date Set */
+	char   lc_oldmatdt[3];               /* Old Maturity Date Set */
+	char   lc_tam[3];		     /* bien tam de so sanh */
+	char   lc_tammatdt[3];
+	char   lc_lastday[9];
+	char   lc_newmatdttn[7];
+	char   lc_nxtdpcapdt[9];	
+	char   lc_frt[3]; //20100311 tuanemtv	
+        
+	char	h_allowcredit[1+1]; //nttq 20100517
+	int 	h_count=0; //nttq 20100517        				
+	double 	h_chk_tktltl = 0;  //20120621
+	char	h_savdptpcd[4];   //20120621
+	
+	//=============nttq 20060929===========================
+	 varchar rem1[211];
+	//=====================================================	
+	EXEC SQL END DECLARE SECTION;
+	memset(&osstparm, 0x00, sizeof(osstparm));
+	
+	/* Host variable initialize        */
+	memset(&stinput,   0x00, sizeof(stinput));
+	memset(&stbrmst,   0x00, sizeof(stbrmst));
+	memset(&stcust,    0x00, sizeof(stcust));
+	memset(&stdptp,    0x00, sizeof(stdptp));
+	memset(&stidxacct, 0x00, sizeof(stidxacct));
+	memset(&stdmdmst,  0x00, sizeof(stdmdmst));
+	memset(&sttrlst,   0x00, sizeof(sttrlst));
+	memset(&stcommlst, 0x00, sizeof(stcommlst));
+	memset(&stbuscd,   0x00, sizeof(stbuscd));
+	memset(&stovrd,    0x00, sizeof(stovrd));
+	memset(&stoutput,  0x00, sizeof(stoutput));
+	memset(&st_exrtinfo,0x00, sizeof(st_exrtinfo));
+	memset(&stdpinput, 0x00, sizeof(stdpinput));
+	memset(&stdpoutput,0x00, sizeof(stdpoutput));
+	memset(&stLclTime,	0x00, sizeof(stLclTime));
+	memset(&sttaxcal,  0x00, sizeof(sttaxcal));
+	memset(&stccyspec, 0x00, sizeof(stccyspec));
+	memset(&sttaxlst,  0x00, sizeof(sttaxlst));
+	memset(&sttrodlmt, 0x00, sizeof(sttrodlmt));	
+	memset(&stlockhist, 0x00, sizeof(stlockhist));	
+	memset(&dpInput,   0x00, sizeof(dpInput));
+    	memset(&dpOutput,   0x00, sizeof(dpOutput));
+    	memset(&stDeptGet,   0x00, sizeof(stDeptGet));
+	memset((struct cs_brcdinfo *)&stBrcdInfo, 0x00, sizeof(struct cs_brcdinfo));
+	memset(&stautocnt2,0x00, sizeof(stautocnt2));
+	memset(&sttaxhistdt,0x00,sizeof(sttaxhistdt));
+	memset(&sttaxamtrt,0x00, sizeof(sttaxamtrt));
+	memset(&stccycd,   0x00, sizeof(stccycd));
+	memset(&stbrbusday,     0x00, sizeof(stbrbusday));
+	memset(&stjnal,    0x00, sizeof(stjnal));
+	memset(&stSp,      0x00, sizeof(stSp));
+	memset(&trlog,     0x00, sizeof(trlog));
+	memset(&stautotran,     0x00, sizeof(stautotran));
+	memset(&stmaptcode, 0x00, sizeof(stmaptcode));//20120621
+	memset(&stlogdp,  0x00, sizeof(stlogdp));//20120621
+	
+	memset(h_trtm,   0x00, sizeof(h_trtm));
+	memset(tmp_year,   0x00, sizeof(tmp_year));
+	memset(h_brcd,   0x00, sizeof(h_brcd));
+	memset(tmp_rrsptax,0x00, sizeof(tmp_rrsptax));
+	memset(tmp_trccyamt,0x00,sizeof(tmp_trccyamt));
+	memset(tmp_rrsppay,0x00, sizeof(tmp_rrsppay));
+	memset(tmp_lclamt, 0x00, sizeof(tmp_lclamt));
+	memset(tmp_taxamt, 0x00, sizeof(tmp_taxamt));
+	memset(lc_trtype,  0x00, sizeof(lc_trtype));
+	memset(lc_trtype2, 0x00, sizeof(lc_trtype2));
+	memset(h_trdt, 0x00, sizeof(h_trdt));
+	memset(h_wdavlfnd,   0x00, sizeof(h_wdavlfnd));
+	memset(h_curbal,   0x00, sizeof(h_curbal));
+	memset(h_minamt,   0x00, sizeof(h_minamt));
+	memset(h_dpamt,   0x00, sizeof(h_dpamt));
+	memset(h_sub_valuedt,         0x00,  sizeof(h_sub_valuedt));
+   	memset(h_sub_maxvaluedt,         0x00,  sizeof(h_sub_maxvaluedt));
+	memset(tmp_totcomm, 0x00, sizeof(tmp_totcomm));         //%%K3
+	memset(tmp_commission, 0x00, sizeof(tmp_commission));   //%%K3
+	memset(tmp_fndamt, 0x00, sizeof(tmp_fndamt));           //%%K3
+	memset(tmp_bfbalance2, 0x00, sizeof(tmp_bfbalance2));   //%%K3
+	memset(tmp_diff, 0x00, sizeof(tmp_diff));               //%%K3
+	memset(h_dptpcd, 0x00, sizeof(h_dptpcd));
+	memset(h_lockflg, 0x00, sizeof(h_lockflg));
+	memset(h_acctseq,   0x00, sizeof(h_acctseq));
+	memset(h_idxacno,   0x00, sizeof(h_idxacno));
+	memset(h_acctnopaid,   0x00, sizeof(h_acctnopaid));
+	memset(h_ccycd,   0x00, sizeof(h_ccycd));
+	memset ( &h_error    , 0x00, sizeof ( h_error    ) );
+	memset ( h_acctccydpamt       , 0x00, sizeof ( h_acctccydpamt       ) );
+	memset ( h_pretrandt        , 0x00, sizeof ( h_pretrandt        ) );
+	memset ( h_brcd1        , 0x00, sizeof ( h_brcd1        ) );
+	memset(h_maxvaluedt,       0x00, sizeof(h_maxvaluedt));
+        memset(h_max30valuedt,       0x00, sizeof(h_max30valuedt));
+	//=========nttq 20060929======================================
+	memset(&rem1, 0x00, sizeof(&rem1)); 
+	memset(&tmp_dt, 0x00, sizeof(&tmp_dt)); 
+	
+	memset(lc_newmatdt,     0x00, sizeof(lc_newmatdt));
+	memset(lc_oldmatdt,     0x00, sizeof(lc_oldmatdt)); 
+	memset(lc_newmatdttn,     0x00, sizeof(lc_newmatdttn)); 
+	memset(lc_tam,     0x00, sizeof(lc_tam));
+	memset(lc_tammatdt,     0x00, sizeof(lc_tammatdt));
+	memset(lc_lastday,     0x00, sizeof(lc_lastday));
+	memset(lc_nxtdpcapdt,     0x00, sizeof(lc_nxtdpcapdt));	
+	memset(h_custseq,     0x00, sizeof(h_custseq));	
+	memset(h_savdptpcd,     0x00, sizeof(h_savdptpcd));	//20120621	
+	
+	memset(h_allowcredit, 0x00, sizeof(h_allowcredit));//nttq 20100517
+	stovrd.ovrcnt = 0;
+	strcpy(tmp_str, "R");
+	
+	// RRSP세금 Default Setting
+	strcpy(tmp_rrsptax, "0");
+
+
+	buf_len = sizeof(errmsg);
+    Err_Clear();
+    strcpy(szThisFunction, transb->name);
+    strcpy(szSvcName, transb->name);
+    strcpy(pszThisFunction, transb->name);
+    memset(pLabel, 0x00, sizeof(pLabel));
+    RACE_Err_FunctionPush(szThisFunction);
+
+    /* Allocate memery to FML Buffer pointer
+     */
+    transf = (FBFR32 *)transb->data;
+    transf = (FBFR32 *)tprealloc((char *)transf, 65000);
+
+    if (transf == NULL) {
+        transf = (FBFR32 *)transb->data;
+        RACE_Err_LogError(ERRNUM_MSG_TUX_TPALLOC_FAILED, szSvcName);
+        KEB_Err_PutReturnBuffer(transf);
+        RACE_Err_FunctionPop(szThisFunction);
+        tpreturn(TPFAIL, ERRNUM_MSG_TUX_TPALLOC_FAILED, (char *)transf, 0L, 0);
+    }
+
+   /* Put the input FML buffer in a global var(used by the arch.)
+    */
+
+    gVars[nID]->Tux.gpInFMLBuf = transf;
+    RACE_Sec_GetCallingUser(szUserName);
+
+    // if other transaction is in progress, then it must be closed
+    nRet = tpgetlev();
+    if ( nRet == 1 ) nRet = tpabort(0);
+
+    // Transaction Start
+    nRet = tpbegin(0, 0);
+    if ( nRet != 1 ) {
+        RACE_Err_LogError(KEB_BATCHERROR, tpstrerror(tperrno));
+        strcpy(pLabel, "< L: 001 >");
+        BTERROR(BT_FAIL);
+    }
+
+    EXEC SQL SET TRANSACTION USE ROLLBACK SEGMENT BIG_RBS;
+#ifdef SECURITY
+	/* Put the input FML buffer in a global var(used by the arch.)         */
+	gVars[nID]->Tux.gpInFMLBuf = transf;
+	RACE_Sec_GetCallingUser(szUserName);
+	
+	nRet = RACE_Sec_ValidateResource(szSvcName, &bAuthorized);
+	if ( nRet != RACE_SUCCESS ) 
+	{
+		RACE_Err_LogError(ERRNUM_MSG_SECURITY_FAIL, szSvcName);
+		KEB_Err_PutReturnBuffer(transf);
+		RACE_Err_FunctionPop(szThisFunction);
+		tpreturn(TPFAIL, ERRNUM_MSG_SECURITY_FAIL, (char *)transf, 0L, 0);
+	} 
+	else if ( bAuthorized != RACE_TRUE ) 
+	{
+		/* log a security violation error */
+		RACE_Err_LogError(ERRNUM_MSG_SVC_NOT_AUTH, szUserName, szSvcName);
+		KEB_Err_PutReturnBuffer(transf);
+		RACE_Err_FunctionPop(szThisFunction);
+		tpreturn(TPFAIL, ERRNUM_MSG_SVC_NOT_AUTH, (char *)transf, 0L, 0);
+	}
+	#endif
+	GetOsstparm(transf, &osstparm);
+	GET    (BT_BRCD,         0, h_brcd);
+    GET    (BT_TRDT,         0, h_trdt);
+               
+    strcpy(stinput.valuedt,h_trdt);        
+	strcpy( osstparm.sys_curbusday, h_trdt);
+	strcpy( osstparm.sys_onofflg, "1");
+	strcpy( osstparm.sys_mode, "0");
+	strcpy( osstparm.sys_ccy, "VND");
+	strcpy( stinput.onofftp[0], "1");
+		    
+    /********************************************
+    *   Current Business date Get               *
+    ********************************************/
+	
+	//20120621
+	stlogdp.cnt =1;
+	strcpy(stlogdp.servicenm, "bs_dpdaccb20005");
+	LogDP(&stlogdp," <Auto TRanfer for TKGG> " );
+	LogDP(&stlogdp,"brcd[%s],h_trdt[%s]",stinput.brcd,h_trdt);	
+	
+	strcpy(stinput.trtype,"ins");
+	strcpy(stinput.valuedt,h_trdt);
+	strcpy(stinput.buscd,"DP");
+	strcpy(stinput.untbscd,"DA");
+	strcpy(stinput.trcd,"W200");
+	strcpy(stinput.dbcdtp[0],"601");			
+	
+	EXEC SQL DECLARE cs1 CURSOR for 
+		//20100311 tuanemtv SELECT TRANACCTNO,TRANBRCD,TRANDPTPCD,TRANACCTSEQ,A.CUSTSEQ,a.IDXACNO,TRANAMT,A.CCYCD   ,B.CNTRMMTRM,PRETRANDT,NXTTRANDT,	MINAMT,TRANFLG
+		/* 20120621
+			SELECT TRANACCTNO,TRANBRCD,TRANDPTPCD,TRANACCTSEQ,a.IDXACNO,TRANAMT,A.CCYCD   ,B.CNTRMMTRM,PRETRANDT,NXTTRANDT,	MINAMT,TRANFLG, TRDT
+			FROM TBDP_SAVMST A , TBDP_AUTOTRAN B
+			WHERE A.DPTPCD = '69B'
+				AND TRIM(A.CLSFLG) <>'1'
+				AND TRIM(A.OPNCNCLFLG) <> '1'
+				AND A.BRCD = B.BRCD
+				AND A.DPTPCD = B.DPTPCD
+				AND A.ACCTSEQ = B.ACCTSEQ
+				AND TRIM(B.CNCLFLG) <>'1' 
+				AND B.NXTTRANDT = :h_trdt 
+				AND A.MATDT > B.NXTTRANDT;//TTLHANG 20100209 DO TKGG KO DAO HAN NEN CHI TRANFER CHO NHUNG TAI KHOAN KHAC NGAY DAO HAN
+		*/
+		
+	//20120621 - bo 69B
+	SELECT A.DPTPCD, TRANACCTNO,TRANBRCD,TRANDPTPCD,TRANACCTSEQ,a.IDXACNO,TRANAMT,A.CCYCD   ,B.CNTRMMTRM,PRETRANDT,NXTTRANDT,	MINAMT,TRANFLG, TRDT
+		FROM TBDP_SAVMST A , TBDP_AUTOTRAN B
+		WHERE TRIM(A.CLSFLG) <>'1'
+			AND TRIM(A.OPNCNCLFLG) <> '1'
+			AND A.BRCD = B.BRCD
+			AND A.DPTPCD = B.DPTPCD
+			AND A.ACCTSEQ = B.ACCTSEQ
+			AND TRIM(B.CNCLFLG) <>'1' 
+			AND B.NXTTRANDT = :h_trdt 
+			AND A.MATDT > B.NXTTRANDT;
+				
+	EXEC SQL OPEN cs1;
+	if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+		buf_len = sizeof(errmsg);
+		sqlglm(errmsg, &buf_len, &msg_len);
+		RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+		EXEC SQL CLOSE cs1;
+		nRet = tpabort(0);
+		BTERROR(ERRNUM_DB_ORAERR);
+	}
+	
+	total = sqlca.sqlerrd[2];
+   	LogDP(&stlogdp,"tong so record sqlca.sqlerrd[%d]",sqlca.sqlerrd[2]);
+     
+    for (;;) {	
+		LABEL:  	    memset(stinput.dpbcd, 0x00, sizeof(stinput.dpbcd));
+	    EXEC SQL FETCH cs1 INTO   	
+				:h_savdptpcd:idct, //20120621
+				:stinput.idxacno:idct,
+				:stinput.brcd:idct,
+				:stinput.dptpcd:idct,
+				:stinput.acctseq:idct,				
+				:h_acctnopaid:idct,
+				:h_dpamt:idct,
+				:stinput.ccycd:idct,
+				:stautotran.cntrmmtrm:idct,
+				:stautotran.pretrandt:idct,
+				:stautotran.nxttrandt:idct,
+				:h_minamt:idct,
+				:stautotran.tranflg:idct,
+				:stautotran.trdt:idct; //20100311 tuanemtv
+		
+		strcpy(stlogdp.idxacno, (char *)stinput->idxacno.arr); //20120621
+	    //LogDP(&stlogdp,"hu hu stinput.idxacno[%s] ", (char*)stinput.idxacno.arr);	    			    
+	    ll_sqlcode = sqlca.sqlcode;
+	    LogDP(&stlogdp,"ll_sqlcode[%d] ", ll_sqlcode);
+		
+	    if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+	        buf_len = sizeof(errmsg);
+	        sqlglm(errmsg, &buf_len, &msg_len);
+	        RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+	        EXEC SQL CLOSE cs1;
+	        nRet = tpabort(0);
+	        BTERROR(ERRNUM_DB_ORAERR);
+	    }
+		if (sqlca.sqlcode == 1403)  break;
+	  
+	    strcpy(h_crtuser, stinput.brcd);
+	    strcpy(osstparm.sys_brcd, stinput.brcd);
+	    strcat(h_crtuser, "DP");
+	        
+		LogDP(&stlogdp,"h_crtuser [%s]", h_crtuser);  
+		   
+		strcpy((char *) osstparm.sys_usrid.arr, h_crtuser);
+		osstparm.sys_usrid.len = 6;    
+	    bf_cscc_brcdinfo(stinput.brcd, &stBrcdInfo, &retcd, &errcd);
+	    if (retcd == FAIL) {	
+	        LogDP(&stlogdp,"Get BRCD info fail...");	
+	        RACE_Err_LogError(errcd, szSvcName, errmsg);
+	        nRet = tpabort(0);
+	        BTERROR(errcd);
+	    }
+	   
+	    LogDP(&stlogdp,"Get BRCD info success...");
+		bf_cscc_usrdeptget ( stinput.brcd, h_crtuser, &stDeptGet, &retcd, &errcd );
+		if (retcd == FAIL) {
+		    LogDP(&stlogdp,"Get User Dept. info fail...");
+		
+		    RACE_Err_LogError(errcd, szSvcName, errmsg);
+		    nRet = tpabort(0);
+		    BTERROR(errcd);
+		}
+		bf_cscc_brbusday(stinput.brcd, &stbrbusday, &retcd,&errcd);
+	    if (retcd != SUCCESS) {
+	    	LogDP(&stlogdp,"Get DAY info fail...");
+	        RACE_Err_LogError(errcd, szSvcName, errmsg);
+	        nRet = tpabort(0);
+	        BTERROR(errcd);
+	    }
+	    LogDP(&stlogdp,"Get DAY info success...");
+			
+	    if (strcmp(stbrbusday.ocurbusday, h_trdt) != 0) {
+	        LogDP(&stlogdp,"Back Value Transaction: Value Date[%s], Business Date[%s]",
+	        h_trdt, stbrbusday.ocurbusday);	
+	    }
+	
+	   strcpy(osstparm.sys_curbusday, stbrbusday.ocurbusday);
+		LogDP(&stlogdp,"osstparm.sys_curbusday [%s]",osstparm.sys_curbusday);
+	    
+     
+		for (i= 0;i < 1 ;i++) 
+		{
+    	    	
+			EXEC SQL SELECT WDAVLFND,CURBAL,CUSTSEQ
+				INTO  			
+					:h_wdavlfnd:idct,
+					:h_curbal:idct,
+					:stinput.custseq:idct
+				FROM TBDP_DMDMST 
+				WHERE idxacno = :stinput.idxacno
+	  	    	AND OPNCNCLFLG <>'1'
+	  	    	AND CLSFLG <>'1';
+				
+			EXEC SQL SELECT BRCD,DPTPCD,ACCTSEQ,CUSTSEQ
+				INTO  			
+					:h_brcd1:idct,
+					:h_dptpcd:idct,
+					:h_acctseq:idct,
+					:h_custseq:idct		
+				FROM TBDP_SAVMST
+				WHERE idxacno = :h_acctnopaid
+	  	    	AND OPNCNCLFLG <>'1'
+	  	    	AND CLSFLG <>'1';
+			if(strcmp(stinput.dptpcd,"") == 0 ) break;
+			if(strcmp(h_dptpcd,"") == 0 ) break;
+			
+			//if(atoi(h_curbal) < atoi(h_dpamt)) break ;
+			LogDP(&stlogdp," strat tranfer ");
+			
+			// kiem tra tai khoan GG da qua 30 ngay ke tu ngayden han nop tien chua
+			//EXEC SQL SELECT TO_CHAR(ADD_MONTHS(TO_DATE(VALUEDT, 'YYYYMMDD'), CNTRMMTRM), 'YYYYMMDD') , SUBSTR(VALUEDT,7,2) ,SUBSTR(TO_CHAR(ADD_MONTHS(TO_DATE(VALUEDT, 'YYYYMMDD'), CNTRMMTRM), 'YYYYMMDD'),7,2)
+			EXEC SQL SELECT TO_CHAR(ADD_MONTHS(TO_DATE(OPNDT, 'YYYYMMDD'), CNTRMMTRM), 'YYYYMMDD'), SUBSTR(OPNDT,7,2) ,SUBSTR(TO_CHAR(ADD_MONTHS(TO_DATE(OPNDT, 'YYYYMMDD'), CNTRMMTRM), 'YYYYMMDD'),7,2)
+				into :h_maxvaluedt,
+					:h_sub_valuedt,
+					:h_sub_maxvaluedt
+			FROM (
+					SELECT MST.OPNDT, MST.CURBAL, MDP.RGSTMMAMT, PRGCD, TRUNC(CURBAL / RGSTMMAMT) * TO_NUMBER(SUBSTR(MST.PRGCD, 3, 1)) CNTRMMTRM
+					FROM DP1.TBDP_SAVMST MST, DP1.TBDP_MINDPAMT MDP
+					WHERE MST.BRCD = MDP.BRCD
+					AND MST.DPTPCD = MDP.DPTPCD
+					AND MST.ACCTSEQ = MDP.ACCTSEQ
+					AND MST.BRCD = :h_brcd1
+					AND MST.DPTPCD = :h_dptpcd
+					AND MST.ACCTSEQ =:h_acctseq
+				);
+			
+			if  (atoi(h_sub_maxvaluedt) > atoi(h_sub_valuedt)) 
+			{
+				EXEC SQL SELECT SUBSTR(:h_maxvaluedt,1,6)||:h_sub_valuedt
+				 into :h_maxvaluedt
+				FROM DUAL ;
+			}
+			bf_dpcc_holtonbus(stinput.brcd, h_maxvaluedt, &stoutput, h_maxvaluedt, pszThisFunction);
+			if (stoutput.retcd != SUCCESS) {
+	    	    if ((stoutput.errcd == ERRNUM_DB_ORAERR) || (stoutput.errcd == CSDBERROR))  { 
+		            RACE_Err_LogError(stoutput.errcd, szSvcName, stoutput.e1);
+	                TPERROR(stoutput.errcd);
+	            } else {
+	                RACE_Err_LogError(stoutput.errcd, stoutput.e1, "");
+	                TPERROR(stoutput.errcd);
+	            }
+	        } /* if end */
+			
+			LogDP(&stlogdp,"TTLHANG max valuedt h_maxvaluedt[%s]",h_maxvaluedt);	
+			strcpy(h_max30valuedt, bf_dpcc_getdate(h_maxvaluedt, 60));
+			LogDP(&stlogdp,"TTLHANG max 30 valuedt h_max30valuedt[%s],stinput.valuedt[%s]",h_max30valuedt,stinput.valuedt);
+			bf_dpcc_holtonbus(stinput.brcd, h_max30valuedt, &stoutput, h_max30valuedt, pszThisFunction);
+			if (stoutput.retcd != SUCCESS) {
+	    	    if ((stoutput.errcd == ERRNUM_DB_ORAERR) || (stoutput.errcd == CSDBERROR))  { 
+		            RACE_Err_LogError(stoutput.errcd, szSvcName, stoutput.e1);
+	                TPERROR(stoutput.errcd);
+	            } else {
+	                RACE_Err_LogError(stoutput.errcd, stoutput.e1, "");
+	                TPERROR(stoutput.errcd);
+	            }
+	        } /* if end */
+			LogDP(&stlogdp,"TK chuyen va TK nhan stinput.custseq[%s],h_custseq[%s]",stinput.custseq,h_custseq);
+		   //if(strcmp(stinput.custseq,h_custseq) == 0 )
+		   //{
+			if (numcmp(stinput.valuedt ,h_max30valuedt) > 0 ) 
+			{	       
+                strcpy((char*)h_error.arr,"Over 30 days from deposit");
+				h_error.len = strlen((char *)h_error.arr);
+				strcpy(stinput.acctccydpamt[0], h_dpamt);
+				strcpy(stinput.trccyamt[0], h_dpamt);
+				ll_flag = 0;                              	       
+			}
+			else  
+			{
+				if (atof(h_minamt) == 0 ) //chi chuyen tranamt
+				{
+					if (atof(h_curbal) < atof(h_dpamt))
+					{
+						
+						strcpy((char*)h_error.arr,"Insufficient balance(curbal smaller than tranamt)");
+						h_error.len = strlen((char *)h_error.arr);
+						strcpy(stinput.acctccydpamt[0], h_dpamt);
+						strcpy(stinput.trccyamt[0], h_dpamt);
+						ll_flag = 0;
+						 //break;
+					}
+					else
+					{
+						 strcpy(stinput.acctccydpamt[0], h_dpamt);
+						 strcpy(stinput.trccyamt[0], h_dpamt);
+						 strcpy((char*)h_error.arr,"OK");
+						h_error.len = strlen((char *)h_error.arr);
+						 ll_flag = 1;
+					}
+				}
+				else  // co 2 truong hop : tranamt = 0 va tranamt > 0 
+				{
+					if (atof(h_curbal) <= atof(h_minamt )  )
+					{	
+						strcpy((char*)h_error.arr,"Insufficient balance(curbal smaller than minamt)");
+						h_error.len = strlen((char *)h_error.arr);
+						strcpy(stinput.acctccydpamt[0], h_minamt);
+						strcpy(stinput.trccyamt[0], h_minamt);
+						ll_flag = 0;
+						// break;
+					}
+					else
+					{
+						if (atof(h_curbal) < atof(h_dpamt))
+						{
+							strcpy((char*)h_error.arr,"Insufficient balance(curbal smaller than tranamt)");
+							h_error.len = strlen((char *)h_error.arr);
+							strcpy(stinput.acctccydpamt[0], h_dpamt);
+							strcpy(stinput.trccyamt[0], h_dpamt);
+							ll_flag = 0;
+							// break;
+						}
+						else 
+						{
+							if (atof(h_dpamt) == 0 ) // tranamt = 0 
+							{
+								
+								minus(h_curbal,h_minamt,h_acctccydpamt,21,3,"R");
+								strcpy(stinput.acctccydpamt[0], h_acctccydpamt);
+								strcpy(stinput.trccyamt[0], h_acctccydpamt);
+								strcpy((char*)h_error.arr,"OK");
+								h_error.len = strlen((char *)h_error.arr);
+								ll_flag = 1;
+							}
+							else   //tranamt > 0 net them minamt du dieu kien de tranfer khong
+							{
+								minus(h_curbal,h_minamt,h_acctccydpamt,21,3,"R");
+								
+								if (atof(h_acctccydpamt) < atof(h_dpamt))
+								{
+									strcpy((char*)h_error.arr,"Insufficient balance(minamt-tranamt)");
+									h_error.len = strlen((char *)h_error.arr);
+									strcpy(stinput.acctccydpamt[0], h_dpamt);
+									strcpy(stinput.trccyamt[0], h_dpamt);
+									ll_flag = 0;
+									// break;
+								}
+								else
+								{
+									strcpy(stinput.acctccydpamt[0], h_dpamt);
+									strcpy(stinput.trccyamt[0], h_dpamt);
+									strcpy((char*)h_error.arr,"OK");
+									h_error.len = strlen((char *)h_error.arr);
+									ll_flag = 1;
+								}
+							}
+							
+							
+						}
+					}
+				}
+			}
+			//}
+			//	else
+			//	{
+			//		ll_flag = 0;
+			//		LogDP(&stlogdp,"TK chuyen va TK nhan khac CIF stinput.custseq[%s],h_custseq[%s]",stinput.custseq,h_custseq);
+			//		
+			//	}
+			if (ll_flag == 1) 
+			{	     	
+				strcpy(stinput.trccytot,h_dpamt);  // so tien 
+				strcpy(stinput.acctccydptot,h_dpamt);
+				//strcpy(stinput.dpbcd,"100");
+				strcpy((char*)stinput.rem.arr,"Auto tranfer");
+				stinput.rem.len      = strlen((char *)stinput.rem.arr);
+				strcpy(stinput.acctccydpamt[i],h_dpamt);
+				strcpy(stinput.trccyamt[i],h_dpamt);
+				strcpy((char*)stinput.cntacct[i].arr,h_acctnopaid);  // TK ghi co 
+				stinput.cntacct[i].len = 15;
+				strcpy(stinput.trccy,stinput.ccycd);  
+				strcpy(stinput.fndtrccy[i],stinput.ccycd);
+	
+				// end  Getdpincomm				
+				LogDP(&stlogdp,"TTLHANG 20070528 bs_dpdaccb20005 stinput.dptpcd[%s]",stinput.dptpcd);
+				LogDP(&stlogdp,"TTLHANG 20080408 bs_dpdaccb20005 h_acctnopaid[%s]",h_acctnopaid);
+				LogDP(&stlogdp,"TTLHANG 20070528 bs_dpdaccb20005 h_dpamt[%s]",h_dpamt);
+				// Rrtype Reserve
+				strcpy(lc_trtype,  stinput.trtype);
+				strcpy(lc_trtype2, stinput.trtype2);
+				
+				/******************************
+				*   Common Input data check   *
+				******************************/
+				LogDP(&stlogdp,"LRW 1[%s]", sttrlst.bopid[0]);
+				LogDP(&stlogdp,"KHOH_stinput.dbcdtp[0]: %s", stinput.dbcdtp[0]);
+				
+				// Decide subtype
+				LogDP(&stlogdp,"TTLHANG 20070528 bs_dpdaccb20005 stinput->dptpcd[0][%s]",stinput.dptpcd[0]);
+				LogDP(&stlogdp,"TTLHANG 20070528 bs_dpdaccb20005 stinput->commcd[0][%s]",stinput.commcd[0]);
+				LogDP(&stlogdp,"LRW 2");
+				 
+				bf_dpsvccf71602(&osstparm,&stinput, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+				// Fund Type Check for cheque and cash :
+				// Currency code must be equal to The currency of fund type table
+				LogDP(&stlogdp,"20090306 stinput.brcd[%s],osstparm.sys_brcd[%s]", stinput.brcd,osstparm.sys_brcd);
+				LogDP(&stlogdp,"LRW 3");
+				bf_dpcc_fundtypecheck(&stinput, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				LogDP(&stlogdp,"LRW 4");
+
+				//%%K Get Base Rate for Acct Ccy
+				bf_cscc_exrtinfo(stinput.valuedt, osstparm.sys_brcd, "VND", stinput.ccycd, &st_exrtinfo, &retcd,&errcd);
+				if (retcd != SUCCESS) 
+				{
+					strcpy(pLabel, "L:005");
+					RACE_Err_LogError(13856, szSvcName);
+					TPERROR(13856);
+				}
+
+				dblBsRt = st_exrtinfo.obsrt;
+				//--------------------
+				
+				/********************************************
+				*      Deposit Branch Information Select    *
+				********************************************/
+
+				LogDP(&stlogdp,"LRW 5");
+				bf_dpsvccf60105(&stinput, &stbrmst, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+
+				/***********************************
+				*    Index Account Number Select   *
+				************************************/
+				LogDP(&stlogdp,"Index account number select6");
+				
+				//LogDP(&stlogdp,"LRW 6");
+				bf_dpsvccf71501(&stinput, &stidxacct, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+
+				/********************************************
+				*    Deposit Customer Information Select    *
+				********************************************/
+				LogDP(&stlogdp,"Deposit Customer7");
+				//LogDP(&stlogdp,"LRW 7");
+				bf_dpsvccf60201(&stinput, &stcust, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				/******************************
+				*    Deposit Type  Select     *
+				******************************/
+				LogDP(&stlogdp,"Deposit Type8");
+				//LogDP(&stlogdp,"LRW 8");
+				bf_dpsvccf60101(&stinput, &stdptp, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+				LogDP(&stlogdp,"LRW 8");
+				/**************************************
+				*    Deposit Business Code Select     *
+				**************************************/
+				LogDP(&stlogdp,"Business Code9");
+				
+				//LogDP(&stlogdp,"LRW 9");
+				bf_dpsvccf60801(&stinput, &stbuscd, &stoutput, pszThisFunction);				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				/************************************
+				*    Demand Deposit Master Select   *
+				************************************/
+				LogDP(&stlogdp,"Demand Deposit Master10");
+				//LogDP(&stlogdp,"LRW 10");
+				bf_dpdaccf60001(&stinput, &stdmdmst, &stoutput, pszThisFunction);				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+
+				//KIEM TRA CENTER CUT OFLINE - NTTQ - 20090930
+				bf_dpdaccf60407(&stinput, &stdmdmst, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						LogDP(&stlogdp,"a1");
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						strcpy((char*)h_error.arr,"Exist one center cut does not process");
+						h_error.len = strlen((char *)h_error.arr);
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						
+						break;
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 					
+					{
+						LogDP(&stlogdp,"a2");
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						strcpy((char*)h_error.arr,"Exist one center cut does not process");
+						h_error.len = strlen((char *)h_error.arr);
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						//TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						break;
+					}
+					else 
+					{
+						LogDP(&stlogdp,"a3");
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						strcpy((char*)h_error.arr,"Exist one center cut does not process");
+						h_error.len = strlen((char *)h_error.arr);
+						h_seq = 0 ;	
+							EXEC SQL select nvl(max(seq),0) + 1
+							into :h_seq:idct
+							from DP1.TBDP_AUTODTLTRANF
+							where BRCD = :h_brcd1
+							and DPTPCD = :h_dptpcd
+							and ACCTSEQ = :h_acctseq
+							and TRDT = :stinput.valuedt
+							and IDXACNO =:stinput.idxacno;
+						if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+								buf_len = sizeof(errmsg);
+								sqlglm(errmsg, &buf_len, &msg_len);
+								RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+								EXEC SQL CLOSE cs1;
+								nRet = tpabort(0);
+								BTERROR(ERRNUM_DB_ORAERR);
+							}
+							if (atof(stinput.acctccydpamt[0]) == 0 ) strcpy(stinput.acctccydpamt[0],h_dpamt);		
+							EXEC SQL INSERT INTO DP1.TBDP_AUTODTLTRANF(BRCD,DPTPCD,ACCTSEQ,CUSTSEQ,IDXACNO,TRDT,SEQ,CCYCD,TRAMT,TRTM,REMARK)
+								VALUES (:h_brcd1, :h_dptpcd, :h_acctseq,:stinput.custseq,:stinput.idxacno, 
+								:stinput.valuedt,:h_seq,:stinput.ccycd, to_number(:stinput.acctccydpamt[0]),:h_trtm,:h_error );
+						//to_number(:stinput.acctccydpamt[0])	
+						LogDP(&stlogdp,"TTLHANG 20080721 sqlca.sqlcode[%d]",sqlca.sqlcode);
+						if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) 
+						{
+								buf_len = sizeof(errmsg);
+								sqlglm(errmsg, &buf_len, &msg_len);
+								RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+								EXEC SQL CLOSE cs1;
+								nRet = tpabort(0);
+								BTERROR(ERRNUM_DB_ORAERR);
+							}		
+						break;
+
+					}
+				}
+
+				strcpy(tmp_curbal,stdmdmst.curbal[0]);//20070627
+				/************************************
+				*    Transaction Limit Check        *
+				************************************/
+				LogDP(&stlogdp,"Transaction Limit Check");
+				//LogDP(&stlogdp,"LRW 10");
+				bf_dpdaccf79102(&stinput, &stoutput, pszThisFunction);	
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				/***********************************
+				*   On/Off Shore Validation Check  *
+				***********************************/
+				// Either Main Account shore or Offset Account shore must be equal to The Shore of Screen.
+				
+				LogDP(&stlogdp,"LRW 12 stinput.aplcommamt[1][%s] stinput.vatamt[%s]", stinput.aplcommamt[0], stinput.vatamt[0]);
+				
+				bf_dpcc_onoffchk(&stinput, &osstparm, stdmdmst.onofftp[0], &stovrd, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				/***********************************
+				*   Business License Expire Date ( TBCM_CORP.BLEXPDT ) And
+				*   Unregistered Date ( TBCM_GENERAL.UNREGDT ) Compare with Value Date Check  *
+				***********************************/
+				bf_dpcc_ovrddatechk(&stinput, 3, &stovrd, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				/******************************************
+				*    Daily First Transaction Processing   *
+				******************************************/
+				// make a transaction summary record of current business date,
+				// set a clearing balance of DDA master after calculating cheque clearing amount
+				if (strcmp(stdmdmst.dfsttrdt[0], osstparm.sys_curbusday) < 0) 
+				{
+					LogDP(&stlogdp,"LRW 13");
+					bf_dpdaccf70501(&stinput, &osstparm, &stcust, &stdptp, &stdmdmst, &stoutput, pszThisFunction);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				}
+					
+				/*************************************
+				*    Withdrawal Validation Check     *
+				*************************************/
+				
+				LogDP(&stlogdp,"Validation Check14");
+				LogDP(&stlogdp,"stdmdmst.paystopflg[0][%s]",stdmdmst.paystopflg[0]);
+				//LogDP(&stlogdp,"LRW 14");
+				bf_dpdaccf70201(&stinput, &stbrmst, &stdptp, &stcust, &stdmdmst, &stovrd, &stoutput, &osstparm, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				// password check
+				if ((strcmp(stdptp.pwflg[0], "1") == 0) && (bf_dpcc_pwcmp(stdmdmst.pw[0], stinput.pw) != 0)) 
+				{
+					RACE_Err_LogError(13760);
+					strcpy(pLabel, "L:101");
+					TPERROR(13760);
+				}
+
+				/**************************************
+				*   Demand Deposit Structure Update   *
+				**************************************/
+				strcpy(stdmdmst.lsttrdt[0], osstparm.sys_curbusday);
+				if (strcmp(stbuscd.inatvhflg[0], "0") == 0) strcpy(stdmdmst.fldgupdt[0], osstparm.sys_curbusday);
+				
+				if (strcmp(stdptp.pbisuflg[0], "1") == 0) 
+				{
+					
+					for (i = 0; i < FND_CNT; i++) 
+					{
+						if ((strlen(trim(stinput.dbcdtp[i])) != 3) || (strlen(trim(stinput.trccyamt[i])) == 0)) break;
+						stdmdmst.unprtcnt[0]++; 
+					}
+					if (stdmdmst.unprtcnt[0] > 998) 
+					{
+						//strcpy(stdmdmst.unprtcnt[0],  "0");
+						stdmdmst.unprtcnt[0] = 0;	
+						//            RACE_Err_LogError(13756);
+						//            strcpy(pLabel, "L:300");
+						//            TPERROR(13756);
+					}
+				}
+
+
+				stdmdmst.ftrseq[0]++;
+				strcpy(tmp_bfbalance, stdmdmst.curbal[0]);
+				
+				
+				/**********************
+				*    Balance Update   *
+				**********************/
+				LogDP(&stlogdp,"Balance Update15");
+				// update deposit master balance (current balance, clearing balance) according to input fund type and amount
+				//LogDP(&stlogdp,"LRW 15");
+				bf_dpdaccf70601(&stinput, &osstparm, &stdmdmst, &sttrlst, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+
+				/**************************************
+				*   Current Account check withdrawl   *
+				***************************************/
+				LogDP(&stlogdp,"Current account check withdraw stinput.cuchktpcdl[%s] stdptp.chkisuflg[%s]",stinput.cuchktpcd,stdptp.chkisuflg[0]);
+				
+				// use current check?
+				if ((strlen(trim(stinput.cuchktpcd)) == 3) && (stinput.cuchkno.len != 0)) 
+				{	
+					if (strcmp(stdptp.chkisuflg[0], "0") == 0) // check issue possible ?
+					{        
+						RACE_Err_LogError(13667, szSvcName);
+						strcpy(pLabel, "L:012");
+						TPERROR(13667);
+					}
+					
+					//%%K
+					tmp_count2 = 0;
+					for (i = 0; i < FND_CNT; i++) 
+					{
+						if (strcmp(stinput.dbcdtp[i], "298") == 0) tmp_count2++;
+					}
+
+					if (tmp_count2 > 0) {	//%%K
+					
+					if ((strcmp(stinput.dbcdtp[0], "298") == 0) || (strcmp(stinput.dbcdtp[1], "298") == 0) || (strcmp(stinput.dbcdtp[2], "298") == 0)) // certified check withdrawal ?
+					{      
+						// can not use together '298' and a fund type except '199'(cash commission) and '296'(CCA commission)
+						tmp_count = 0;
+						
+						for (i = 0;  i < FND_CNT; i++) 
+						{			
+							if ((strlen(trim(stinput.dbcdtp[i])) != 3) || (strlen(trim(stinput.trccyamt[i])) == 0)) continue;
+							
+							if ((strcmp(stinput.dbcdtp[i], "199") == 0) || (strcmp(stinput.dbcdtp[i], "296") == 0) || (strcmp(stinput.dbcdtp[i], "298") == 0)) continue;
+							
+							tmp_count++;
+							}
+							
+							if (tmp_count > 0) 
+							{
+								RACE_Err_LogError(13789, szSvcName);
+								strcpy(pLabel, "L:112");
+								TPERROR(13789);
+							}
+						}
+					}
+
+					// current check withdrawal validation check and cheque master insert/update
+					strcpy(stinput.trtype, "ins");
+					LogDP(&stlogdp,"LRW 16");
+					bf_dpdaccf72701(&stinput, &osstparm, &stbrmst, &stoutput, &stovrd, pszThisFunction);
+					
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				}
+				else if (strcmp(stdptp.chkisuflg[0], "1") == 0) // cheque number not input and cheque issue possible ?
+				{   
+					//%%K
+					
+					
+					for (i = 0; i < FND_CNT; i++) // certified cheque need a check number.
+					{			
+						if (strcmp(stinput.dbcdtp[i], "298") == 0)
+						{
+							RACE_Err_LogError(10273, "Current Check No.");
+							strcpy(pLabel, "L:021");
+							TPERROR(10273);
+						}
+					}
+				
+					LogDP(&stlogdp,"LRW 17");
+					bf_dpsvccf70501(osstparm.sys_brcd, 13321, &ovrd_return, &stoutput);     // 13321 : No check transaction
+					
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					
+				}
+
+
+				/***********************************************************
+				*   Transaction Daily Summary                              *
+				*   If back value date transaction,                        *
+				*   Update table from value date to current business date  *
+				*   If current business date transaction,                  *
+				*   Update table current business date                     *
+				***********************************************************/
+				// In case of Back Value Transaction.
+				if (strcmp(stinput.valuedt, osstparm.sys_curbusday) < 0) 
+				{
+					LogDP(&stlogdp,"LRW 18");
+					bf_dpdaccf71601(&stinput, &osstparm, &stcust, &stdptp, &stdmdmst, &sttrlst,	&stovrd, &stoutput, pszThisFunction);
+				
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				}
+
+				// Update Transaction summary table For Current business date.
+				LogDP(&stlogdp,"LRW 19");
+				bf_dpdaccf71701(&stinput, &osstparm, &stbrmst, &stcust, &stdptp, &stdmdmst, &sttrlst, &stovrd, &stoutput, pszThisFunction);
+				
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+				
+				LogDP(&stlogdp,"LRW 20");
+
+				/**************************************************
+				* KEBOC RRSP Withdrawal                           *
+				* 지급시 세금을 자동적으로 계산하여 차감한다.     *
+				* 자금종류 1개만 허용하며 296거래는 불허한다.     *
+				* 지급연동시에는 세금을 제외한 금액으로 하며      *
+				* 상대 거래에 대한 일계발행시에도 세금을 제외한   *
+				* 금액으로 한다.                                  *
+				**************************************************/
+				if (strcmp(stdptp.rrspflg[0], "1") == 0) 
+				{
+					// 세금 History Get
+					/*******************************
+					* Get tax info function call   *
+					*******************************/
+					// RRST TAX는 무조건 99번 입니다.
+					bf_cscc_taxhistdt(stinput.brcd, "99", stinput.valuedt, stinput.valuedt, &sttaxhistdt, &stoutput.retcd, &stoutput.errcd);
+					
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					strcpy(sttaxhistdt.onxtappldt[sttaxhistdt.ocnt - 1], "99999999");
+					sttaxcal.ocnt = 0;
+				
+					// 세금금액을 계산한다.
+					// 국적이 CA(canada)인 경우에만 금액별 세액 계산함.
+					// RRSP의 세액코드는 무조건 99
+					if (strcmp(stdmdmst.cntrctrycd[0], "CA") == 0) strcpy(sttaxamtrt.ocaltaxcd, "1");
+					
+					bf_cscc_taxamtrt(stinput.brcd, "99", sttaxhistdt.oappldt[sttaxhistdt.ocnt - 1], stdmdmst.cntrctrycd[0], stinput.acctccydptot, stinput.ccycd, stdmdmst.onofftp[0], osstparm.sys_curbusday, &sttaxamtrt, &stoutput.retcd, &stoutput.errcd);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				
+					bf_dpcc_taxcal(&sttaxamtrt, &sttaxcal);
+					
+					/*********************************************
+					* Currency information table (Common Team)   *
+					*********************************************/
+					bf_cscc_ccycd(stinput.brcd, stinput.ccycd, &stccycd, &stoutput.retcd, &stoutput.errcd);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				
+				
+					/**************************************
+					*     Currency Speculation Select     *
+					**************************************/
+					strcpy(stccyspec.aplydt[0], stinput.valuedt);
+					bf_dpsvccf60103(&stinput, &stccyspec, &stoutput, pszThisFunction);
+					
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				
+				
+					/******************************************************
+					*   Tax minimum amount check & Output structure Set   *
+					******************************************************/
+					bf_dpcc_settax(stinput.acctccydptot, &sttaxhistdt, &sttaxamtrt, &sttaxcal, &stccycd, &stccyspec, &stoutput, pszThisFunction);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					
+					/*******************************
+					*   make Tax list structure    *
+					*******************************/
+					for (i = 0; i < sttaxcal.ocnt; i++) 
+					{
+						strcpy(sttaxlst.brcd[i],        stinput.brcd);
+						strcpy(sttaxlst.dptpcd[i],      stinput.dptpcd);
+						strcpy(sttaxlst.acctseq[i],     stinput.acctseq);
+						strcpy(sttaxlst.ocrdt[i],       stinput.valuedt);
+						strcpy(sttaxlst.clscaptp[i],    "054");
+						strcpy(sttaxlst.taxrtcd[i],     sttaxcal.taxrtcd[i]);
+						strcpy(sttaxlst.sprd[i],        stinput.valuedt);
+						strcpy(sttaxlst.eprd[i],        stinput.valuedt);
+						strncpy(tmp_year, stinput.valuedt, 4);
+						strcpy(sttaxlst.taxyy[i],       tmp_year);
+						strcpy(sttaxlst.originamt[i],   stdmdmst.curbal[0]);
+						strcpy(sttaxlst.taxamt[i],      stinput.acctccydptot);
+						strcpy(sttaxlst.netccycd[i],    stdmdmst.ccycd[0]);
+						strcpy(sttaxlst.taxccycd[i],    sttaxcal.taxccy);
+						strcpy(sttaxlst.acctccytax[i],  sttaxcal.taxamt[i]);
+						strcpy(sttaxlst.natccytax[i],   sttaxcal.lclamt[i]);
+						strcpy(sttaxlst.oractaxamt[i],  sttaxcal.taxamt[i]);
+						strcpy(sttaxlst.orlctaxamt[i],  sttaxcal.lclamt[i]);
+						strcpy(sttaxlst.taxudttp[i],    "");
+						strcpy(sttaxlst.udtdt[i],       "");
+						strcpy(sttaxlst.intcapdt[i],    stinput.valuedt);
+						sttaxlst.taxrt[i]             = sttaxcal.taxrt[i];
+						strcpy(sttaxlst.acctcd[i],      sttaxcal.acctcd[i]);
+						sttaxlst.atccybsrt[i]         = sttaxcal.taxbsrt[i];
+						sttaxlst.ctccybsrt[i]         = sttaxcal.lclbsrt[i];
+						strcpy(sttaxlst.taxcustcd[i],   stcust.taxcustcd[0]);
+						strcpy(sttaxlst.txrttp[i],      stdmdmst.txrttp[0]);
+						strcpy(sttaxlst.cntrctrycd[i],  stdmdmst.cntrctrycd[0]);
+						strcpy(sttaxlst.cnclflg[i],     "0");
+						strcpy(sttaxlst.taxpayflg[i],   "0");
+						strcpy(sttaxlst.custseq[i],     stinput.custseq);
+						strcpy((char *)sttaxlst.musrid[i].arr,   "");
+						sttaxlst.musrid[i].len        = strlen((char *)sttaxlst.musrid[i].arr);
+						strcpy((char *)sttaxlst.lcldscp[i].arr,  (char *)sttaxcal.lcltaxrtnm[i].arr);
+						sttaxlst.lcldscp[i].len       = sttaxcal.lcltaxrtnm[i].len;
+					} // end of for
+				
+					/*****************************
+					*   insert tax list table    *
+					*****************************/
+					strcpy(stinput.trtype, "ins");
+					bf_dpsvccf70301(&stinput, &osstparm, &sttaxlst, &stoutput, pszThisFunction);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+				
+					// RRSP TAX Amount Reserve
+					strcpy(tmp_rrsptax, sttaxcal.accttaxtot);
+					LogDP(&stlogdp,"THUY LRW 20 tmp_rrsptax [%s]", tmp_rrsptax);	
+				}
+				// Trtype Recovery
+				strcpy(stinput.trtype,  lc_trtype);
+				strcpy(stinput.trtype2, lc_trtype2);
+				
+				// RRSP세금에 대해서 거래 금액을 임시적으로 Change
+				//%%K This routine should be checked carefully.
+				if (numcmp(tmp_rrsptax, "0") > 0) 
+				{
+					LogDP(&stlogdp,"THUY LRW 20 tmp_rrsptax [%s]", tmp_rrsptax);
+					strcpy(tmp_trccyamt,    stinput.trccyamt[0]);
+					minus(stinput.trccyamt[0], tmp_rrsptax, stinput.trccyamt[0], 21, 3, "R");
+				}
+
+
+				/********************
+				*   Make Voucher    *
+				********************/
+				if (strcmp(osstparm.sys_mode, "4") != 0) 
+				{
+				
+					
+					LogDP(&stlogdp,"LRW 21");
+					bf_cscc_autocnt2(stinput.brcd, h_crtuser, &stautocnt2, &stoutput.retcd, &stoutput.errcd);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						strcpy(pLabel, "L:025");
+						buf_len = sizeof(errmsg);
+						sqlglm(errmsg, &buf_len, &msg_len);
+						RACE_Err_LogError(stoutput.errcd, szSvcName, errmsg);
+						nRet = tpabort(0);
+								TPERROR(stoutput.errcd);
+					}
+					stjnal.DySeq = stautocnt2.oldgrisuno; 
+					LogDP(&stlogdp,"chan chuyen qua di  stjnal.DySeq[%d]",stjnal.DySeq);
+					//stjnal.DySeq = 0;
+					 strcpy(stjnal.TrTp,     "0");
+						strcpy(stjnal.DyTrKd,   "02");
+						strcpy(stjnal.DyTrTp,   "1");
+						strcpy(stjnal.BrCd,     osstparm.sys_brcd);
+						strcpy(stjnal.TrRef,    stinput.dptpcd);
+						stjnal.TrSeq.len      = strlen(stinput.acctseq);
+						strcpy((char *)stjnal.TrSeq.arr, stinput.acctseq);
+						strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+						stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+						strcpy((char *)stjnal.Remark1.arr, (char *)stinput.rem.arr);
+					stjnal.Remark1.len      = stinput.rem.len;
+					
+					
+				}
+				else stjnal.DySeq = 0;
+
+				/***************************
+				*   Issue Banker's check   *
+				***************************/
+				for (i = 0; i < FND_CNT; i++) //%%K Release fund count limitation
+				{		
+					// issue Cashier's(Banker's) check ?	
+					
+					if (stinput.dbcdtp[i][0] == '7') 
+					{
+						LogDP(&stlogdp,"Issue Banker's check");
+						
+						// Can not use together cashier's check and Bank account(Customer account)
+						//%%K
+						
+						for (j = 0; j < FND_CNT; j++) 
+						{
+							if ((stinput.dbcdtp[j][0] == '3') ||        // Bank account ?
+								(stinput.dbcdtp[j][0] == '6')) // Customer account ?
+							{        				
+								RACE_Err_LogError(13856, szSvcName, "");
+								strcpy(pLabel, "L:840");
+								TPERROR(13856);
+							}
+						}
+
+					// issue cashier's check
+					stinput.dacno = stjnal.DySeq;
+					LogDP(&stlogdp,"chan that la chan stinput.dacno[%d]",stinput.dacno);
+			LogDP(&stlogdp,"LRW 22");
+					bf_dptbccf70301(&stinput, &osstparm, &stoutput, pszThisFunction);
+
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					break;	//%%K
+				}
+
+				// Customer Transfer ?
+
+				
+				else if (stinput.dbcdtp[i][0] == '6') {
+
+				/***************************
+				*   Credit Other Account   *
+				***************************/
+				LogDP(&stlogdp,"Credit Customer's account");
+
+					// Can not use together Customer account and Bank account
+				
+					for (j = 0; j < FND_CNT; j++) {
+						if (stinput.dbcdtp[j][0] == '3'){       // Bank account ?
+
+							RACE_Err_LogError(13856, szSvcName, "");
+							strcpy(pLabel, "L:841");
+							TPERROR(13856);
+						}
+					}
+						 
+					idx = i;	//%%K
+
+					// prohibit account transfer to itself
+					if ((strcmp(stdmdmst.brcd[0], stinput.brcd) == 0) &&
+						(strcmp((char *)stdmdmst.idxacno[0].arr, (char *)stinput.cntacct[idx].arr) == 0) &&
+					
+						(strcmp(stdmdmst.ccycd[0], stinput.fndtrccy[idx]) == 0)) {
+
+						RACE_Err_LogError(13882);
+						strcpy(pLabel, "L:020");
+						TPERROR(13882);
+					}
+					
+					// 연동시에는 Account Branch Setting하지 않음 CIB 2001.01.12
+					// strcpy(stdpinput.acbrcd, stinput.brcd);
+					strcpy(stdpinput.custseq, stinput.custseq);
+					strcpy(stdpinput.fmonoff, stdmdmst.onofftp[0]);
+					strcpy(stdpinput.valdt, h_trdt);
+					//%%K strcpy(stdpinput.ccy, stinput.trccy);
+					strcpy(stdpinput.ccy, stinput.ccycd);   //%%K
+					strcpy(stdpinput.cntrtp, "03");
+					strcpy((char *)stdpinput.acno.arr, (char *)stinput.cntacct[idx].arr);
+					stdpinput.acno.len = stinput.cntacct[idx].len;
+
+					strcpy(stdpinput.trkind,"0");
+					strcpy(stdpinput.drcr,"C");
+					strcpy(stdpinput.amnt, stinput.trccyamt[idx]);
+
+					strcpy((char *)stdpinput.fmtrref.arr, (char *)stinput.idxacno.arr);
+					stdpinput.fmtrref.len = stinput.idxacno.len;
+
+					strcpy(stdpinput.buscd, stinput.buscd);
+					strcpy(stdpinput.untbuscd, stinput.untbscd);
+					strcpy(stdpinput.trcd, stinput.trcd);
+					strcpy(stdpinput.subtp, "000");
+
+					stdpinput.dyseq= stjnal.DySeq;
+					LogDP(&stlogdp,"chan oi la chan stdpinput.dyseq[%d]",stdpinput.dyseq);
+					strcpy((char *)stdpinput.ourref.arr, (char *)stdpinput.fmtrref.arr);
+					stdpinput.ourref.len = stdpinput.fmtrref.len;
+				
+
+
+					  strcpy((char *)stdpinput.remark.arr, (char *)stinput.rem.arr);
+					stdpinput.remark.len = stinput.rem.len;
+
+					// account transfer
+				LogDP(&stlogdp,"LRW 23bf_dpsa_rtroute chay di ne ");  
+					bf_dpsa_rtroute(osstparm, stdpinput, &stdpoutput, &stoutput.retcd, &stoutput.errcd, pszThisFunction, stoutput.e1);
+				LogDP(&stlogdp,"stdpoutput.dtTrDNo : [%s]", stdpoutput.tohisno);
+				LogDP(&stlogdp,"LRW 23-1stoutput.errcd[%d]\n", stoutput.errcd);
+				LogDP(&stlogdp,"TVK stdpoutput.custno : [%s]", stdpoutput.custno);
+
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					break;	//%%K
+				}
+				// Bank account transfer ?
+				
+				else if (stinput.dbcdtp[i][0] == '3') {
+
+				/********************************
+				*   Credit Inter bank Account   *
+				********************************/
+				LogDP(&stlogdp,"Credit Inter bank account");
+
+					// get the position of bank account in fund type array
+					//%%K
+				   
+					idx = i;
+
+					// prohibit account transfer to itself
+					if ((strcmp(stdmdmst.brcd[0], osstparm.sys_brcd) == 0) &&
+						(strcmp((char *)stdmdmst.bkcd[0].arr, (char *)stinput.toacctno[idx].arr) == 0) &&
+						//%%K (strcmp(stdmdmst.ccycd[0], stinput.trccy) == 0)) {
+						(strcmp(stdmdmst.ccycd[0], stinput.fndtrccy[idx]) == 0)) {
+
+						RACE_Err_LogError(13882);
+						strcpy(pLabel, "L:021");
+						TPERROR(13882);
+					}
+
+					// prohibit account transfer for customer account of other branch
+					if (strcmp(stdmdmst.brcd[0], osstparm.sys_brcd) != 0) {
+
+						RACE_Err_LogError(13759);
+						strcpy(pLabel, "L:021");
+						TPERROR(13759);
+					}
+
+					strcpy(stdpinput.acbrcd, stinput.brcd);
+					strcpy(stdpinput.custseq, stinput.custseq);
+					strcpy(stdpinput.fmonoff, stdmdmst.onofftp[0]);
+					strcpy(stdpinput.valdt, stinput.valuedt);
+					//%%K strcpy(stdpinput.ccy, stinput.trccy);
+					strcpy(stdpinput.ccy, stinput.fndtrccy[idx]);
+					strcpy(stdpinput.cntrtp, "04");
+					strcpy((char *)stdpinput.acno.arr, (char *)stinput.toacctno[idx].arr);
+					stdpinput.acno.len = stinput.toacctno[idx].len;
+
+					strcpy(stdpinput.trkind,"0");
+					strcpy(stdpinput.drcr,"C");
+					strcpy(stdpinput.amnt, stinput.trccyamt[idx]);
+
+					strcpy((char *)stdpinput.fmtrref.arr, (char *)stinput.idxacno.arr);
+					stdpinput.fmtrref.len = stinput.idxacno.len;
+
+					strcpy(stdpinput.buscd, stinput.buscd);
+					strcpy(stdpinput.untbuscd, stinput.untbscd);
+					strcpy(stdpinput.trcd, stinput.trcd);
+					strcpy(stdpinput.subtp, "000");
+
+					stdpinput.dyseq= stjnal.DySeq;
+
+					strcpy((char *)stdpinput.ourref.arr, (char *)stinput.ourref.arr);
+					stdpinput.ourref.len = stinput.ourref.len;
+					strcpy((char *)stdpinput.thrref.arr, (char *)stinput.thrref.arr);
+					stdpinput.thrref.len = stinput.thrref.len;
+					strcpy((char *)stdpinput.remark.arr, (char *)stinput.rem.arr);
+					stdpinput.remark.len = stinput.rem.len;
+
+				LogDP(&stlogdp,"ourref [%s]",(char *)stinput.ourref.arr);
+				LogDP(&stlogdp,"thrref [%s]",(char *)stinput.thrref.arr);
+				
+				LogDP(&stlogdp,"LRW 24");
+					bf_dpsa_rtroute(osstparm, stdpinput, &stdpoutput, &stoutput.retcd, &stoutput.errcd, pszThisFunction, stoutput.e1);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+						break;	//%%K
+					}
+				}
+
+				// RRSP세금에 대해서 거래 금액을 Restore
+				if (numcmp(tmp_rrsptax, "0") > 0) {
+					strcpy(stinput.trccyamt[0],     tmp_trccyamt);
+				}
+
+				// RRSP예금 지급시에는 여러건을 동시에 지급할 수 없다.
+				// 하루에 한건만 허용함. 취소후 재거래시에는 허용한다.
+				if ((strcmp(stdptp.rrspflg[0], "1") == 0) && (stdmdmst.ftrseq[0] != 1)) {
+					EXEC SQL SELECT COUNT(*)
+						INTO :ln_rrspcnt
+						FROM TBDP_TRLST
+						WHERE BRCD      = :stinput.brcd
+						  AND DPTPCD    = :stinput.dptpcd
+						  AND ACCTSEQ   = :stinput.acctseq
+						  AND TRDT      = :osstparm.sys_curbusday
+						  AND TRCD      = 'W200'
+						  AND CNCLTRFLG = '0'
+						  AND TGTFLG    = '0';
+					  if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+						  sqlglm(errmsg, &buf_len, &msg_len);
+						  strcpy(stoutput.e1, errmsg);
+						  RACE_Err_LogError(sqlca.sqlcode, stoutput.e1);
+						strcpy(pLabel, "L:R881");
+						TPERROR(13759);
+					  }
+					  if (sqlca.sqlerrd[2] < 1) ln_rrspcnt = 0;
+				
+					if (ln_rrspcnt != 0) {
+						RACE_Err_LogError(13972);
+						strcpy(pLabel, "L:R888");
+						TPERROR(13759);
+					}
+				}
+
+				  /*****************************************
+				  *    Set Transaction History structure   *
+				  *****************************************/
+				LogDP(&stlogdp,"Set Transaction History structure");
+				strcpy(tmp_totdpamt, "0");
+				strcpy(tmp_totodamt, "0");
+
+				tmp_count = 0;
+				for (i = 0; i < FND_CNT; i++) {
+					if ((strcmp(stinput.dbcdtp[i], "199") == 0) ||      // cash commission
+						(strcmp(stinput.dbcdtp[i], "296") == 0)){        // CCA commission
+				
+						tmp_count++;
+					}
+				}
+				if (tmp_count > 0)
+					strcpy(tmp_trtype2, "wid");         // '196' or '296' is separated from other fund type 1 transaction -> 2 transaction
+				else
+					strcpy(tmp_trtype2, "new");
+	
+				for (i = 0; i < FND_CNT; i++) {
+					LogDP(&stlogdp,"20090211 cha hieu nua stinput.dbcdtp : [%s], stinput.trccyamt[i] : [%s]", stinput.dbcdtp[i], stinput.trccyamt[i]);
+					if ((strlen(trim(stinput.dbcdtp[i])) != 3) || (strlen(trim(stinput.trccyamt[i])) == 0)) break;
+				
+					  if ((strcmp(stinput.dbcdtp[i], "299") == 0) ||      // abandoned property
+						  (strcmp(stinput.dbcdtp[i], "799") == 0)) {      // Certified Cheque
+				
+						RACE_Err_LogError(13856, szSvcName, "");
+						strcpy(pLabel, "L:040");
+						TPERROR(13856);
+					}
+			
+					if ((strcmp(tmp_trtype2, "wid") == 0) && (i > 0)) stdmdmst.ftrseq[0]++;
+				
+						sttrlst.ddtrseq[i] = stdmdmst.ftrseq[0];
+				
+					strcpy(sttrlst.savdmdtp[i], "001");
+					//%%K sttrlst.bsrt[i] = stovrd.bsrt;
+				
+					if (strcmp(stdptp.pbisuflg[0], "1") == 0)
+						strcpy(sttrlst.pbprtnoflg[i], "0");
+					else
+						strcpy(sttrlst.pbprtnoflg[i], "1");
+					if (stovrd.ovrcnt > 0)
+						strcpy(sttrlst.ovrdflg[i], "1");
+					else
+						strcpy(sttrlst.ovrdflg[i], "0");
+						strcpy(sttrlst.cncltrflg[i], "0");
+						strcpy(sttrlst.tgtflg[i], "0");
+						strcpy(sttrlst.bftrbal[i], tmp_bfbalance);
+				
+				
+					if (numcmp(tmp_bfbalance, 0) > 0) {
+						if (numcmp(tmp_bfbalance, stinput.acctccydpamt[i]) < 0) {
+							strcpy(sttrlst.acctccydpamt[i], tmp_bfbalance);
+							minus(stinput.acctccydpamt[i], tmp_bfbalance, sttrlst.acctccyodamt[i], 30, 3, tmp_str);
+						}
+						else {
+							strcpy(sttrlst.acctccydpamt[i], stinput.acctccydpamt[i]);
+							strcpy(sttrlst.acctccyodamt[i], "0");
+						}
+					}
+					else {
+						strcpy(sttrlst.acctccydpamt[i], "0");
+						strcpy(sttrlst.acctccyodamt[i], stinput.acctccydpamt[i]);
+					}
+					strcpy(tmp_bfbalance2, tmp_bfbalance);      //%%K3
+						minus(tmp_bfbalance, stinput.acctccydpamt[i], tmp_bfbalance, 30, 3, tmp_str);
+					strcpy(sttrlst.aftrbal[i], tmp_bfbalance);
+					strcpy(sttrlst.whtax[i], tmp_rrsptax);
+					strcpy(sttrlst.dpint[i], "0");
+					strcpy(sttrlst.odint[i], "0");
+					sttrlst.toddtrseq[i] = 0;
+				
+					//lrw 00.04.17 동경요청 - Inter Bank거래시 거래기록에 은행코드를 쌓는다.
+				
+					tmp_count = 0;
+					for (j = 0; j < FND_CNT; j++) {
+						if ((stdmdmst.dptpcd[j][0] == '3') || (stinput.dbcdtp[j][0]  == '3')) tmp_count++;
+					}
+				
+					if (tmp_count > 0) {
+						if (stinput.dbcdtp[0][0] == '6') {
+							strcpy((char *)sttrlst.toacctno[i].arr, (char *)stinput.cntacct[i].arr);
+							sttrlst.toacctno[i].len = stinput.cntacct[i].len;
+						} else {
+							strcpy((char *)sttrlst.toacctno[i].arr, (char *)stinput.toacctno[i].arr);
+							sttrlst.toacctno[i].len = stinput.toacctno[i].len;
+						}
+					}
+					  else {
+							strcpy((char *)sttrlst.toacctno[i].arr, (char *)stinput.cntacct[i].arr);
+						sttrlst.toacctno[i].len = stinput.cntacct[i].len;
+					  }
+					//--------------------
+				
+					LogDP(&stlogdp,"Lrw0000 (char *)stinput.toacctno[i].arr[%s]",(char *)stinput.toacctno[i].arr);
+				
+					strcpy((char *)sttrlst.tomgntno[i].arr, (char *)stinput.opno.arr);
+					sttrlst.tomgntno[i].len = stinput.opno.len;
+					sttrlst.dacno[i] = stjnal.DySeq;	 /* Daily Account Number */
+				
+					  add(tmp_totdpamt, sttrlst.acctccydpamt[i], tmp_totdpamt, 30, 3, tmp_str);
+					  add(tmp_totodamt, sttrlst.acctccyodamt[i], tmp_totodamt, 30, 3, tmp_str);
+				}
+				LogDP(&stlogdp,"20090211 cha hieu nua tmp_totdpamt : [%s], tmp_totodamt : [%s],tmp_slipseq[%d]", tmp_totdpamt, tmp_totodamt,tmp_slipseq);
+				//%%K3 ==================================
+				/* Deduct Commission from Customer A/C */
+				if (strcmp(stinput.commfndstp, "198") == 0) {				
+					  if (numcmp(tmp_totdpamt, tmp_bfbalance2) < 0) {
+				
+						  minus(tmp_bfbalance2, tmp_totdpamt, tmp_diff, 30, 3, tmp_str);
+						  if (numcmp(tmp_diff, tmp_totcomm) < 0) {
+							  add(tmp_totdpamt, tmp_diff, tmp_totdpamt, 30, 3, tmp_str);
+							  minus(tmp_totcomm, tmp_diff, tmp_totcomm, 30, 3, tmp_str);
+							  add(tmp_totodamt, tmp_totcomm, tmp_totodamt, 30, 3, tmp_str);
+						  }
+						  else {
+							  add(tmp_totdpamt, tmp_totcomm, tmp_totdpamt, 30, 3, tmp_str);
+						  }
+					  }
+					  else {
+						  add(tmp_totodamt, tmp_totcomm, tmp_totodamt, 30, 3, tmp_str);
+					  }
+					  LogDP(&stlogdp,"1.tmp_totdpamt: %s", tmp_totdpamt);
+					  LogDP(&stlogdp,"2.tmp_totodamt: %s", tmp_totodamt);
+				}
+				// ======================================
+
+				  //%%K3 =======================================================
+				  add(tmp_totdpamt, tmp_totodamt, tmp_totdpamt, 30, 3, tmp_str);
+				  strcpy(tmp_totodamt, "0");
+				  // ===========================================================
+	
+				/**************************************************
+				* Array Common Data Setting                       *
+				**************************************************/
+				LogDP(&stlogdp,"Array Common Data Setting");
+				LogDP(&stlogdp,"tmp_totdpamt : [%s], tmp_totodamt : [%s],tmp_slipseq[%d]", tmp_totdpamt, tmp_totodamt,tmp_slipseq);
+
+				if (strcmp(osstparm.sys_mode, "4") != 0) {									
+					  if (numcmp(tmp_totdpamt, "0") > 0) {
+						  strcpy(stjnal.dtBrCd[tmp_slipseq],      stinput.brcd);          // account branch
+						  strcpy(stjnal.dtAcctCd[tmp_slipseq],    stdptp.dpac[0]);        // deposit account
+						  strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+						  //strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+						  strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdmdmst.onofftp[0]);   // account on/off
+						  strcpy(stjnal.dtCcy[tmp_slipseq],       stdmdmst.ccycd[0]);     // account currency
+						  strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdmdmst.custseq[0]);   // account holder
+						  strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "1");                   // major account
+						  strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "D");                   // Debit
+						  strcpy(stjnal.dtTrAmt[tmp_slipseq],     tmp_totdpamt);
+						  strcpy(stjnal.dtBusCd[tmp_slipseq],     stinput.buscd);
+						  strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stinput.untbscd);
+						  strcpy(stjnal.dtTrCd[tmp_slipseq],      stinput.trcd);
+						  strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+						  strcpy(stjnal.dtTrRef[tmp_slipseq],     stinput.dptpcd);
+						  stjnal.dtTrSeq[tmp_slipseq].len       = strlen(trim(stinput.acctseq));
+						  strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  stinput.acctseq);
+							sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdmdmst.ftrseq[0]);
+						  stjnal.dtTrDNo[tmp_slipseq].len       = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+
+						  //%%K -----
+						  stjnal.dtTrExRt[tmp_slipseq]          = stinput.aplyexrt;
+						  strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  stinput.exrttp);
+						stjnal.dtBsExRt[tmp_slipseq] 		  = dblBsRt;
+						LogDP(&stlogdp,"1 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+						//---------
+					strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+						stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+						 
+						  tmp_slipseq++;  
+					  }
+					  if (numcmp(tmp_totodamt, "0") > 0) {
+						  strcpy(stjnal.dtBrCd[tmp_slipseq],      stinput.brcd);          // account branch
+						  strcpy(stjnal.dtAcctCd[tmp_slipseq],    stdptp.odac[0]);        // overdraft account
+						  strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+						   //strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+						  strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdmdmst.onofftp[0]);   // account on/off
+						  strcpy(stjnal.dtCcy[tmp_slipseq],       stdmdmst.ccycd[0]);     // account currency
+						  strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdmdmst.custseq[0]);   // account holder
+
+						  if (numcmp(tmp_totdpamt, "0") == 0)
+							  strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "1");
+						  else
+							  strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "0");
+							  strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "D");                   // Debit
+							  strcpy(stjnal.dtTrAmt[tmp_slipseq],     tmp_totodamt);
+							  strcpy(stjnal.dtBusCd[tmp_slipseq],     stinput.buscd);
+							  strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stinput.untbscd);
+							  strcpy(stjnal.dtTrCd[tmp_slipseq],      stinput.trcd);
+							  strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+							  strcpy(stjnal.dtTrRef[tmp_slipseq],     stinput.dptpcd);
+							  stjnal.dtTrSeq[tmp_slipseq].len       	= strlen(trim(stinput.acctseq));
+							  strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  stinput.acctseq);
+								sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdmdmst.ftrseq[0]);
+							  stjnal.dtTrDNo[tmp_slipseq].len       	= strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+							  //%%K stjnal.dtBsExRt[tmp_slipseq]          	= stovrd.bsrt;
+				  
+							//%%K -----
+							stjnal.dtTrExRt[tmp_slipseq]          = stinput.aplyexrt;
+							strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  stinput.exrttp);
+							stjnal.dtBsExRt[tmp_slipseq] 		  = dblBsRt;
+							//---------
+
+						LogDP(&stlogdp,"2 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+						strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+							 stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+							  tmp_slipseq++;
+					  }
+					  if ((numcmp(tmp_totdpamt, "0") == 0) && (numcmp(tmp_totodamt, "0") == 0)) {
+						strcpy(pLabel, "L:026");
+						RACE_Err_LogError(13856, szSvcName);
+						TPERROR(13856);
+					  }
+
+
+					// RRSP세금에 대해서 거래 금액을 임시적으로 Change
+					if (numcmp(tmp_rrsptax, "0") > 0) {
+						strcpy(tmp_trccyamt,    stinput.trccyamt[0]);
+						minus(stinput.trccyamt[0], tmp_rrsptax, stinput.trccyamt[0], 21, 3, "R");
+					}
+
+					
+					for (i = 0; i < FND_CNT; i++) {     //%%K  FND_CNT => dp.h
+
+						if ((strlen(trim(stinput.dbcdtp[i])) != 3) || (strlen(trim(stinput.trccyamt[i])) == 0)) break;
+
+
+						sttrlst.bsrt[i] = st_exrtinfo.obsrt;		//%%K
+						sttrlst.acctbsrt[i] = dblBsRt;				//%%K
+
+						  //%%K3 ---------------------------------
+						  strcpy(tmp_fndamt, stinput.trccyamt[i]);
+					  
+						  if ((strlen(trim(tmp_fndamt)) == 0)) continue;
+						  //-------------------------------------
+							 
+								LogDP(&stlogdp,"stdpoutput.count : [%d]", stdpoutput.count);
+								LogDP(&stlogdp,"stdpoutput.acctcd[i] : [%s]", stdpoutput.acctcd[0]);
+								LogDP(&stlogdp,"stdpoutput.acccy : [%s]", stdpoutput.acccy);
+								LogDP(&stlogdp,"stdpoutput.toamnt[i] : [%s]", stdpoutput.toamnt[0]);
+								LogDP(&stlogdp,"stdpoutput.aconoff : [%s]", stdpoutput.aconoff);
+						LogDP(&stlogdp,"stdpoutput.Check : [%c]", stinput.dbcdtp[i][0]);
+
+								for (j = 0; j < stdpoutput.count; j++) {    // loop for returned record count
+									strcpy(stjnal.dtBrCd[tmp_slipseq],      stdpoutput.acbrcd);     // transfer account branch
+									strcpy(stjnal.dtAcctCd[tmp_slipseq],    stdpoutput.acctcd[j]);  // trnasfer account
+									strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+									//strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+									strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdpoutput.aconoff);    // transfer account on/off
+									strcpy(stjnal.dtCcy[tmp_slipseq],       stdpoutput.acccy);      // transfer account currency
+									strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdpoutput.custno);     // transfer account holder
+									strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "0");
+									strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "C");                   // Credit
+									strcpy(stjnal.dtTrAmt[tmp_slipseq],     stdpoutput.toamnt[j]);
+									strcpy(stjnal.dtBusCd[tmp_slipseq],     stdpoutput.tobuscd);
+									strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stdpoutput.tountbuscd);
+									strcpy(stjnal.dtTrCd[tmp_slipseq],      stdpoutput.totrcd);
+									strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+									strcpy(stjnal.dtTrRef[tmp_slipseq],     stdpoutput.totrref);
+									stjnal.dtTrSeq[tmp_slipseq].len       = strlen((char *)stdpoutput.totrseq.arr);
+									strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  (char *)stdpoutput.totrseq.arr);
+									//sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", stdpoutput.tohisno);
+									LogDP(&stlogdp,"stdpoutput.dtTrDNo : [%s]", (char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+									LogDP(&stlogdp,"stdpoutput.dtTrDNo : [%s]", stdpoutput.tohisno);
+									stjnal.dtTrDNo[tmp_slipseq].len       = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+						sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdpoutput.tohisno);
+							  stjnal.dtTrDNo[tmp_slipseq].len       = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+									//%%K stjnal.dtBsExRt[tmp_slipseq]          = stovrd.bsrt;
+
+								  //%%K -----
+								  stjnal.dtTrExRt[tmp_slipseq]          = stinput.fndnexrt[i];
+								  strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  stinput.fndexrttp[i]);
+								  stjnal.dtBsExRt[tmp_slipseq]          = st_exrtinfo.obsrt;
+								  strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+								 stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+									//---------
+
+						LogDP(&stlogdp,"5 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+									  tmp_slipseq++;
+								  }
+
+								  sttrlst.toddtrseq[idx] = stdpoutput.tohisno;
+								 
+					  }
+				   LogDP(&stlogdp,"kha kha kha kha kahkaakhak katmp_rrsptax[i] : [%s]", tmp_rrsptax);
+					// RRSP세금에 대해서 거래 금액을 Restore 하고 일계발행
+					if (numcmp(tmp_rrsptax, "0") > 0) {
+						strcpy(stinput.trccyamt[0], tmp_trccyamt);
+						strcpy(stjnal.dtBrCd[tmp_slipseq],      stinput.brcd);          // account branch
+						strcpy(stjnal.dtAcctCd[tmp_slipseq],    stoutput.taxacctcd);    // tax account code
+						strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+						//strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+						strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdmdmst.onofftp[0]);   // account on/off
+						strcpy(stjnal.dtCcy[tmp_slipseq],       stdmdmst.ccycd[0]);     // account currency
+						strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdmdmst.custseq[0]);   // account holder
+						strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "0");
+						strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "C");                   // Credit
+						strcpy(stjnal.dtTrAmt[tmp_slipseq],     stoutput.accttaxtot);   // Tax amount
+						strcpy(stjnal.dtBusCd[tmp_slipseq],     stinput.buscd);
+						strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stinput.untbscd);
+						strcpy(stjnal.dtTrCd[tmp_slipseq],      stinput.trcd);
+						strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+						strcpy(stjnal.dtTrRef[tmp_slipseq],     stinput.dptpcd);
+						stjnal.dtTrSeq[tmp_slipseq].len       	= strlen(trim(stinput.acctseq));
+						strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  stinput.acctseq);
+						sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdmdmst.ftrseq[0]);
+						stjnal.dtTrDNo[tmp_slipseq].len       	= strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+						
+						stjnal.dtBsExRt[tmp_slipseq]          	= dblBsRt;
+						stjnal.dtTrExRt[tmp_slipseq]    		= dblBsRt;
+						//---------
+
+						strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  "01");
+						strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+						stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+						LogDP(&stlogdp,"7 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+						tmp_slipseq++;
+
+						// transaction currency is different from tax currency ?
+						if (strcmp(stdmdmst.ccycd[0], stoutput.taxccy) != 0) {
+							// for account currency credit
+							strcpy(stjnal.dtBrCd[tmp_slipseq],      stinput.brcd);          // account branch
+							strcpy(stjnal.dtAcctCd[tmp_slipseq],    stoutput.taxacctcd);    // tax account code
+							strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+							//strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+							strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdmdmst.onofftp[0]);   // account on/off
+							strcpy(stjnal.dtCcy[tmp_slipseq],       stdmdmst.ccycd[0]);     // account currency
+							strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdmdmst.custseq[0]);   // account holder
+							strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "0");
+							strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "D");                   // Debit
+							strcpy(stjnal.dtTrAmt[tmp_slipseq],     stoutput.accttaxtot);   // tax amount
+							strcpy(stjnal.dtBusCd[tmp_slipseq],     stinput.buscd);
+							strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stinput.untbscd);
+							strcpy(stjnal.dtTrCd[tmp_slipseq],      stinput.trcd);
+							strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+							strcpy(stjnal.dtTrRef[tmp_slipseq],     stinput.dptpcd);
+							stjnal.dtTrSeq[tmp_slipseq].len       = strlen(trim(stinput.acctseq));
+							strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  stinput.acctseq);
+							sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdmdmst.ftrseq[0]);
+							stjnal.dtTrDNo[tmp_slipseq].len       = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+							stjnal.dtBsExRt[tmp_slipseq]          = stoutput.taxacbsrt;
+
+							stjnal.dtTrExRt[tmp_slipseq]          = stoutput.taxacbsrt;
+							strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  "01");
+						LogDP(&stlogdp,"8 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+							tmp_slipseq++;
+
+							// for tax currency debit
+							strcpy(stjnal.dtBrCd[tmp_slipseq],      stinput.brcd);          // account branch
+							strcpy(stjnal.dtAcctCd[tmp_slipseq],    stoutput.taxacctcd);    // tax account code
+							strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "00");
+							//strcpy(stjnal.dtAcctSubCd[tmp_slipseq], "02");
+							strcpy(stjnal.dtOnOffTp[tmp_slipseq],   stdmdmst.onofftp[0]);   // account on/off
+							strcpy(stjnal.dtCcy[tmp_slipseq],       stoutput.taxccy);       // tax currency
+							strcpy(stjnal.dtCustSeq[tmp_slipseq],   stdmdmst.custseq[0]);   // account holder
+							strcpy(stjnal.dtMjrAcFg[tmp_slipseq],   "0");
+							strcpy(stjnal.dtTrDrCr[tmp_slipseq],    "C");                   // Credit
+							strcpy(stjnal.dtTrAmt[tmp_slipseq],     stoutput.lcltaxtot);    // tax currency amount
+							strcpy(stjnal.dtBusCd[tmp_slipseq],     stinput.buscd);
+							strcpy(stjnal.dtUntBusCd[tmp_slipseq],  stinput.untbscd);
+							strcpy(stjnal.dtTrCd[tmp_slipseq],      stinput.trcd);
+							strcpy(stjnal.dtTrBrCd[tmp_slipseq],    stinput.brcd);
+							strcpy(stjnal.dtTrRef[tmp_slipseq],     stinput.dptpcd);
+							stjnal.dtTrSeq[tmp_slipseq].len       = strlen(trim(stinput.acctseq));
+							strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr,  stinput.acctseq);
+							sprintf((char *)stjnal.dtTrDNo[tmp_slipseq].arr, "%s%5d", osstparm.sys_curbusday, stdmdmst.ftrseq[0]);
+							stjnal.dtTrDNo[tmp_slipseq].len       = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+							strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  "01");    // tax ccy rate type
+							stjnal.dtTrExRt[tmp_slipseq]          = stoutput.taxlclbsrt;    // tax ccy rate
+							stjnal.dtBsExRt[tmp_slipseq]          = stoutput.taxlclbsrt;    // tax ccy rate
+						  strcpy(stjnal.dtTrExRtKd[tmp_slipseq],  "01");
+					LogDP(&stlogdp,"9 stjnal.dtTrExRt[%d][%f]", tmp_slipseq, stjnal.dtTrExRt[tmp_slipseq]);
+					strcpy((char *)stjnal.dtRemark[tmp_slipseq].arr, (char *)stinput.rem.arr);
+						stjnal.dtRemark[tmp_slipseq].len      = stinput.rem.len;
+						  tmp_slipseq++;
+							}
+						}
+					}
+				LogDP(&stlogdp,"Finish input jounal{%d}", tmp_slipseq);
+				strcpy(scashier_yn, "1"); //cashier's cheque ? if 1 then exe else 0 then notexe
+		
+				/***********************************
+				*   Demand Deposit Master Update   *
+				***********************************/
+				LogDP(&stlogdp,"Demand Deposit Master Update");
+				LogDP(&stlogdp,"Demand Deposit Master Update -> stdmdmst.adjacrcramt[0][%s]", stdmdmst.adjacrcramt[0]);
+				bf_dpdaccf71301(&stinput, &stdmdmst, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+				////KIEM TRA CENTER CUT OFLINE - NTTQ - 20090930
+				//
+				//bf_dpdaccf60407(&stinput, &stdmdmst, &stoutput, pszThisFunction);
+				//
+				//if (stoutput.retcd != SUCCESS) 
+				//{
+				//	if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+				//	{
+				//		LogDP(&stlogdp,"a1");
+				//		RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+				//		strcpy((char*)h_error.arr,"Exist one center cut does not process");
+				//		h_error.len = strlen((char *)h_error.arr);
+				//		RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+				//		
+				//		goto LABEL;
+				//		//TPERROR(ERRNUM_DB_ORAERR);
+				//		//continue;
+				////		EXEC SQL CLOSE cs1;
+				////		nRet = tpabort(0);
+				////		BTERROR(errcd);
+				//	}
+				//	else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+				//	
+				//	{
+				//		LogDP(&stlogdp,"a2");
+				//		RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+				//		strcpy((char*)h_error.arr,"Exist one center cut does not process");
+				//		h_error.len = strlen((char *)h_error.arr);
+				//		RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+				//		//TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+				//		goto LABEL;
+				//		//EXEC SQL CLOSE cs1;
+				//		//nRet = tpabort(0);
+				//		//BTERROR(errcd); 
+				//	}
+				//	else 
+				//	{
+				//		LogDP(&stlogdp,"a3");
+				//		RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+				//		strcpy((char*)h_error.arr,"Exist one center cut does not process");
+				//		h_error.len = strlen((char *)h_error.arr);
+				//		break;
+				//	//	strcpy(stinput.acctccydpamt[0], h_dpamt);
+				//	//	strcpy(stinput.trccyamt[0], h_dpamt);
+				//	//	ll_flag = 0;
+				//		//TPERROR(stoutput.errcd);
+				//		//EXEC SQL CLOSE cs1;
+				//		//goto LABEL;
+				//		//nRet = tpabort(0);
+				//		//BTERROR(errcd);
+				//	}
+				//}
+
+
+				  /**********************************
+				  *    Transaction History Insert   *
+				  **********************************/
+				  strcpy(stinput.trtype, "ins");
+				  strcpy(stinput.trtype2, tmp_trtype2);
+	
+				LogDP(&stlogdp,"Transaction History Insert tmp_trtype2[%s]",tmp_trtype2);
+				LogDP(&stlogdp,"TTLHANG 20070601 stinput.acctseq[%s]",stinput.acctseq);
+				  bf_dpsvccf71401(&stinput, &osstparm, &sttrlst, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}		
+				LogDP(&stlogdp,"kiem tra -> stdmdmst.curbal[%s]",stdmdmst.curbal[0]);
+				LogDP(&stlogdp,"kiem tra -> sttrlst.acctccyodamt[%s]",sttrlst.acctccyodamt[0]);
+
+
+				/***********************************
+				*   Kiem tra nhom khach hang       *
+				***********************************/	
+				//20100514:nttq -> Kiem tra nhom khach hang 
+				if ((strcmp(stdmdmst.odlmtflg[0],"1")==0 ||strcmp(stdmdmst.ovduflg[0],"1")==0)&& numcmp(stdmdmst.curbal[0],"0")<0)//xet tk thau chi
+				{
+					if (bf_lncc_wrnlstchk(stdmdmst.brcd[0],stdmdmst.custseq[0],&h_count,h_allowcredit) == FAIL) ;
+					{ 
+						//strcpy(pszThisFunction, sFuncNm); 
+						RACE_Err_LogError(13984, "", ""); 
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(13984); 
+					} 
+					
+					
+					if (strcmp(h_allowcredit,"P") == 0)//ko cho lam tin dung tiep 
+					{ 
+						sprintf(pLabel,"<Label 501>"); 
+						RACE_Err_LogError(10270, "Customer exists in Past Due and Credit is not allowed"); 
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(10270); 
+					} 
+				}		
+				/**********************************
+				*   Hang  calc dp1.tbdp_trodlmt   *
+				**********************************/
+				
+				//Hang rem 20070712  
+				  //if ((strcmp(stdmdmst.odlmtflg[0],"1")==0) && (strcmp(stdmdmst.dptpcd[0],"101")==0))
+				  if ((strcmp(stdmdmst.odlmtflg[0],"1")==0) && (strcmp(stdmdmst.dptpcd[0],"101")==0 ||strcmp(stdmdmst.dptpcd[0],"111")==0))//20100522
+				  {
+				
+					  stinput.ddtrseq =stdmdmst.ftrseq[0];
+					  LogDP(&stlogdp," stinput.ddtrseq[%d]",stinput.ddtrseq);
+					bf_dpsvccf71210(&stinput, &stoutput, pszThisFunction);
+					if (stoutput.retcd != SUCCESS) 
+					{
+						if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+						{
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+							TPERROR(ERRNUM_DB_ORAERR);
+							
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+						{
+							RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+							TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+						else 
+						{
+							RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+							TPERROR(stoutput.errcd);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}
+					}
+					
+				  }
+				//End hang 
+				
+				  /*******************************
+				  *   Commision History Insert   *
+				  *******************************/
+				  strcpy(stinput.trtype, "ins");
+				
+				LogDP(&stlogdp,"Commision History Insert");
+				bf_dpsvccf70901(&stinput, &osstparm, &stcommlst, &stoutput, pszThisFunction);
+				if (stoutput.retcd != SUCCESS) 
+				{
+					if (stoutput.errcd == ERRNUM_DB_ORAERR) 
+					{
+						RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+						TPERROR(ERRNUM_DB_ORAERR);
+						
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) 
+					{
+						RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+						TPERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+					else 
+					{
+						RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+						TPERROR(stoutput.errcd);
+						EXEC SQL CLOSE cs1;
+						nRet = tpabort(0);
+						BTERROR(errcd);
+					}
+				}
+
+
+				for ( i = 0; i < tmp_slipseq; i++) {
+				  LogDP(&stlogdp,"stjnal.dtOnOffTp[%d] : [%s], stjnal.dtTrDrCr[%d] : [%s], stjnal.dtTrAmt[%d] : [%s], stjnal.dtCommCd[%d] : [%s]",
+							   i, stjnal.dtOnOffTp[i], i, stjnal.dtTrDrCr[i], i, stjnal.dtTrAmt[i], i, stjnal.dtCommCd[i]);
+				}
+
+				 /********************************************
+				 * Overide check module call                 *
+				 ********************************************/
+				LogDP(&stlogdp,"Overide check module call");	
+				LogDP(&stlogdp,"LRW 29");
+				
+				  /***********************************************
+				  * Account information posting (Ilgye)          *
+				  ***********************************************/
+				if (strcmp(osstparm.sys_mode, "4") != 0) {
+					  stjnal.Count  =  tmp_slipseq;
+					  strcpy(pszThisFunction, transb->name);
+				
+					for( i=0; i < tmp_slipseq; i++)
+					{
+						LogDP(&stlogdp,"LMJ3:stjnal.dtBsExRt[%d]=%f",i,stjnal.dtBsExRt[i]);
+						LogDP(&stlogdp,"LMJ3:stjnal.dtTrExRt=%f",stjnal.dtTrExRt[i]);
+						LogDP(&stlogdp,"LMJ3:stjnal.dtTrExRtKd=%s",stjnal.dtTrExRtKd[i]);
+					}
+						// hic hic khong biet sao day nua chan qua di hu hu 20080409
+						//strcpy (stjnal.TrDt,  h_trdt);                             //  거래일
+						strcpy (stjnal.TrDt,  osstparm.sys_curbusday);                             //  거래일
+						strcpy (stjnal.DyhBr, stinput.brcd);                              //  취급부점코드
+						/*
+						strcpy ((char *)stJnal.CrtUsr.arr, (char *)h_crtuser.arr);       //  USER ID
+						stJnal.CrtUsr.len = strlen((char *)h_crtuser.arr);
+						*/
+						strcpy ((char *)stjnal.CrtUsr.arr, h_crtuser);       //  USER ID
+						stjnal.CrtUsr.len = strlen(h_crtuser);
+						strcpy (stjnal.OnOffTp, "1");
+						strcpy (stjnal.DeptCd, stDeptGet.odeptcd );                              //  계구분
+						strcpy (stjnal.AcMode, "0" );                                //  계정갱신mode
+						strcpy (stjnal.TrTp,   GL_NO);                                              //  취소여부
+						strcpy (stjnal.DyTrKd, JNL_TRUSR);
+						strcpy (stjnal.DyTrTp, JNL_JOLIB_NOTCOM);
+						stjnal.Count = tmp_slipseq ;                                                //  일계처리요청건수
+						strcpy(stjnal.BusCd,    "DP");                                               //  업무코드
+						strcpy(stjnal.UntBusCd, "DA");                                            //  단위업무코드
+						strcpy(stjnal.TrCd,     "W200");                                              //  거래코드
+						strcpy(stjnal.CustBrCd, stinput.brcd);                        //  Customer Branch
+						strcpy(stjnal.CustSeq,  stinput.custseq);                         //  고객번호
+						strcpy(stjnal.BrCd,     stinput.brcd  );                          //  거래부점코드
+						strcpy(stjnal.TrRef,    stinput.dptpcd);                       //  거래과목코드
+						strcpy((char *)stjnal.dtTrSeq[tmp_slipseq].arr, stinput.acctseq);
+						   stjnal.dtTrSeq[tmp_slipseq].len = strlen( stinput.acctseq );
+						strcpy((char *)stjnal.dtTrDNo[tmp_slipseq].arr,(char *)stinput.idxacno.arr );
+						   stjnal.dtTrDNo[tmp_slipseq].len = strlen((char *)stjnal.dtTrDNo[tmp_slipseq].arr);
+						
+						strcpy(stjnal.ValDt, h_trdt);                               //  기산일
+						
+						/* stJnal.NonPCcy = '';                                     포지션 발생시키지 않는 통화코드*/
+						strcpy(stjnal.OvdTrFg, GL_NO);                                            //  승인거래(OverRide)여부
+						strcpy(stjnal.OvdTrFg, JNL_OVERRIDE_NO);                                  //  승인거래(OverRide)여부
+						strcpy(stjnal.FwPosFg, "0"); 					
+						//end hic hic 
+						memset(&sFuncNm,    0x00, sizeof(sFuncNm));
+						if (bf_glcc_journal(&stjnal, &stSp, &errcd, sFuncNm) == GL_FAIL) {
+							LogDP(&stlogdp,"bf_glcc_journal fail...");						
+							RACE_Err_LogError(errcd, szSvcName, errmsg);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(errcd);
+						}								
+				}
+				LogDP(&stlogdp,"TTLHAG tai sao khong inser o day chu stautotran.nxttrandt[%s]",stautotran.nxttrandt[0]);
+				LogDP(&stlogdp,"TTLHAG tai sao khong inser o day chu stinput.brcd[%s],stinput.dptpcd[%s],stinput.acctseq[%s]",stinput.brcd,stinput.dptpcd,stinput.acctseq);
+			} //end ll_flag = 1   
+			// cap nhat lai pretrandt,nxttrandt  
+		    
+			
+			//tuanemtv 2009-07-27: chi xet dk stautotran.nxttrandt[0]
+			if(atoi(stautotran.nxttrandt[0]) >  0 )
+			//if( atoi(stautotran.pretrandt[0])> 0 && atoi(stautotran.nxttrandt[0]) >  0 )
+			{
+				LogDP(&stlogdp,"TTLHANG 20080721 cap nhat lai ngay tranfer ne chet ngay luc dau luon ");
+	    		 //strcpy(h_pretrandt,stautotran.nxttrandt[0]);
+	    			
+	    		  strcpy(stautotran.pretrandt[0],stautotran.nxttrandt[0]);
+	    		    if(atof(stautotran.tranflg[0]) == 1) // ngay
+			     		strcpy(stautotran.nxttrandt[0],   bf_dpcc_getdate(stautotran.pretrandt[0], atol(stautotran.cntrmmtrm[0])));
+			     else if(atof(stautotran.tranflg[0]) == 2) // Tuan
+			     		strcpy(stautotran.nxttrandt[0],   bf_dpcc_getdate(stautotran.pretrandt[0], atol(stautotran.cntrmmtrm[0])*7));
+			     else if(atof(stautotran.tranflg[0]) == 3) // Thang
+			     		strcpy(stautotran.nxttrandt[0],   bf_dpcc_getmonth(stautotran.pretrandt[0], atol(stautotran.cntrmmtrm[0])));
+			     else // nam
+			     		strcpy(stautotran.nxttrandt[0],   bf_dpcc_getmonth(stautotran.pretrandt[0], atol(stautotran.cntrmmtrm[0])*12));
+			   // strcpy(stautotran.pretrandt[0],h_pretrandt);
+			   
+			   					
+			   //===============nttq:20090506-> chuyen lai nhom ngay cu========================			   
+			   	memcpy(lc_tam, stautotran.nxttrandt[0]+6, 2);
+			   	
+			   	//20100311 <<< tuanemtv -----------------------			   	
+					exec sql SELECT NVL(SUBSTR(MIN(TRDT),7,2),0)
+								into :lc_oldmatdt
+								from DP1.TBDP_AUTODTLTRANF
+								where brcd=:h_brcd1
+								and dptpcd=:h_dptpcd
+								and acctseq=:h_acctseq 
+								and trdt>=:stautotran.trdt[0];
+																	    				
+					LogDP(&stlogdp,"---->1. DAY tu MIN TBDP_AUTODTLTRANF[%s]",lc_oldmatdt);	
+					if (atof(lc_oldmatdt) == 0) //neu ko co so thi lay ngay NXTTRANDT					
+					{	
+						exec sql select substr(NXTTRANDT,7,2)
+							 into :lc_oldmatdt
+							from  dp1.TBDP_AUTOTRAN 
+							where brcd   = :h_brcd1
+							and  dptpcd = :h_dptpcd
+							and  acctseq= :h_acctseq 
+							and  cnclflg <>'1' ;
+							
+							if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+							buf_len = sizeof(errmsg);
+							sqlglm(errmsg, &buf_len, &msg_len);
+							RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+							EXEC SQL CLOSE cs1;
+							nRet = tpabort(0);
+							BTERROR(ERRNUM_DB_ORAERR);
+						}
+						LogDP(&stlogdp,"---->2. DAY tu NXTTRANDT cua TBDP_AUTOTRAN[%s]",lc_oldmatdt);	
+					}
+					
+					LogDP(&stlogdp,"---->DAY TRICH TRIEN[%s]",lc_oldmatdt);					
+					LogDP(&stlogdp,"--->stautotran.nxttrandt[%s]",stautotran.nxttrandt[0]);
+					LogDP(&stlogdp,"--->stautotran.pretrandt[%s]",stautotran.pretrandt[0]);				
+				  //20100311 >>> tuanemtv -----------------------
+				
+			        LogDP(&stlogdp,"H 2006 bs_dpsaccb20005-> lc_tam[%s]",lc_tam);
+			        
+			    /*20100311 tuanemtv         
+			        exec sql select min(mindt)
+			        	into   :lc_oldmatdt
+			        from (
+			        select  decode(trim(PRETRANDT),'',substr(NXTTRANDT,7, 2),substr(pretrandt,7, 2))  mindt
+				
+					from  dp1.TBDP_AUTOTRAN 
+					where      brcd   = :h_brcd1
+					      and  dptpcd = :h_dptpcd
+					      and  acctseq= :h_acctseq 
+					      and  cnclflg <>'1' )
+					      ;
+					      */
+					      
+				LogDP(&stlogdp,"log xem ngay mo lc_oldmatdt[%s]",lc_oldmatdt);
+				if (memcmp(lc_oldmatdt, stautotran.nxttrandt[0]+6, 2) != 0)
+				{
+					LogDP(&stlogdp,"LMJ HAI NGAY KHAC NHAU ");
+					
+					memcpy(stautotran.nxttrandt[0]+6, lc_oldmatdt, 2);
+					memcpy(lc_newmatdttn, stautotran.nxttrandt, 6);
+					
+					LogDP(&stlogdp,"H 2006 bs_dpsaccb20005-> lc_newmatdttn[%s]",lc_newmatdttn);
+					LogDP(&stlogdp,"H 2006 bs_dpsaccb20005-> stautotran.nxttrandt[0][%s]",stautotran.nxttrandt[0]);
+							 
+				        exec sql SELECT TO_CHAR(LAST_DAY(TO_DATE(:lc_newmatdttn||'01', 'YYYYMMDD')), 'YYYYMMDD')
+						            into  :lc_lastday         
+						           FROM DUAL;	        
+					// Kiem tra khi tra lai nhom ay cu ma ngay cu lon hon ngay cuoi thang tra lai ngay cuoi thang 
+					LogDP(&stlogdp,"H 2006 bs_dpsaccb20005-> lc_lastday[%s]",lc_lastday);
+					if (memcmp(stautotran.nxttrandt[0]+6, lc_lastday+6, 2) > 0) 
+					{
+						LogDP(&stlogdp,"H 2006 bs_dpsaccb20005 lc_newmatdt lon hon ");
+						memcpy(stautotran.nxttrandt[0]+6, lc_lastday+6, 2);
+					} 
+				      memcpy(lc_tammatdt, stautotran.nxttrandt[0]+6, 2);
+				      LogDP(&stlogdp,"H 2006 bs_dpsaccb20005-> lc_tammatdt[%s]",lc_tammatdt);
+				        //Kiem tra neu tra lai nhom ngay cu lon > ngay cu hien tai : 15 ngay -> thang -1 
+				        if ((atoi(lc_tammatdt) - atoi(lc_tam))>15)
+					{   
+						LogDP(&stlogdp,"vao day");
+						exec sql SELECT TO_CHAR(ADD_MONTHS(TO_DATE(:stautotran.nxttrandt[0], 'YYYYMMDD'), -1), 'YYYYMMDD')
+				                                 into :lc_nxtdpcapdt          FROM DUAL;
+				                strcpy(stautotran.nxttrandt[0],lc_nxtdpcapdt);
+					}
+					
+					// Kiem tra neu nhom ngay cu < ngay hien tai : 15 ngay  -> thang +1
+					 LogDP(&stlogdp,"H sau 2006 bs_dpsaccb20005-> lc_tam[%s]",lc_tam);
+					 LogDP(&stlogdp,"H sau 2006 bs_dpsaccb20005-> lc_tammatdt[%s]",lc_tammatdt);
+					 LogDP(&stlogdp,"H sau 2006 bs_dpsaccb20005-> stsavmst.nxtdpcapdt[%s]",stautotran.nxttrandt);
+					if ((atoi(lc_tam) - atoi(lc_tammatdt) ) > 15)
+					{   
+						LogDP(&stlogdp,"con day");
+						exec sql SELECT TO_CHAR(ADD_MONTHS(TO_DATE(:stautotran.nxttrandt[0], 'YYYYMMDD'), 1), 'YYYYMMDD')
+				                                 into :lc_nxtdpcapdt         FROM DUAL;
+				                   strcpy(stautotran.nxttrandt[0],lc_nxtdpcapdt);
+				                   LogDP(&stlogdp,"H 20061103 bs_dpsaccb20005-> stsavmst.nxtdpcapdt[%s]",stautotran.nxttrandt[0]);
+					}
+					//nttq 20090505 -> check ngay cuoi thang neu 20090430->20090531:sai;20090430->20090530:dung
+					if (memcmp(lc_nxtdpcapdt+6, lc_oldmatdt, 2) > 0) 
+					{
+						EXEC SQL
+						SELECT SUBSTR(:lc_nxtdpcapdt,1,6)|| :lc_oldmatdt INTO :lc_nxtdpcapdt FROM  DUAL;
+						strcpy(stautotran.nxttrandt[0],lc_nxtdpcapdt);
+					}		
+					LogDP(&stlogdp,"Cuoi cung-> stautotran.nxttrandt[0][%s]",stautotran.nxttrandt);	
+				}
+				else
+				{
+					LogDP(&stlogdp,"LMJ HAI NGAY BANG NHAU ");
+				}
+				//========================het :chuyen nhom ngay cu =============================
+			   
+			    LogDP(&stlogdp,"TTLHANG 20080721 cap nhat sau pre");
+			     bf_dpcc_holtonbus(h_brcd1, stautotran.nxttrandt[0], &stoutput, stautotran.nxttrandt[0], pszThisFunction);
+		        	if (stoutput.retcd != SUCCESS) {
+				    if (stoutput.errcd == ERRNUM_DB_ORAERR) {
+				         RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, stoutput.e1);
+				         EXEC SQL CLOSE cs1;
+				        
+				         BTERROR(ERRNUM_DB_ORAERR);
+				    }
+				    else if (stoutput.errcd == ERRNUM_MSG_NO_ROWS_RETURNED) {
+				         RACE_Err_LogError(ERRNUM_MSG_NO_ROWS_RETURNED, szSvcName);
+				         EXEC SQL CLOSE cs1;
+				        
+				         BTERROR(ERRNUM_MSG_NO_ROWS_RETURNED);
+				    }
+				    else {
+				         RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+				         EXEC SQL CLOSE cs1;
+				        
+				         BTERROR(stoutput.errcd);
+				    }
+				}
+				LogDP(&stlogdp,"TTLHANG 20080721 cap nhat sau pre stautotran.nxttrandt[%s],h_brcd1[%s]",stautotran.nxttrandt[0],h_brcd1);	
+				LogDP(&stlogdp,"TTLHANG tai sao fail stinput.idxacno[%s],h_acctnopaid[%s]",(char*)stinput.idxacno.arr,h_acctnopaid);
+				
+		        EXEC SQL UPDATE DP1.TBDP_AUTOTRAN  
+					SET NXTTRANDT = :stautotran.nxttrandt[0],
+						PRETRANDT = :stautotran.pretrandt[0]
+				  WHERE BRCD = :h_brcd1
+				  AND DPTPCD = '69B'
+				  AND ACCTSEQ = substr(:h_acctnopaid,10,6)
+				  AND TRANACCTNO = :stinput.idxacno
+				  AND CNCLFLG <> '1' ;
+				  
+				LogDP(&stlogdp,"TTLHANG 20110704 UPDATE TBDP_AUTOTRAN  sqlca.sqlcode[%d]",sqlca.sqlcode);
+				if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+			        buf_len = sizeof(errmsg);
+			        sqlglm(errmsg, &buf_len, &msg_len);
+			        RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+			        EXEC SQL CLOSE cs1;
+			        nRet = tpabort(0);
+			        BTERROR(ERRNUM_DB_ORAERR);
+			    }
+				
+			}
+			//strcpy(stautotran.nxttrandt[0], bf_dpcc_getmonth(stautotran.nxttrandt[0], atol(stautotran.cntrmmtrm[0]));
+	 
+			// insert TBDP_AUTOTRAND 20080721
+			bf_cscc_lcltime(stinput.brcd, &stLclTime, &retcd, &errcd);
+			LogDP(&stlogdp,"TTLHANG bf_cscc_lcltime ");
+            if (retcd != SUCCESS){
+                stoutput.retcd = FAIL;
+	            stoutput.errcd   = errcd;
+                return;
+            }
+            strncpy(h_trtm, stLclTime.olocaltm + 8, 6);
+		
+			h_seq = 0 ;	
+			EXEC SQL select nvl(max(seq),0) + 1
+				into :h_seq:idct
+				from DP1.TBDP_AUTODTLTRANF
+				where BRCD = :h_brcd1
+				and DPTPCD = :h_dptpcd
+				and ACCTSEQ = :h_acctseq
+				and TRDT = :stinput.valuedt
+				and IDXACNO =:stinput.idxacno;
+				
+			LogDP(&stlogdp,"TTLHANG 20110704 UPDATE TBDP_AUTOTRAN  h_seq[%d],sqlca.sqlcode[%d]",h_seq,sqlca.sqlcode);
+			if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) {
+				buf_len = sizeof(errmsg);
+				sqlglm(errmsg, &buf_len, &msg_len);
+				RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+				EXEC SQL CLOSE cs1;
+				nRet = tpabort(0);
+				BTERROR(ERRNUM_DB_ORAERR);
+			}
+			
+			if (atof(stinput.acctccydpamt[0]) == 0 ) strcpy(stinput.acctccydpamt[0],h_dpamt);
+			LogDP(&stlogdp,"TTLHANG 20080721 stinput.brcd[%s],stinput.dptpcd[%s],stinput.acctseq[%s],stinput.custseq[%s]",stinput.brcd,stinput.dptpcd,stinput.acctseq,stinput.custseq);
+			LogDP(&stlogdp,"TTLHANG 20080721 stinput.cntacct[%s],stinput.valuedt[%s],stinput.ccycd[%s],stinput.acctccydpamt[%s]",(char*)stinput.cntacct[0].arr,stinput.valuedt,stinput.ccycd,stinput.acctccydpamt[0]);
+			LogDP(&stlogdp,"TTLHANG 20080721 h_seq[%d],h_trtm[%s],h_error[%s]",h_seq,h_trtm,(char*)h_error.arr);
+			
+			EXEC SQL INSERT INTO DP1.TBDP_AUTODTLTRANF(BRCD,DPTPCD,ACCTSEQ,CUSTSEQ,IDXACNO,TRDT,SEQ,CCYCD,TRAMT,TRTM,REMARK)
+				VALUES (:h_brcd1, :h_dptpcd, :h_acctseq,:stinput.custseq,:stinput.idxacno, 
+				:stinput.valuedt,:h_seq,:stinput.ccycd, to_number(:stinput.acctccydpamt[0]),:h_trtm,:h_error );
+			
+			//20120621 insert TBDP_AUTODTLTRANF
+			
+			//to_number(:stinput.acctccydpamt[0])	
+			LogDP(&stlogdp,"TTLHANG 20080721 sqlca.sqlcode[%d]",sqlca.sqlcode);
+			if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) 
+			{
+				buf_len = sizeof(errmsg);
+				sqlglm(errmsg, &buf_len, &msg_len);
+				RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+				EXEC SQL CLOSE cs1;
+				nRet = tpabort(0);
+				BTERROR(ERRNUM_DB_ORAERR);
+			}
+    	
+			LogDP(&stlogdp,"NTTQ 20090930  cap nhat tbdp_24mstv h_dpamt [%s] ",h_dpamt);
+			//NTTQ 20090911: cap nhat tbdp_24mstv
+			EXEC SQL UPDATE TBDP_24MSTV
+				SET CURBAL  	= CURBAL -:h_dpamt,
+					WDAVLFND	= WDAVLFND - :h_dpamt
+				WHERE BRCD =:stdmdmst.brcd[0]
+				AND DPTPCD =:stdmdmst.dptpcd[0]
+				AND ACCTSEQ=:stdmdmst.acctseq[0]
+				AND TRDT   =:stinput.valuedt;
+			if (sqlca.sqlcode != 0 && sqlca.sqlcode != 1403 ) 
+			{
+				buf_len = sizeof(errmsg);
+				sqlglm(errmsg, &buf_len, &msg_len);
+				RACE_Err_LogError(ERRNUM_DB_ORAERR, szSvcName, errmsg);
+				EXEC SQL CLOSE cs1;
+				nRet = tpabort(0); 
+				BTERROR(ERRNUM_DB_ORAERR);
+			}    
+		             	
+			memset	(&stautotran,     0x00, sizeof(stautotran));
+			memset	(&h_error    , 0x00, sizeof ( h_error    ));
+			memset  (h_curbal    , 0x00, sizeof ( h_curbal    ));
+			memset  (h_acctccydpamt    , 0x00, sizeof ( h_acctccydpamt    ));
+			//memset ( h_dpcrac    , 0x00, sizeof ( h_dpcrac    ) );
+			memset  (h_brcd1    , 0x00, sizeof ( h_brcd1    ));
+			memset  (h_dptpcd    , 0x00, sizeof ( h_dptpcd    ));
+			memset  (h_acctseq    , 0x00, sizeof ( h_acctseq    ));
+			memset  (h_savdptpcd    , 0x00, sizeof( h_savdptpcd)); //20120621
+			memset	(h_acctnopaid,   0x00, sizeof(h_acctnopaid));
+			memset	(h_dpamt,   0x00, sizeof(h_dpamt)); 
+			tmp_slipseq =  0 ;	  
+		} // close for 
+	} //CLOSE FOR TTLHANG 20080408
+	
+	LogDP(&stlogdp,"close cs1!");					
+	EXEC SQL CLOSE cs1;  
+
+	LogDP(&stlogdp,"LRW 30");
+
+	/* Initialize out FML buffer     */
+	Finit32(transf, Fsizeof32(transf));
+
+	if (numcmp(stdmdmst.todtclrchk[0], "0") > 0) {
+      /*********************
+      *  Get Local Time    *
+      *********************/
+		LogDP(&stlogdp,"Get Local Time");
+		bf_cscc_lcltime(stinput.brcd, &stLclTime, &stoutput.retcd, &stoutput.errcd);
+		if (stoutput.retcd != SUCCESS){
+			RACE_Err_LogError(stoutput.errcd, stoutput.e1);
+			strcpy(pLabel, "L:002");
+			TPERROR(stoutput.errcd);
+		}
+		
+		LogDP(&stlogdp,"stLclTime.olocaltm : [%s]", stLclTime.olocaltm);
+		if (strncmp(stLclTime.olocaltm + 8, stbrmst.clrtm[0], 4)  < 0)
+			minus(stdmdmst.wdavlfnd[0], stdmdmst.todtclrchk[0], ls_avlamt, 21, 3, tmp_str);
+		else
+          strcpy(ls_avlamt,stdmdmst.wdavlfnd[0]);
+	}
+	else strcpy(ls_avlamt,stdmdmst.wdavlfnd[0]);
+
+    nRet = tpcommit(0);
+    if (nRet != 1) {
+        RACE_Err_LogError(KEB_BATCHERROR, tpstrerror(tperrno));
+        nRet = tpabort(0);
+        BTERROR(BT_FAIL);
+    }
+    BTRETURN(0) ;
+}
