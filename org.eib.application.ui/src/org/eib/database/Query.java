@@ -172,7 +172,10 @@ public class Query {
 		while(i.hasNext()) {
 			Entry<String, String> me = i.next();
 			//Chi & + tu ky tu thu 2(bo 01, 02..)
-			_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(2), (String)me.getValue());
+			//System.out.println("a = "+me.getKey());
+			//System.out.println("b = "+"&"+(String)me.getKey().substring(3));
+			//System.out.println("getValue = "+(String)me.getValue());
+			_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(3), (String)me.getValue());
 		}
 	}
 	
