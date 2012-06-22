@@ -1,6 +1,7 @@
 package org.eib.application.ui.views;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
@@ -252,7 +253,18 @@ public class MultiScriptView extends ViewPart {
 								//Run scipt do
 								System.out.println("Run 1 script.");
 								CommandQuery.set_Excelrow(_app.get_excelrows());
-								CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_query[i].get_querynm()));
+								try {
+									CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_query[i].get_querynm()));
+								} catch (FileNotFoundException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 							}
 						}
 					}else{

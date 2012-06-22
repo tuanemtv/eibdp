@@ -1,8 +1,10 @@
 package org.eib.application.ui.views;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,14 +16,18 @@ import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
+import org.eib.application.dialog.AppMessageBox;
 import org.eib.common.AppCommon;
 import org.eib.common.JavaUtil;
 import org.eib.common.QueryServer;
@@ -29,21 +35,12 @@ import org.eib.database.CommandQuery;
 import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
 import org.xml.sax.SAXException;
-import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.DateTime;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -51,6 +48,7 @@ import org.eclipse.swt.events.MouseEvent;
 public class TellerView extends ViewPart {
 
 	public static final String ID = "org.eib.application.ui.views.TellerView"; //$NON-NLS-1$
+	private static Logger logger =Logger.getLogger("TellerView");
 	private AppCommon _app;
 	private QueryServer queryser;
 	private Connection _conn = null; 
@@ -74,7 +72,11 @@ public class TellerView extends ViewPart {
 	
 	StyledText styledTxtDesc;
 	StyledText styledTxtNote;
+	AppMessageBox _appMes;
 
+	Display display;
+	Shell shell;
+	
 	public TellerView() {
 	}
 
@@ -83,9 +85,13 @@ public class TellerView extends ViewPart {
 	 * @param parent
 	 */
 	@Override
-	public void createPartControl(Composite parent) {
-		FillLayout fillLayout = (FillLayout) parent.getLayout();
+	public void createPartControl(final Composite parent) {
+		_appMes = new AppMessageBox();
+		
 		Composite container = new Composite(parent, SWT.NONE);
+		//display = new Display();
+	   // shell = new Shell(display);
+	    
 		container.setLayout(null);
 		{
 			cboReport = new Combo(container, SWT.NONE);
@@ -107,7 +113,7 @@ public class TellerView extends ViewPart {
 							Iterator<Entry<String, String>> j = set.iterator();
 							while(j.hasNext()) {
 								Entry<String, String> me = j.next();
-								System.out.println(me.getKey() + ": "+me.getValue());			
+								//System.out.println(me.getKey() + ": "+me.getValue());			
 								//logger.info(me.getKey() + ": "+me.getValue());
 								showControl(me.getKey().substring(3));
 							}
@@ -219,9 +225,8 @@ public class TellerView extends ViewPart {
 				//Doc lai map
 				for (int i=0; i< _query.length; i++){
 					if (cboReport.getText().equals(_query[i].get_querynm())){
-						
-						String _filename="";
-						
+						_appMes.set_title("Information");
+						String _filename="";						
 						//Them ngay he thong lay bao cao
 						DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 						Date date = new Date();
@@ -246,13 +251,37 @@ public class TellerView extends ViewPart {
 						//JavaUtil.showHashMap(_tMap);
 						
 						//Run scipt do
-						System.out.println("\nRun 1 script.");
-						JavaUtil.showHashMap(_tMap);
+						System.out.println("\nRun "+_query[i].get_querynm());
+						//JavaUtil.showHashMap(_tMap);
 						_query[i].set_define(_tMap);//Tham so nhap							
 						_query[i].setquery();//Set lai cau script lay
-						System.out.print("query= "+ _query[i].get_exquery());
+						//System.out.print("query= "+ _query[i].get_exquery());
+						_app.set_outurl(txtOutUrl.getText()+"\\");//lay duong dan chon
 						CommandQuery.set_Excelrow(_app.get_excelrows());
-						CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
+						try {
+							CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
+						} catch (FileNotFoundException e1) {
+							// TODO Auto-generated catch block
+							_appMes.set_message(e1.getMessage());
+							_appMes.getErrorMessageBox();
+							logger.error(e1.getMessage());
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							_appMes.set_message(e1.getMessage());
+							_appMes.getErrorMessageBox();
+							logger.error(e1.getMessage());
+							e1.printStackTrace();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							_appMes.set_message(e1.getMessage());
+							_appMes.getErrorMessageBox();
+							logger.error(e1.getMessage());
+							e1.printStackTrace();
+						}												
+						_appMes.set_message("Successful \n\nUrl File:  "+_app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));						
+						_appMes.getInfoMessageBox();
+						logger.info("OK"+_query[i].get_querynm());
 					}
 					//cboServer.getText().equals("1. Oracle - A Report")}
 				}
@@ -266,6 +295,29 @@ public class TellerView extends ViewPart {
 		txtOutUrl.setBounds(117, 343, 427, 21);
 		
 		Button btnNewButton = new Button(container, SWT.NONE);
+		btnNewButton.addMouseListener(new MouseAdapter() {		
+			@Override
+			public void mouseDown(MouseEvent e) {							       
+			  DirectoryDialog dlg = new DirectoryDialog(parent.getShell());
+
+		      // Set the initial filter path according
+		      // to anything they've selected or typed in
+		      dlg.setFilterPath(txtOutUrl.getText());
+		      // Change the title bar text
+		      dlg.setText("Chon duong dan luu file");
+		      // Customizable message displayed in the dialog
+		      dlg.setMessage("Chon duong dan.");
+
+		      // Calling open() will open and run the dialog.
+		      // It will return the selected directory, or
+		      // null if user cancels
+		      String dir = dlg.open();
+		      if (dir != null) {
+		        // Set the text box to the new selection
+		    	  txtOutUrl.setText(dir);
+		      }
+			}
+		});
 		btnNewButton.setBounds(550, 341, 34, 25);
 		btnNewButton.setText("...");
 		
@@ -289,10 +341,10 @@ public class TellerView extends ViewPart {
 		
 		setinitializeControl(false); //an tat ca
 		
-		//setcontrol
-		
+		//setcontrol		
 		//lay thong tin
 		_app = new AppCommon();
+		_appMes.set_title("Get congifure");		
 		try {
 			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
 			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
@@ -300,29 +352,47 @@ public class TellerView extends ViewPart {
 			txtOutUrl.setText(_app.get_outurl());
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();	
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		
 		
-		//Ket noi server
-
+		//Ket noi server		
 		queryser =new QueryServer();
+		_appMes.set_title("Connect database");
 		try {
 			queryser.getServer(_app.get_configureurl()+"database.xml",_app.get_servernm());
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 		queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
@@ -331,15 +401,19 @@ public class TellerView extends ViewPart {
 		try {
 			Class.forName(queryser.getDriver()).newInstance();
 			_conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
-			System.out.println("Connect Successful !!!");
+			//System.out.println("Connect Successful !!!");
+			logger.info("Connect Successful !!!");
         } catch (Exception e2) {
-            System.out.println("Unable to load driver " + queryser.getDriver());
-            System.out.println("ERROR " + e2.getMessage());
+        	_appMes.set_message(e2.getMessage());
+			_appMes.getErrorMessageBox();			
+			logger.error("Unable to load driver " + queryser.getDriver());
+			logger.error("ERROR " + e2.getMessage());            
             //return;				        
         }
 		
 		
 		//Add bao cao
+		_appMes.set_title("Load Report");
 		Query qur = new Query();//luc khoi dau lay duoc gia tri ko?
 		_query = new Query[_app.get_scriptcount()];
 		try {
@@ -364,18 +438,26 @@ public class TellerView extends ViewPart {
 				//System.out.println("["+i+"] out file : " + _query[i].get_queryouturl());						
 				//System.out.println("["+i+"] status : " + _query[i].get_status());						
 			}
-			System.out.println("> Load script Done. With= "+_query.length+" scripts");
+			//System.out.println("> Load script Done. With= "+_query.length+" scripts");
 		} catch (ParserConfigurationException e1) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
 			e1.printStackTrace();
 		} catch (SAXException e1) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
 			e1.printStackTrace();
-		}
-		
+		}		
 		//an hien control
 	}
 
@@ -528,8 +610,7 @@ public class TellerView extends ViewPart {
 		}
 		if (_def.equals("h_custseq")){
 			_return = txtCIF.getText().substring(0, 9);
-		}
-		
+		}		
 		return _return;
 	}
 }

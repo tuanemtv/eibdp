@@ -45,6 +45,10 @@ public class AppMessageBox {
 		this._message = _message;
 	}
 	
+	public AppMessageBox() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public void getInfoMessageBox(){
 		Shell lShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();  
 		MessageDialog.openInformation(lShell, this._title, this._message);  
