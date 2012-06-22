@@ -1,6 +1,8 @@
 package org.eib.database;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -8,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.TreeMap;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,6 +20,7 @@ import org.eib.common.JavaUtil;
 public class CommandQuery {
 		
 	private static long  _Excelrow = 65636;
+	private static Logger logger =Logger.getLogger("CommandQuery");
 	
 	public static long get_Excelrow() {
 		return _Excelrow;
@@ -44,8 +48,7 @@ public class CommandQuery {
                 
                 while (rs.next()) {
                     for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                    	//System.out.println("A = "+rsmd.getColumnName(i) + ":"+rs.getString(i)+" --> "+String.valueOf(rsmd.getColumnName(i)).toLowerCase());
-                        
+                    	//System.out.println("A = "+rsmd.getColumnName(i) + ":"+rs.getString(i)+" --> "+String.valueOf(rsmd.getColumnName(i)).toLowerCase());                        
                     	//Day vao tri treemap, , TreeMap tMa
                     	//System.out.print(rs.getString(i));
                     	
@@ -61,9 +64,7 @@ public class CommandQuery {
                     	else if (String.valueOf(rsmd.getColumnName(i)).toLowerCase().equals("h_predt"))
                     		tMap.put("05"+String.valueOf(rsmd.getColumnName(i)).toLowerCase(), String.valueOf(rs.getString(i)));
                     	else 
-                    		tMap.put(String.valueOf(rsmd.getColumnName(i)).toLowerCase(), String.valueOf(rs.getString(i)));
-                    		
-                    	
+                    		tMap.put(String.valueOf(rsmd.getColumnName(i)).toLowerCase(), String.valueOf(rs.getString(i)));                    		                    
                     }
                     //System.out.println();
                 }
@@ -71,6 +72,7 @@ public class CommandQuery {
                 stmt.getUpdateCount();
             }
         } catch (Exception e) {
+        	logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             try {
@@ -78,12 +80,10 @@ public class CommandQuery {
                 stmt.close();               
             } catch (SQLException ex) {
             }
-
         }
         //System.out.println("A = ");
         //JavaUtil.showHashMap(tMap);
-		return tMap;
-		
+		return tMap;		
 	}
 	
     public static void commandQuery(Connection conn, String query,
@@ -123,13 +123,13 @@ public class CommandQuery {
                 stmt.getUpdateCount();
             }
         } catch (Exception e) {
+        	logger.error(e.getMessage());
             e.printStackTrace();
         } finally {
             try {
                 stmt.close();
             } catch (SQLException ex) {
             }
-
         }
     }
 
@@ -327,151 +327,136 @@ public class CommandQuery {
      * GG Tao
      */    
     public static void commandQueryExcel(Connection conn, String query,
-            boolean showHeaders, boolean showMetaData, String filename) {
-        Statement stmt = null;        
-        try {
-        	
-        	System.out.println("  filename= "+filename);
-        	//ResourceBundle rb = ResourceBundle.getBundle("database");		
-        	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
-        	//System.out.println("_Excelrow= "+_Excelrow);
-        	
-        	HSSFWorkbook book = new HSSFWorkbook();
-        	HSSFSheet sheet = null;
-        	            
-            stmt = conn.createStatement();
-            long rowPos = 0;
-            long _rownguyen = 0;
-            long _rowbu=0;
-            		
-            boolean resp = stmt.execute(query);
-            if (resp) {            	
-                ResultSet rs = stmt.getResultSet();
-                ResultSetMetaData rsmd = rs.getMetaData();               
-                                           		                                             
-                //Show du lieu
-                //_excelrow = rs.next()/65636; //Phan phan nguyen cong 1                
-                while (rs.next()) {                	
-                	_rownguyen =rowPos/_Excelrow;//_Excelrow; //65636
-                	_rowbu=rowPos%_Excelrow;
-                	if (_rowbu ==0){
-                		sheet = book.createSheet(String.valueOf(_rownguyen+1));
-                		 //Tao phan header
-    	                if (showHeaders) {
-    	                	HSSFRow row = sheet.createRow((int) _rowbu);
-    	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-    	                    	HSSFCell cell = row.createCell(i - 1);
-    	                        cell.setCellValue(rsmd.getColumnName(i));
-    	                    }
-    	                    rowPos++;
-    	                }
-    	                if (showMetaData) {
-    	                	HSSFRow row = sheet.createRow((int) _rowbu);
-    	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-    	                    	HSSFCell cell = row.createCell(i - 1);
-    	                        int scale = rsmd.getScale(i);
-    	                        cell.setCellValue(rsmd.getColumnTypeName(i) + "("
-    	                                + rsmd.getPrecision(i) + " " + scale + ")");
+            boolean showHeaders, boolean showMetaData, String filename) throws FileNotFoundException, IOException, SQLException {
+        Statement stmt = null;            
+        	        	
+    	//System.out.println("  filename= "+filename);
+    	//ResourceBundle rb = ResourceBundle.getBundle("database");		
+    	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
+    	//System.out.println("_Excelrow= "+_Excelrow);
     	
-    	                    }
-    	                    rowPos++;
-    	                }
-    	                
-    	                //insert them 1 dong 1
-    	                HSSFRow	 row = sheet.createRow((int) 1);	                   	                   
+    	HSSFWorkbook book = new HSSFWorkbook();
+    	HSSFSheet sheet = null;
+    	            
+        stmt = conn.createStatement();
+        long rowPos = 0;
+        long _rownguyen = 0;
+        long _rowbu=0;
+        		
+        boolean resp = stmt.execute(query);
+        if (resp) {            	
+            ResultSet rs = stmt.getResultSet();
+            ResultSetMetaData rsmd = rs.getMetaData();               
+                                       		                                             
+            //Show du lieu
+            //_excelrow = rs.next()/65636; //Phan phan nguyen cong 1                
+            while (rs.next()) {                	
+            	_rownguyen =rowPos/_Excelrow;//_Excelrow; //65636
+            	_rowbu=rowPos%_Excelrow;
+            	if (_rowbu ==0){
+            		sheet = book.createSheet(String.valueOf(_rownguyen+1));
+            		 //Tao phan header
+	                if (showHeaders) {
+	                	HSSFRow row = sheet.createRow((int) _rowbu);
 	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 	                    	HSSFCell cell = row.createCell(i - 1);
-	                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {
-	
-	                            cell.setCellValue(rs.getString(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
-	                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
-	
-	                            cell.setCellValue(rs.getDouble(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
-	                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
-	                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
-	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
-	
-	                            java.util.Date d = new java.util.Date();
-	                            d.setTime(rs.getDate(i).getTime());
-	                            cell.setCellValue(d);
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
-	                            java.util.Date d = new java.util.Date();
-	                            d.setTime(rs.getTimestamp(i).getTime());
-	                            cell.setCellValue(d);
-	                        } else {
-	                            cell.setCellValue("" + rs.getString(i));
-	                        }
+	                        cell.setCellValue(rsmd.getColumnName(i));
 	                    }
-                	}
-                	else
-                	{
-                		//if (_rowbu<6)
-                			//System.out.println("_rownguyen= "+_rownguyen+" _rowbu= "+ _rowbu+" rowPos= "+rowPos);                                	
-                		HSSFRow	 row = sheet.createRow((int) _rowbu);	                   	                   
-	                   
+	                    rowPos++;
+	                }
+	                if (showMetaData) {
+	                	HSSFRow row = sheet.createRow((int) _rowbu);
 	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 	                    	HSSFCell cell = row.createCell(i - 1);
-	                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {
-	
-	                            cell.setCellValue(rs.getString(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
-	                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
-	
-	                            cell.setCellValue(rs.getDouble(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
-	                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
-	                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
-	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
-	
-	                            java.util.Date d = new java.util.Date();
-	                            d.setTime(rs.getDate(i).getTime());
-	                            cell.setCellValue(d);
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
-	                            java.util.Date d = new java.util.Date();
-	                            d.setTime(rs.getTimestamp(i).getTime());
-	                            cell.setCellValue(d);
-	                        } else {
-	                            cell.setCellValue("" + rs.getString(i));
-	                        }
+	                        int scale = rsmd.getScale(i);
+	                        cell.setCellValue(rsmd.getColumnTypeName(i) + "("
+	                                + rsmd.getPrecision(i) + " " + scale + ")");
 	                    }
-                	}
-                    rowPos++;
-                }
+	                    rowPos++;
+	                }
+	                
+	                //insert them 1 dong 1
+	                HSSFRow	 row = sheet.createRow((int) 1);	                   	                   
+                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    	HSSFCell cell = row.createCell(i - 1);
+                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {	
+                            cell.setCellValue(rs.getString(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
+                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
 
-                book.write(new FileOutputStream(filename));
-            } else {
-                stmt.getUpdateCount();
-            }
-            System.out.println("--> OK");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stmt != null) {
-                    stmt.close();
-                }
-            } catch (SQLException ex) {
-            }
+                            cell.setCellValue(rs.getDouble(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
+                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
+                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
+                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
+                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
+                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
+                            cell.setCellValue(rs.getLong(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 
-        }
+                            java.util.Date d = new java.util.Date();
+                            d.setTime(rs.getDate(i).getTime());
+                            cell.setCellValue(d);
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
+                            java.util.Date d = new java.util.Date();
+                            d.setTime(rs.getTimestamp(i).getTime());
+                            cell.setCellValue(d);
+                        } else {
+                            cell.setCellValue("" + rs.getString(i));
+                        }
+                    }
+            	}
+            	else
+            	{
+            		//if (_rowbu<6)
+            			//System.out.println("_rownguyen= "+_rownguyen+" _rowbu= "+ _rowbu+" rowPos= "+rowPos);                                	
+            		HSSFRow	 row = sheet.createRow((int) _rowbu);	                   	                   	                   
+                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    	HSSFCell cell = row.createCell(i - 1);
+                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
+                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {	
+                            cell.setCellValue(rs.getString(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
+                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {	
+                            cell.setCellValue(rs.getDouble(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
+                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
+                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
+                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
+                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
+                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
+                            cell.setCellValue(rs.getLong(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {	
+                            java.util.Date d = new java.util.Date();
+                            d.setTime(rs.getDate(i).getTime());
+                            cell.setCellValue(d);
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
+                            java.util.Date d = new java.util.Date();
+                            d.setTime(rs.getTimestamp(i).getTime());
+                            cell.setCellValue(d);
+                        } else {
+                            cell.setCellValue("" + rs.getString(i));
+                        }
+                    }
+            	}
+                rowPos++;
+            }
+            book.write(new FileOutputStream(filename));
+        } else {
+            stmt.getUpdateCount();
+        }        
+        //System.out.println("--> OK");
+        logger.info("> OK");
+        if (stmt != null) {
+        	stmt.close();
+        }                   
     }
     
     /**
@@ -485,9 +470,8 @@ public class CommandQuery {
     public static void commandMulQueryExcel(Connection conn, Query query,
             boolean showHeaders, boolean showMetaData) {
         Statement stmt = null;        
-        try {
-        	
-        	System.out.println(" Run script= "+query.get_queryid());
+        try {        	
+        	logger.info(" Run script= "+query.get_queryid());
         	//ResourceBundle rb = ResourceBundle.getBundle("database");		
         	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
         	//System.out.println("_Excelrow= "+_Excelrow);
@@ -582,7 +566,6 @@ public class CommandQuery {
 	                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {
-	
 	                            cell.setCellValue(rs.getString(i));
 	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
 	                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
@@ -616,8 +599,9 @@ public class CommandQuery {
             } else {
                 stmt.getUpdateCount();
             }
-            System.out.println("--> OK");
+            logger.info("> OK");
         } catch (Exception e) {
+        	logger.error(e.getMessage());
             e.printStackTrace();
             query.set_status("3");//Fail
         } finally {
@@ -627,9 +611,9 @@ public class CommandQuery {
                     query.set_status("8");//OK
                 }
             } catch (SQLException ex) {
+            	logger.error(ex.getMessage());
             	query.set_status("3");
             }
-
         }
     }
 }
