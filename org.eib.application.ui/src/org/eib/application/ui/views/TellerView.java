@@ -79,14 +79,12 @@ public class TellerView extends ViewPart {
 	private Button btnVip;
 	
 	private Button btnChkZip;
-	
-	StyledText styledTxtDesc;
-	StyledText styledTxtNote;
 	AppMessageBox _appMes;
 
 	Display display;
 	Shell shell;
-	private Text text;
+	private Text TxtDesc;
+	private Text TxtNote;
 	
 	public TellerView() {
 	}
@@ -116,10 +114,11 @@ public class TellerView extends ViewPart {
 					for (int i=0; i< _query.length; i++){
 						if (cboReport.getText().equals(_query[i].get_querynm())){
 							//logger.info("Choose Report : " + _query[i].get_querynm());
-							styledTxtDesc.setText(_query[i].get_description());
-							styledTxtNote.setText(_query[i].get_note());
+							//styledTxtDesc.setText(_query[i].get_description());
+							//styledTxtNote.setText(_query[i].get_note());
 							
-							text.setText(_query[i].get_description());
+							TxtDesc.setText(_query[i].get_description());
+							TxtNote.setText(_query[i].get_note());
 							Set<Entry<String, String>> set = _query[i].get_define().entrySet();
 							// Get an iterator
 							Iterator<Entry<String, String>> j = set.iterator();
@@ -343,19 +342,16 @@ public class TellerView extends ViewPart {
 		Label lblDesc = new Label(container, SWT.NONE);
 		lblDesc.setBounds(10, 88, 34, 15);
 		lblDesc.setText("Desc");
-		
-		styledTxtDesc = new StyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTxtDesc.setBounds(53, 65, 531, 61);
-		
-		styledTxtNote = new StyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTxtNote.setBounds(53, 132, 531, 39);
 
 		btnChkZip = new Button(container, SWT.CHECK);
 		btnChkZip.setBounds(521, 345, 57, 16);
 		btnChkZip.setText("Zip file");
 		
-		text = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-		text.setBounds(101, 370, 285, 48);
+		TxtDesc = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		TxtDesc.setBounds(53, 65, 531, 61);
+		
+		TxtNote = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		TxtNote.setBounds(53, 132, 531, 39);
 		
 		createActions();
 		initializeToolBar();
