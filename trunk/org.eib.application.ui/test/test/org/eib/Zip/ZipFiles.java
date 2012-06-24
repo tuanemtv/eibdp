@@ -13,19 +13,19 @@ public class ZipFiles {
 	public static void main(String[] args) {
 
 		try {
-			FileOutputStream fos = new FileOutputStream("D:\\atest.zip");
+			FileOutputStream fos = new FileOutputStream("D:\\a.zip");
 			ZipOutputStream zos = new ZipOutputStream(fos);
 
-			String file1Name = "D:\\so lieu\\File 1.xls";
-			String file2Name = "D:\\so lieu\\File 2.xls";
-			String file3Name = "D:\\so lieu\\File 3.xls";
-			String file4Name = "D:\\so lieu\\File 4.xls";
+			String file1Name = "D:\\file.xml";
+			//String file2Name = "D:\\so lieu\\File 2.xls";
+			//String file3Name = "D:\\so lieu\\File 3.xls";
+			//String file4Name = "D:\\so lieu\\File 4.xls";
 			//String file5Name = "f1/f2/f3/file5.txt";
 
 			addToZipFile(file1Name, zos);
-			addToZipFile(file2Name, zos);
-			addToZipFile(file3Name, zos);
-			addToZipFile(file4Name, zos);
+			//addToZipFile(file2Name, zos);
+			//addToZipFile(file3Name, zos);
+			//addToZipFile(file4Name, zos);
 			//addToZipFile(file5Name, zos);
 
 			zos.close();

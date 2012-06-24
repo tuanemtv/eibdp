@@ -1,5 +1,7 @@
 package org.eib.database;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ResourceBundle;
 
@@ -84,7 +86,18 @@ public class JDBCSqlConsole {
             CommandCreateClass.commandCreateClass(conn, query);
         }
         else if (CMD == CMD_EXPORT_EXCEL){
-        	CommandQuery.commandQueryExcel(conn, query,showHeaders,showMetaData, filename);
+        	try {
+				CommandQuery.commandQueryExcel(conn, query,showHeaders,showMetaData, filename);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	
         }
         try {

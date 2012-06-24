@@ -28,5 +28,17 @@ public class FolderUtil {
 			e.printStackTrace();			
 		}
 	}
-
+	
+	public static void deleteFile(String file){
+		File f1 = new File(file);
+		boolean success = f1.delete();
+		if (!success){
+			logger.info("Deletion failed.");
+			//System.out.println("Deletion failed.");
+			//System.exit(0);
+		 }else{
+			logger.info("File deleted.");
+			//System.out.println("File deleted.");
+		 }
+	}
 }

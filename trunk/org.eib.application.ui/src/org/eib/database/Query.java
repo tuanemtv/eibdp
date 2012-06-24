@@ -368,4 +368,13 @@ public class Query {
 		  }
 	}
 	
+	/**
+	 * Ghi doi tuong Query ra file XML
+	 * @param _query
+	 * @param _urlfile
+	 */
+	public void WriteScriptToXML(Query[] _query, String _urlfile){
+		
+	}
+	
 }

@@ -1,7 +1,9 @@
 package org.eib.application.ui.views;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,8 +19,12 @@ import java.util.Map.Entry;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
@@ -29,8 +35,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eib.application.dialog.AppMessageBox;
 import org.eib.common.AppCommon;
+import org.eib.common.FolderUtil;
 import org.eib.common.JavaUtil;
 import org.eib.common.QueryServer;
+import org.eib.common.ZipUtil;
 import org.eib.database.CommandQuery;
 import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
@@ -70,12 +78,15 @@ public class TellerView extends ViewPart {
 	private Combo cboKH;
 	private Button btnVip;
 	
+	private Button btnChkZip;
+	
 	StyledText styledTxtDesc;
 	StyledText styledTxtNote;
 	AppMessageBox _appMes;
 
 	Display display;
 	Shell shell;
+	private Text text;
 	
 	public TellerView() {
 	}
@@ -101,13 +112,14 @@ public class TellerView extends ViewPart {
 				public void widgetSelected(SelectionEvent e) {
 					//Chon
 					setinitializeControl(false);
-					System.out.println("Chon bao cao");
 					
 					for (int i=0; i< _query.length; i++){
 						if (cboReport.getText().equals(_query[i].get_querynm())){
+							//logger.info("Choose Report : " + _query[i].get_querynm());
 							styledTxtDesc.setText(_query[i].get_description());
 							styledTxtNote.setText(_query[i].get_note());
 							
+							text.setText(_query[i].get_description());
 							Set<Entry<String, String>> set = _query[i].get_define().entrySet();
 							// Get an iterator
 							Iterator<Entry<String, String>> j = set.iterator();
@@ -117,8 +129,7 @@ public class TellerView extends ViewPart {
 								//logger.info(me.getKey() + ": "+me.getValue());
 								showControl(me.getKey().substring(3));
 							}
-						}
-							
+						}							
 						//cboServer.getText().equals("1. Oracle - A Report")}
 					}
 				}
@@ -222,10 +233,14 @@ public class TellerView extends ViewPart {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				//Run
+				
 				//Doc lai map
-				for (int i=0; i< _query.length; i++){
+				int i;
+				for (i=0; i< _query.length; i++){
+					
 					if (cboReport.getText().equals(_query[i].get_querynm())){
 						_appMes.set_title("Information");
+						logger.info("Run Report: "+_query[i].get_querynm());
 						String _filename="";						
 						//Them ngay he thong lay bao cao
 						DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -242,46 +257,46 @@ public class TellerView extends ViewPart {
 							//System.out.println(me.getKey() + ": "+me.getValue());			
 							//logger.info(me.getKey() + ": "+me.getValue());
 							//showControl(me.getKey().substring(3));
-							//getTextControl
-							_tMap.put(me.getKey(), "'"+getTextControl(me.getKey().substring(3))+"'");
-							//_tMap.put(me.getKey().substring(3), getTextControl(me.getKey().substring(3)));							
-							_filename = _filename +"_"+ getTextControl(me.getKey().substring(3));
+							_tMap.put(me.getKey(), "'"+getTextControl(me.getKey().substring(3))+"'");//Them 1 ky tu vao gia tri		
+							_filename = _filename +"_"+ getTextControl(me.getKey().substring(3)); //Them cai gia tri tham so chon vao ten file
 						}
 						
 						//JavaUtil.showHashMap(_tMap);
-						
 						//Run scipt do
-						System.out.println("\nRun "+_query[i].get_querynm());
+						logger.info("\nRun: "+_query[i].get_querynm());
 						//JavaUtil.showHashMap(_tMap);
 						_query[i].set_define(_tMap);//Tham so nhap							
 						_query[i].setquery();//Set lai cau script lay
 						//System.out.print("query= "+ _query[i].get_exquery());
 						_app.set_outurl(txtOutUrl.getText()+"\\");//lay duong dan chon
 						CommandQuery.set_Excelrow(_app.get_excelrows());
+						//try {
+							
+						//Show Dialog Progress
+						//CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
+						
+						_query[i].set_exquery("select * from athena.daily_stocks_transaction");
 						try {
-							CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
-						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
-							_appMes.set_message(e1.getMessage());
-							_appMes.getErrorMessageBox();
-							logger.error(e1.getMessage());
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							_appMes.set_message(e1.getMessage());
-							_appMes.getErrorMessageBox();
-							logger.error(e1.getMessage());
-							e1.printStackTrace();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							_appMes.set_message(e1.getMessage());
-							_appMes.getErrorMessageBox();
-							logger.error(e1.getMessage());
-							e1.printStackTrace();
-						}												
-						_appMes.set_message("Successful \n\nUrl File:  "+_app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));						
+					          new ProgressMonitorDialog(parent.getShell()).run(true, true, new RunScriptProgressBar(_conn, _query[i], _app.get_excelrows(),_app.get_outurl_excel(_filename+"_"+_query[i].get_querynm())));
+					    } catch (InvocationTargetException e3) {
+					          MessageDialog.openError(shell, "Error", e3.getMessage());
+					    } catch (InterruptedException e3) {
+					          MessageDialog.openInformation(shell, "Cancelled", e3.getMessage());
+					    }							
+						
+						if (btnChkZip.getSelection()){
+							logger.info("out file: "+ _app.get_outurl());
+							logger.info("file name: "+ _filename+"_"+_query[i].get_querynm());
+							
+							File outZipurl = new File(_app.get_outurl());				
+							//Zip
+							ZipUtil.writeZipOneFile(outZipurl, _filename+"_"+_query[i].get_querynm()+".xls");
+							//Xoa file
+							FolderUtil.deleteFile(_app.get_outurl() + _filename+"_"+_query[i].get_querynm() +".xls");
+						}
+						_appMes.set_message("Successful \n\nOut File:  "+_app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));						
 						_appMes.getInfoMessageBox();
-						logger.info("OK"+_query[i].get_querynm());
+						logger.info("OK: "+_query[i].get_querynm());
 					}
 					//cboServer.getText().equals("1. Oracle - A Report")}
 				}
@@ -292,7 +307,7 @@ public class TellerView extends ViewPart {
 		
 		txtOutUrl = new Text(container, SWT.BORDER);
 		txtOutUrl.setEnabled(false);
-		txtOutUrl.setBounds(117, 343, 427, 21);
+		txtOutUrl.setBounds(91, 343, 391, 21);
 		
 		Button btnNewButton = new Button(container, SWT.NONE);
 		btnNewButton.addMouseListener(new MouseAdapter() {		
@@ -318,7 +333,7 @@ public class TellerView extends ViewPart {
 		      }
 			}
 		});
-		btnNewButton.setBounds(550, 341, 34, 25);
+		btnNewButton.setBounds(488, 341, 26, 25);
 		btnNewButton.setText("...");
 		
 		Label lblNote = new Label(container, SWT.NONE);
@@ -329,136 +344,31 @@ public class TellerView extends ViewPart {
 		lblDesc.setBounds(10, 88, 34, 15);
 		lblDesc.setText("Desc");
 		
-		styledTxtDesc = new StyledText(container, SWT.BORDER);
+		styledTxtDesc = new StyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTxtDesc.setBounds(53, 65, 531, 61);
 		
-		styledTxtNote = new StyledText(container, SWT.BORDER);
+		styledTxtNote = new StyledText(container, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTxtNote.setBounds(53, 132, 531, 39);
 
+		btnChkZip = new Button(container, SWT.CHECK);
+		btnChkZip.setBounds(521, 345, 57, 16);
+		btnChkZip.setText("Zip file");
+		
+		text = new Text(container, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		text.setBounds(101, 370, 285, 48);
+		
 		createActions();
 		initializeToolBar();
 		initializeMenu();
 		
 		setinitializeControl(false); //an tat ca
-		
-		//setcontrol		
-		//lay thong tin
-		_app = new AppCommon();
-		_appMes.set_title("Get congifure");		
-		try {
-			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
-			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
-			_app.getAppCom(rb.getString("app_configure_url")+"app.xml",rb.getString("app_configure_common"));
-			txtOutUrl.setText(_app.get_outurl());
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();	
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		}
-		
-		
-		//Ket noi server		
-		queryser =new QueryServer();
-		_appMes.set_title("Connect database");
-		try {
-			queryser.getServer(_app.get_configureurl()+"database.xml",_app.get_servernm());
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-		}
-		queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
-        System.out.println("url = "+queryser.getUrl());
-        	
-		try {
-			Class.forName(queryser.getDriver()).newInstance();
-			_conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
-			//System.out.println("Connect Successful !!!");
-			logger.info("Connect Successful !!!");
-        } catch (Exception e2) {
-        	_appMes.set_message(e2.getMessage());
-			_appMes.getErrorMessageBox();			
-			logger.error("Unable to load driver " + queryser.getDriver());
-			logger.error("ERROR " + e2.getMessage());            
-            //return;				        
-        }
-		
-		
-		//Add bao cao
-		_appMes.set_title("Load Report");
-		Query qur = new Query();//luc khoi dau lay duoc gia tri ko?
-		_query = new Query[_app.get_scriptcount()];
-		try {
-			qur.getXMLToScript(_app.get_configureurl()+"script.xml", "Query", _query);
-			for (int i=0; i< _query.length; i++){
-				//logger.info("["+(i+1)+"] queryid: " + _query[i].get_queryid()+", name: "+_query[i].get_querynm());
-				//System.out.println("\n["+(i+1)+"] queryid : " + _query[i].get_queryid());
-				//System.out.println("["+(i+1)+"] querynm : " + _query[i].get_querynm());
-				//System.out.println("["+i+"] module : " + _query[i].get_module());
-				//System.out.println("["+i+"] getquery : " + qur2[i].get_getquery());
 				
-				_query[i].setquery();
-				//logger.info("\n"+_query[i].get_exquery());
-				
-				cboReport.add(_query[i].get_querynm(), i);
-				JavaUtil.showHashMap(_query[i].get_define());
-				
-				//System.out.println("["+i+"] exequery : " + _query[i].get_exquery());
-				
-				//Lay duong dan out file
-				_query[i].set_queryouturl(_app.get_outurl_excel(_query[i].get_querynm()));
-				//System.out.println("["+i+"] out file : " + _query[i].get_queryouturl());						
-				//System.out.println("["+i+"] status : " + _query[i].get_status());						
-			}
-			//System.out.println("> Load script Done. With= "+_query.length+" scripts");
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e1.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e1.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e1.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-		}		
+		getApp();//setcontrol				
+		getConnectDatabase(); //Ket noi server	
+		getLoadReport(); //Add bao cao
+		
 		//an hien control
+		
 	}
 
 	/**
@@ -505,6 +415,10 @@ public class TellerView extends ViewPart {
 		txtCIF.setEnabled(_bl);
 	}
 	
+	/**
+	 * Hien thi cac tieu chi lien quan
+	 * @param _def
+	 */
 	public void showControl(String _def){
 		if (_def.equals("h_brcd")){
 			cboCN.setEnabled(true);
@@ -541,6 +455,11 @@ public class TellerView extends ViewPart {
 		}
 	}
 	
+	/**
+	 * Lay gia tri cua cac tieu chi duoc chon
+	 * @param _def
+	 * @return
+	 */
 	public String getTextControl(String _def){
 		String _return="";
 		int iDay;
@@ -613,4 +532,210 @@ public class TellerView extends ViewPart {
 		}		
 		return _return;
 	}
+	
+	/**
+	 * 	Lay thong tin cau hinh
+	 */
+	public void getApp(){
+		//lay thong tin
+		_app = new AppCommon();
+		_appMes.set_title("Get congifure");		
+		try {
+			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
+			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
+			_app.getAppCom(rb.getString("app_configure_url")+"app.xml",rb.getString("app_configure_common"));
+			txtOutUrl.setText(_app.get_outurl());
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();	
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		}
+	}
+	
+	/**
+	 * Ket noi database
+	 */
+	public void getConnectDatabase(){
+		queryser =new QueryServer();
+		_appMes.set_title("Connect database");
+		try {
+			queryser.getServer(_app.get_configureurl()+"database.xml",_app.get_servernm());
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+		queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
+		logger.info("url = "+queryser.getUrl());
+        	
+		try {
+			Class.forName(queryser.getDriver()).newInstance();
+			_conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
+			//System.out.println("Connect Successful !!!");
+			logger.info("Connect Successful !!!");
+        } catch (Exception e2) {
+        	_appMes.set_message(e2.getMessage());
+			_appMes.getErrorMessageBox();			
+			logger.error("Unable to load driver " + queryser.getDriver());
+			logger.error("ERROR " + e2.getMessage());    
+			return;		        
+        }
+	}
+	
+	/**
+	 * Lay cac bao cao
+	 */
+	public void getLoadReport(){
+		_appMes.set_title("Load Report");
+		Query qur = new Query();//luc khoi dau lay duoc gia tri ko?
+		_query = new Query[_app.get_scriptcount()];
+		try {
+			qur.getXMLToScript(_app.get_configureurl()+"script.xml", "Query", _query);
+			for (int i=0; i< _query.length; i++){
+				//logger.info("["+(i+1)+"] queryid: " + _query[i].get_queryid()+", name: "+_query[i].get_querynm());
+				//System.out.println("\n["+(i+1)+"] queryid : " + _query[i].get_queryid());
+				//System.out.println("["+(i+1)+"] querynm : " + _query[i].get_querynm());
+				//System.out.println("["+i+"] module : " + _query[i].get_module());
+				//System.out.println("["+i+"] getquery : " + qur2[i].get_getquery());
+				
+				_query[i].setquery();
+				//logger.info("\n"+_query[i].get_exquery());
+				
+				cboReport.add(_query[i].get_querynm(), i);
+				//JavaUtil.showHashMap(_query[i].get_define());
+				
+				//System.out.println("["+i+"] exequery : " + _query[i].get_exquery());
+				
+				//Lay duong dan out file
+				_query[i].set_queryouturl(_app.get_outurl_excel(_query[i].get_querynm()));
+				//System.out.println("["+i+"] out file : " + _query[i].get_queryouturl());						
+				//System.out.println("["+i+"] status : " + _query[i].get_status());						
+			}
+			//System.out.println("> Load script Done. With= "+_query.length+" scripts");
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
+			e1.printStackTrace();
+			return;	
+		} catch (SAXException e1) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
+			e1.printStackTrace();
+			return;	
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			_appMes.set_message(e1.getMessage());
+			_appMes.getErrorMessageBox();
+			logger.error(e1.getMessage());
+			e1.printStackTrace();
+			return;	
+		}		
+	}
+}
+
+
+/**
+ * 
+ * @author tuanemtv
+ *
+ */
+class RunScriptProgressBar implements IRunnableWithProgress{
+	
+	private static Logger logger =Logger.getLogger("RunScriptProgressBar");
+	private static Query query;
+	private Connection conn = null;
+	private static long rowexcel;
+	private static String outfileurl;
+  
+
+  public static Query getQuery() {
+	return query;
+  }
+
+  public static void setQuery(Query query) {
+	  RunScriptProgressBar.query = query;
+  }
+  
+  public RunScriptProgressBar(Connection _conn, Query _query, long _rowexcel, String _outfileurl) {
+    this.conn = _conn;
+    RunScriptProgressBar.query = _query;
+    RunScriptProgressBar.rowexcel = _rowexcel;
+    RunScriptProgressBar.outfileurl = _outfileurl;
+  }
+
+  public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+	 monitor.beginTask(query.get_querynm(), true ? IProgressMonitor.UNKNOWN: 100); //true la chay ko biet thoi gian dung
+	 try {
+		CommandQuery.set_Excelrow(rowexcel);
+		CommandQuery.commandQueryExcel(conn, query.get_exquery(),true,false, outfileurl);
+		
+		//monitor.subTask(CommandQuery.get_message()); //hien thi thong diep ben duoi
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		logger.error(e.getMessage());
+		e.printStackTrace();		
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		logger.error(e.getMessage());
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		logger.error(e.getMessage());
+		e.printStackTrace();
+	}
+	 
+	// Thread.sleep(INCREMENT);
+	 /*
+    for (int total = 0; total < TOTAL_TIME && !monitor.isCanceled(); total += INCREMENT) {
+      Thread.sleep(INCREMENT);
+      monitor.worked(INCREMENT);
+      if (total == TOTAL_TIME / 2)
+        monitor.subTask("Doing second half");
+    }*/
+    monitor.done();
+    
+    if (monitor.isCanceled()){
+    	//Phai stop query luon
+      throw new InterruptedException(query.get_querynm() + " -> running operation was cancelled");
+    }
+  }
 }

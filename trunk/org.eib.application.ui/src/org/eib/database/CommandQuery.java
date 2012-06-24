@@ -21,7 +21,26 @@ public class CommandQuery {
 		
 	private static long  _Excelrow = 65636;
 	private static Logger logger =Logger.getLogger("CommandQuery");
+	private static int _dperComplete; //Phan tram thuc hien script
+	private static String _message;
 	
+	
+	public static String get_message() {
+		return _message;
+	}
+
+	public void set_message(String _message) {
+		CommandQuery._message = _message;
+	}
+
+	public static double get_dperComplete() {
+		return _dperComplete;
+	}
+
+	public static void set_dperComplete(int _dperComplete) {
+		CommandQuery._dperComplete = _dperComplete;
+	}
+
 	public static long get_Excelrow() {
 		return _Excelrow;
 	}
@@ -86,6 +105,14 @@ public class CommandQuery {
 		return tMap;		
 	}
 	
+	/**
+	 * 
+	 * @param conn
+	 * @param query
+	 * @param showHeaders
+	 * @param separator
+	 * @param showMetaData
+	 */
     public static void commandQuery(Connection conn, String query,
             boolean showHeaders, String separator, boolean showMetaData) {
         Statement stmt = null;
@@ -323,17 +350,22 @@ public class CommandQuery {
 
     }
     */
-    /*
-     * GG Tao
-     */    
+    
+    
+    /**
+     * Thuc hien script voi cau query duoc vao    
+     * @param conn
+     * @param query
+     * @param showHeaders
+     * @param showMetaData
+     * @param filename
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void commandQueryExcel(Connection conn, String query,
             boolean showHeaders, boolean showMetaData, String filename) throws FileNotFoundException, IOException, SQLException {
-        Statement stmt = null;            
-        	        	
-    	//System.out.println("  filename= "+filename);
-    	//ResourceBundle rb = ResourceBundle.getBundle("database");		
-    	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
-    	//System.out.println("_Excelrow= "+_Excelrow);
+        Statement stmt = null;                   
     	
     	HSSFWorkbook book = new HSSFWorkbook();
     	HSSFSheet sheet = null;
@@ -342,12 +374,16 @@ public class CommandQuery {
         long rowPos = 0;
         long _rownguyen = 0;
         long _rowbu=0;
-        		
+        
+        _message = "Run Report....";
         boolean resp = stmt.execute(query);
+        
+       
         if (resp) {            	
             ResultSet rs = stmt.getResultSet();
             ResultSetMetaData rsmd = rs.getMetaData();               
-                                       		                                             
+                       
+            _message = "Export Excel....";
             //Show du lieu
             //_excelrow = rs.next()/65636; //Phan phan nguyen cong 1                
             while (rs.next()) {                	
@@ -447,12 +483,21 @@ public class CommandQuery {
                     }
             	}
                 rowPos++;
+                //System.out.println("rowPos= "+rowPos);
             }
-            book.write(new FileOutputStream(filename));
+            
+            //Bo ket noi file
+            FileOutputStream outfile = new FileOutputStream(filename);
+            //book.write(new FileOutputStream(filename));
+            book.write(outfile);
+            outfile.close();
+            
         } else {
             stmt.getUpdateCount();
-        }        
+        }   
+        
         //System.out.println("--> OK");
+        //_dperComplete = 100;
         logger.info("> OK");
         if (stmt != null) {
         	stmt.close();
@@ -594,11 +639,18 @@ public class CommandQuery {
                 	}
                     rowPos++;
                 }
-
-                book.write(new FileOutputStream(query.get_queryouturl()));
+             
+                //Bo ket noi file
+                FileOutputStream outfile = new FileOutputStream(query.get_queryouturl());
+                //book.write(new FileOutputStream(query.get_queryouturl()));
+                book.write(outfile);
+                outfile.close();
+                
             } else {
                 stmt.getUpdateCount();
             }
+            
+            
             logger.info("> OK");
         } catch (Exception e) {
         	logger.error(e.getMessage());
