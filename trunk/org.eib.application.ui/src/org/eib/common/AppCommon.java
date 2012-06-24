@@ -83,6 +83,25 @@ public class AppCommon {
 		this._scriptcount = _scriptcount;
 	}
 
+	
+	/**
+	 * Lay so luong script trong file xml 
+	 * @param _scriptXMlUrl
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	 */
+	public void set_scriptcount(String _scriptXMlUrl) throws ParserConfigurationException, SAXException, IOException{
+		
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+		Document doc = docBuilder.parse(_scriptXMlUrl);
+ 
+		NodeList list = doc.getElementsByTagName("Query");
+		
+		this._scriptcount = list.getLength();
+	}
+	
 	public String get_defscripturl2() {
 		return _defscripturl2;
 	}
