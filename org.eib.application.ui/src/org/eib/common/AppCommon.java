@@ -153,6 +153,11 @@ public class AppCommon {
 		return this._inurl + _filename +".xls";
 	}
 	
+	/**
+	 * Lay duong dan out file xls
+	 * @param _filename: Ten file xls
+	 * @return
+	 */
 	public String get_outurl_excel(String _filename){
 		//Tao thu muc va set duong dan moi				
 		return this._outurl + _filename +".xls";
@@ -258,7 +263,6 @@ public class AppCommon {
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 this._scriptnums = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 System.out.println("scriptnums: "+this.get_scriptnums());
 				 logger.info("scriptnums: "+this.get_scriptnums());
 					
 				 //Duong dan luu file cau hinh
@@ -371,9 +375,8 @@ public class AppCommon {
 				 this.set_definenm(hm_tempnm);
 				 
 				 //show hashmap
-				 JavaUtil.showHashMap(hm_temp);
-				 JavaUtil.showHashMap(hm_tempnm);
-				 
+				 //JavaUtil.showHashMap(hm_temp);
+				 //JavaUtil.showHashMap(hm_tempnm); 
 				
 				//Set lai duong dan xuat file
 				//this._outurl  = this._outurl + this._h_trdt;

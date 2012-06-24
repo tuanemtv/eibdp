@@ -28,18 +28,18 @@ public class ZipUtil {
 		File directoryToZip = new File(_folderurl);
 
 		List<File> fileList = new ArrayList<File>();
-		System.out.println("> Getting references to all files in: " + _folderurl);
+		//System.out.println("> Getting references to all files in: " + _folderurl);
 		logger.info("> Getting references to all files in: " + _folderurl);
 		getAllFiles(directoryToZip, fileList);
 		
-		System.out.println("> Reating zip file");
+		//System.out.println("> Reating zip file");
 		logger.info("> Reating zip file");
-		System.out.println(">> directoryToZip= "+directoryToZip);
+		//System.out.println(">> directoryToZip= "+directoryToZip);
 		logger.info(">> directoryToZip= "+directoryToZip);
 		
 		writeZipFile(directoryToZip, fileList);
 		logger.info("> Zip Done.");
-		System.out.println("> Zip Done.");
+		//System.out.println("> Zip Done.");
 	}
 	
 	
@@ -94,6 +94,29 @@ public class ZipUtil {
 		}
 	}
 
+	/**
+	 * Tao file bang 1 file duy nhat
+	 * @param directoryToZip: File directoryToZip = new File(_folderurl);
+	 * @param fileList
+	 */
+	public static void writeZipOneFile(File directoryToZip, String fileName) {
+		try {
+			//FileOutputStream fos = new FileOutputStream(directoryToZip.getName() + ".zip");
+			FileOutputStream fos = new FileOutputStream(directoryToZip +"\\"+ fileName.replace(".xls", "")+".zip");
+			ZipOutputStream zos = new ZipOutputStream(fos);
+
+			File file = new File(directoryToZip + "\\"+ fileName);
+			addToZip(directoryToZip, file, zos);
+
+			zos.close();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * 
 	 * @param directoryToZip
