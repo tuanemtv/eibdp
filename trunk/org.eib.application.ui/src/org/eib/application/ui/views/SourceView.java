@@ -94,7 +94,8 @@ public class SourceView extends ViewPart {
 	    		
 	    	      // File f = new File(_app.get_srcFTPCliUrl());
 	    	      // upload.copyFile(f,_app.get_srcFTPSerUrl());
-	    		upload.showModifyFile(_app);
+	    		//upload.showModifyFile(_app);
+	    		upload.downloadModifyFile(_app);
 	    	}
 	    });
 	    btnGet.setBounds(24, 10, 75, 25);
