@@ -44,8 +44,70 @@ public class AppCommon {
 	private String _ftpUrl;
 	private String _ftpInurl;
 	private String _servernm;
+	private String _srcFTPServer;
+	private String _srcFTPUser;
+	private String _srcFTPPass;
+	private String _srcFTPSerUrl;
+	private String _srcFTPCliUrl;
+	private String _srcFTPExtFile;
+	private String _srcDate;
 	
-	
+	public String get_srcFTPServer() {
+		return _srcFTPServer;
+	}
+
+	public void set_srcFTPServer(String _srcFTPServer) {
+		this._srcFTPServer = _srcFTPServer;
+	}
+
+	public String get_srcFTPUser() {
+		return _srcFTPUser;
+	}
+
+	public void set_srcFTPUser(String _srcFTPUser) {
+		this._srcFTPUser = _srcFTPUser;
+	}
+
+	public String get_srcFTPPass() {
+		return _srcFTPPass;
+	}
+
+	public void set_srcFTPPass(String _srcFTPPass) {
+		this._srcFTPPass = _srcFTPPass;
+	}
+
+	public String get_srcFTPSerUrl() {
+		return _srcFTPSerUrl;
+	}
+
+	public void set_srcFTPSerUrl(String _srcFTPSerUrl) {
+		this._srcFTPSerUrl = _srcFTPSerUrl;
+	}
+
+	public String get_srcFTPCliUrl() {
+		return _srcFTPCliUrl;
+	}
+
+	public void set_srcFTPCliUrl(String _srcFTPCliUrl) {
+		this._srcFTPCliUrl = _srcFTPCliUrl;
+	}
+
+	public String get_srcFTPExtFile() {
+		return _srcFTPExtFile;
+	}
+
+	public void set_srcFTPExtFile(String _srcFTPExtFile) {
+		this._srcFTPExtFile = _srcFTPExtFile;
+	}
+
+	public String get_srcDate() {
+		return _srcDate;
+	}
+
+	public void set_srcDate(String _srcDate) {
+		this._srcDate = _srcDate;
+	}
+
 	public String get_servernm() {
 		return _servernm;
 	}
@@ -470,6 +532,48 @@ public class AppCommon {
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 this._servernm = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPServer
+				 nodelist = element.getElementsByTagName("srcFTPServer");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPServer = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPUser
+				 nodelist = element.getElementsByTagName("srcFTPUser");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPUser = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPPass
+				 nodelist = element.getElementsByTagName("srcFTPPass");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPPass = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPSerUrl
+				 nodelist = element.getElementsByTagName("srcFTPSerUrl");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPSerUrl = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPCliUrl
+				 nodelist = element.getElementsByTagName("srcFTPCliUrl");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPCliUrl = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcFTPExtFile
+				 nodelist = element.getElementsByTagName("srcFTPExtFile");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcFTPExtFile = (fstNm.item(0)).getNodeValue();
+				 
+				 //_srcDate
+				 nodelist = element.getElementsByTagName("srcDate");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 this._srcDate = (fstNm.item(0)).getNodeValue();
 			  }
 		  }
    }

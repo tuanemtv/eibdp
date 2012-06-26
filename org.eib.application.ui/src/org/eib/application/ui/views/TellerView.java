@@ -284,8 +284,8 @@ public class TellerView extends ViewPart {
 					    }							
 						
 						if (btnChkZip.getSelection()){
-							logger.info("out file: "+ _app.get_outurl());
-							logger.info("file name: "+ _filename+"_"+_query[i].get_querynm());
+							//logger.info("out file: "+ _app.get_outurl());
+							//logger.info("file name: "+ _filename+"_"+_query[i].get_querynm());
 							
 							File outZipurl = new File(_app.get_outurl());				
 							//Zip
