@@ -298,6 +298,107 @@ public class  FTPdownload
         	logger.info("1. The exection in function="+exe);
         }
     }
+    
+    public  void  downloadModifyFile(AppCommon _app){
+        int reply;
+        InputStream in = null;
+        OutputStream out = null;
+        
+        
+        File outputFile = new File(_app.get_srcFTPCliUrl());
+        String inputFile = _app.get_srcFTPSerUrl();
+          
+       
+        try{
+           //File outputFile1 = new File(outputFile+"");
+           boolean success = (new File(outputFile+"")).mkdirs();
+           //String inputfiles = inputFile;
+
+           ftp.setFileType(FTP.BINARY_FILE_TYPE);
+
+           FTPFile ftpfile = new FTPFile();
+           ftpfile.setRawListing(inputFile);
+           FTPFile[] ftpFiles = ftp.listFiles( inputFile );
+
+           if (inputFile != null && inputFile.trim().length() > 0){        	  
+               ftp.changeWorkingDirectory(inputFile);
+               reply = ftp.getReplyCode();               
+               if(!FTPReply.isPositiveCompletion(reply)){
+                     //throw new Exception ("1. Unable to change working directory to:"+inputFile);
+            	   return;
+               }
+           }
+          
+           int size = ( ftpFiles == null ) ? 0 : ftpFiles.length;          
+           ArrayList<String> ar  = new ArrayList<String>();
+
+           for( int i = 0; i < size; i++ ){
+              ftpfile = ftpFiles[i];
+              ar.add(ftpFiles[i].getName());  
+              
+              if(ftpfile.isDirectory()){
+	        	   //neu la no la duong dan thi di tiep
+            	  String temIn =  inputFile+"";
+            	  //Goi de quy
+            	  
+	             //File f = new File(outputFile+"\\"+ftpfile.getName());
+	              //copyFile(f,temIn+"/"+ftpfile.getName());
+	              
+            	  _app.set_srcFTPCliUrl(outputFile+"\\"+ftpfile.getName());
+	              _app.set_srcFTPSerUrl(temIn+"/"+ftpfile.getName());
+	              	            	              
+	              downloadModifyFile(_app);
+	              
+	           }else{	        	   
+	               try{
+	                  boolean retValue=false;
+	                  String filename=ftpfile.getName();
+	                  String File1 = outputFile + "\\"+ filename;
+	                  File  fileout = new File(File1);
+	                  
+	                  String strDate="";
+	                  if (_app.get_srcDate().equals("TODAY")){//la ngay hom nay
+	                	 Date nowDate = new Date();
+	         			 DateFormat nowDateFormat = new SimpleDateFormat("yyyyMMdd");
+	         			 strDate = nowDateFormat.format(nowDate);
+	                  }else
+	                  {
+	                	  strDate = _app.get_srcDate();
+	                  }
+	                  
+	                 
+	                  Date date;
+	                  date= ftpfile.getTimestamp().getTime();
+	                  	               
+	     			  DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+	     			  
+	     			 //System.out.println(fileout.getTimestamp().getTime() + " - " + fileout.getName());
+	     			 // logger.info(strDate+" "+dateFormat.format(date)+" filename: "+filename +" "+outputFile);
+	     			  if (dateFormat.format(date).equals(strDate)){
+	     				  logger.info(" download: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
+	     				  System.out.println(" download: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
+	     				 if (filename.indexOf(_app.get_srcFTPExtFile())>0){//La file .pc	                	 
+		                	  logger.info(" -->Copy: "+filename+"   ==> "+outputFile + "\\"+ filename+"  -->OK");
+		                	  ftp.changeWorkingDirectory(inputFile);
+			                  retValue = ftp.retrieveFile(filename, new FileOutputStream(fileout));
+			                  if (!retValue){
+			                   //throw new Exception ("1. Downloading of remote file "+ inputFile+" failed. ftp.retrieveFile() returned false.");
+			                	  return;
+			                  }
+		                  }
+	     			  }
+	     				 
+	               }catch(Exception e){
+	            	   logger.info("1. The exection in function="+e);
+	               }
+	            }
+       		}
+        }catch(Exception exe){
+        	logger.info("1. The exection in function="+exe);
+        }
+    }
+    
+    
     /**
      *
      * @param inFile: duong dan Server
