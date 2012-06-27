@@ -5,8 +5,9 @@
                id="org.eib.application.ui.views.LightweightConsoleView">
          </view>
 		 
+AppMessageBox _appMes;
 		 
-		 
+_appMes.getErrorMessageBox()		 
 		 
 		 E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project
 		 E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\
