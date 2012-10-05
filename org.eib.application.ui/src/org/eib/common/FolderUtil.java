@@ -29,6 +29,33 @@ public class FolderUtil {
 		}
 	}
 	
+	
+	/**
+	 * Tao folder tu duong dan cong voi ten folder 
+	 * @param _folderurl: Duong dan chua folder
+	 * @param _folderName: Ten folder
+	 */
+	public static void createFolder(String _folderurl, String _folderName){
+		File f = new File(_folderurl+_folderName);
+		try{
+			if(f.mkdir()){
+				logger.info("Directory Created: " + _folderurl + _folderName);
+				System.out.println("Directory Created: "+ _folderurl + _folderName);				
+			}
+			else{
+				logger.info("Directory is not created: " + _folderurl + _folderName);
+				System.out.println("Directory is not created: " + _folderurl + _folderName);
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+			e.printStackTrace();			
+		}
+	}
+	
+	/**
+	 * 
+	 * @param file
+	 */
 	public static void deleteFile(String file){
 		File f1 = new File(file);
 		boolean success = f1.delete();
