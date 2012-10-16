@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScriptCommon id='All Script'>
+	<Query id='DP0001'>
+		<queryid>DP0001</queryid>
+		<querynm>DP 0001 - SD ca nhan tai thoi diem tren 500tr</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0001 - SD ca nhan tai thoi diem tren 500tr.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Lấy số dư tại thời điểm với tổng số dư lớn hơn 500tr (tính theo CIF của chi nhánh).
+Không lấy số dư của chi nhánh khác với cùng CIF
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]</note>
+		<define1 id='01h_brcd' name='Chi nhanh'>1403</define1>
+		<define2 id='02h_trdt' name='Ngay chay bao cao'>20120619</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0002'>
+		<queryid>DP0002</queryid>
+		<querynm>DP 0002 - SD DN tai thoi diem tren 500tr</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0002 - SD DN tai thoi diem tren 500tr.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Lấy số dư tại thời điểm với tổng số dư lớn hơn 500tr (tính theo CIF của chi nhánh).
+Không lấy số dư của chi nhánh khác với cùng CIF
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]</note>
+		<define1 id='01h_brcd' name='Chi nhanh'>1403</define1>
+		<define2 id='02h_trdt' name='Ngay chay bao cao'>20120619</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0003'>
+		<queryid>DP0003</queryid>
+		<querynm>DP 0003 - SP - Tien gui lai suat uu dai - CN</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0003 - SP - Tien gui lai suat uu dai - CN.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Số liệu chương trình dự thưởng Tiền gửi lãi suất ưu đãi
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]</note>
+		<define1 id='01h_brcd_ex' name='Chi nhanh quy doi'>1000</define1>
+		<define2 id='02h_brcd' name='Chi nhanh'>1403</define2>		
+		<define3 id='03h_frdt' name='Tu ngay'>20120612</define3>
+		<define4 id='04h_todt' name='Den ngay'>20120620</define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0004'>
+		<queryid>DP0004</queryid>
+		<querynm>DP 0004 - FTP chi tiet ca nhan</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0004 - FTP chi tiet ca nhan.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Lấy số liệu chi tiết của FTP cá nhân tại 1 ngày
+Lấy từ câu xuất Excel: DP - 45. FTP - CN - Chi tiet.sql		
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]
+Người thường lấy số liệu: tu.ntc@eximbank.com.vn</note>
+		<define1 id='01h_trdt' name='Ngay'>20120621</define1>
+		<define2 id='' name=''> </define2>		
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0005'>
+		<queryid>DP0005</queryid>
+		<querynm>DP 0005 - Passbook - Trang thai xuat so trong thang</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0005 - Passbook - Trang thai xuat so trong thang.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Passbook: Lấy những seri in bị Fail, Fail Print, Lost trong khoảng thời gian
+Các cột lấy gồm: Chi nhánh, Số seri, Ngày nhập, Trạng thái(Fail, Fail Print, Lost), Khách hàng, Tài khoản, Mã PGD của TK, User nhập	
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]
+		</note>		
+		<define1 id='01h_brcd' name='Chi nhanh'>1403</define1>		
+		<define2 id='02h_frdt' name='Tu ngay'>20120612</define2>
+		<define3 id='03h_todt' name='Den ngay'>20120620</define3>			
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0006'>
+		<queryid>DP0006</queryid>
+		<querynm>DP 0006 - SP - Tien gui lai suat uu dai - DN</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0006 - SP - Tien gui lai suat uu dai - DN.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Số liệu chương trình dự thưởng Tiền gửi lãi suất ưu đãi
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]</note>
+		<define1 id='01h_brcd_ex' name='Chi nhanh quy doi'>1000</define1>
+		<define2 id='02h_brcd' name='Chi nhanh'>1403</define2>		
+		<define3 id='03h_frdt' name='Tu ngay'>20120612</define3>
+		<define4 id='04h_todt' name='Den ngay'>20120620</define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>	
+	<Query id='DP0007'>
+		<queryid>DP0007</queryid>
+		<querynm>DP 0007 - FTP - Co ky han - chi tiet</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0007 - FTP - Co ky han - chi tiet.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Thông tin chi tiết FTP của một tài khoản có kỳ hạn
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]</note>
+		<define1 id='01h_acctno' name='tai khoan'>200014949495050</define1>
+		<define2 id='' name=''> </define2>		
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='DP0011'>
+		<queryid>DP0011</queryid>
+		<querynm>DP 0011 - FTP chi tiet ca nhan</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status> <!--0: Chua xu ly, 1: Dang xu ly, 3: Fail, 8: Thanh cong-->
+		<server>Oralce-AReport</server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Excel\DP 0011 - FTP chi tiet ca nhan - chi nhanh.sql</fileurl>
+		<getquery> </getquery> <!-- cau script chay -->
+		<description>Lấy số liệu chi tiết của FTP cá nhân tại 1 ngày và chi nhánh
+Lấy từ câu xuất Excel: DP - 45. FTP - CN - Chi tiet.sql		
+		</description> <!--Mieu ta cau script-->
+		<note>Người liên hệ: em.tvt@eximbank.com.vn [(08)39151843,(08)38210056 Ext 117]
+Người thường lấy số liệu: tu.ntc@eximbank.com.vn</note>
+		<define1 id='01h_brcd' name='CN'>2000</define1>
+		<define2 id='02h_frdt' name='Tu ngay'>20120601</define2>		
+		<define3 id='03h_todt' name='Den ngay'>20120601</define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+</ScriptCommon>
