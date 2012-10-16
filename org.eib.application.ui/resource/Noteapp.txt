@@ -64,6 +64,6 @@
 		<srcFTPSerUrl>/dp</srcFTPSerUrl>
 		<srcFTPCliUrl>D:\B</srcFTPCliUrl>
 		<srcFTPExtFile>.pc</srcFTPExtFile>
-		<srcDate>TODAY</srcDate>
+		<srcDate>20120807</srcDate>
 	</Common2>
 </App>

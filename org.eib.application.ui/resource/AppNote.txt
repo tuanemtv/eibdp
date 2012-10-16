@@ -1,4 +1,4 @@
- 
+\\\\10.1.97.14\\2012\\06\\20120601\\Report to Excel Congifure\\Congifure\\ 
  
   
   AppMessageBox msg = new AppMessageBox("Tieu de","Thong bao");
