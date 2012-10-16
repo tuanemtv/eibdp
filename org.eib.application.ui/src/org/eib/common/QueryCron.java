@@ -99,151 +99,57 @@ public class QueryCron {
 				 Element element1 = (Element) nodelist.item(0);
 				 NodeList fstNm = element1.getChildNodes();
 				 _querycron[i].set_cronNM((fstNm.item(0)).getNodeValue());
-				// System.out.println("\nqueryid : " + (fstNm.item(0)).getNodeValue());
+				 System.out.println("\ncronNM : " + (fstNm.item(0)).getNodeValue());
 				 
-				 nodelist = element.getElementsByTagName("querynm");
+				 nodelist = element.getElementsByTagName("jobNM");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
-				 _query[i].set_querynm((fstNm.item(0)).getNodeValue());
-				 //System.out.println("querynm : " + (fstNm.item(0)).getNodeValue());
+				 _querycron[i].set_jobNM((fstNm.item(0)).getNodeValue());
+				 System.out.println("jobNM : " + (fstNm.item(0)).getNodeValue());
 				 				
 				 
-				 nodelist = element.getElementsByTagName("module");
+				 nodelist = element.getElementsByTagName("jobClass");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
-				 _query[i].set_module((fstNm.item(0)).getNodeValue());
-				 //System.out.println("module : " + (fstNm.item(0)).getNodeValue());
+				 _querycron[i].set_jobClass((fstNm.item(0)).getNodeValue());
+				 System.out.println("jobClass : " + (fstNm.item(0)).getNodeValue());
 				 
 				 
-				 nodelist = element.getElementsByTagName("getquery");
+				 nodelist = element.getElementsByTagName("jobGroup");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
-				 _query[i].set_getquery((fstNm.item(0)).getNodeValue());
-				 //System.out.println("getquery : " + (fstNm.item(0)).getNodeValue());
+				 _querycron[i].set_jobGroup((fstNm.item(0)).getNodeValue());
+				 System.out.println("jobGroup : " + (fstNm.item(0)).getNodeValue());
 				 
-				 
-				 //Add define
-				 TreeMap<String, String> hm_temp = new TreeMap<String, String>();
-				 
-				 nodelist = element.getElementsByTagName("define1");
+				 nodelist = element.getElementsByTagName("triggerNM");
 				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
+				 fstNm = element1.getChildNodes();
+				 _querycron[i].set_triggerNM((fstNm.item(0)).getNodeValue());
+				 System.out.println("triggerNM : " + (fstNm.item(0)).getNodeValue());
 				 
-				 nodelist = element.getElementsByTagName("define2");
+				 nodelist = element.getElementsByTagName("triggerSchedule");
 				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
+				 fstNm = element1.getChildNodes();
+				 _querycron[i].set_triggerSchedule((fstNm.item(0)).getNodeValue());
+				 System.out.println("triggerSchedule : " + (fstNm.item(0)).getNodeValue());
 				 
-				 nodelist = element.getElementsByTagName("define3");
+				 nodelist = element.getElementsByTagName("triggerGroup");
 				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+ element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
+				 fstNm = element1.getChildNodes();
+				 _querycron[i].set_triggerGroup((fstNm.item(0)).getNodeValue());
+				 System.out.println("triggerGroup : " + (fstNm.item(0)).getNodeValue());	
 				 
-				 nodelist = element.getElementsByTagName("define4");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define5");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define6");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define7");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define8");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define9");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define10");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put('&'+element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-				 }
-				 //Dua vao define
-				 _query[i].set_define(hm_temp);
-				 
-				 //Doc duong dan file
-				 nodelist = element.getElementsByTagName("fileurl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
-					 // Get the object of DataInputStream
-					 DataInputStream in = new DataInputStream(fstream);
-					 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-					 String strLine;
-					 while ((strLine = br.readLine()) != null)   {	
-						 //Neu bat dau bang select thi moi them vao.
-						 _query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung	  
-						 //System.out.println (strLine);
+				 NodeList qlist = doc.getElementsByTagName("Query");
+				 _query = new Query[qlist.getLength()];
+				 for (int j = 0; j < qlist.getLength(); j++) {	
+					 _query[j] = new Query();
+					 if (node.getNodeType() == Node.ELEMENT_NODE) {
+						Element qelement1 = (Element) qlist.item(j);
+						NodeList qfstNm = qelement1.getChildNodes();							
+						System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
+						_query[j].set_queryid(qelement1.getAttribute("id"));
 					 }
-				 }
-				 //System.out.println ("get Query = " + _query[i].get_getquery());				 
-				  
-				  //Lay status
-				 nodelist = element.getElementsByTagName("status");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _query[i].set_status((fstNm.item(0)).getNodeValue());
-				 //System.out.println("status : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("description");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _query[i].set_description((fstNm.item(0)).getNodeValue());
-				 
-				 
-				 nodelist = element.getElementsByTagName("note");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _query[i].set_note((fstNm.item(0)).getNodeValue());
-				 
+				 }				 
 			  }
 		  }
 	}
