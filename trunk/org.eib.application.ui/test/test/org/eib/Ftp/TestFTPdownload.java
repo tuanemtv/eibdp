@@ -22,7 +22,7 @@ public class TestFTPdownload {
 		try {
 			//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
 			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
-			_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml","Common2");
+			_app.getAppCom("\\\\10.1.97.14\\2012\\06\\20120601\\Report to Excel Congifure\\Congifure\\app.xml","Common2");
 			
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
@@ -57,11 +57,13 @@ public class TestFTPdownload {
 			e.printStackTrace();
 		}
 		
-	      // File f = new File(_app.get_srcFTPCliUrl());
-	      // upload.copyFile(f,_app.get_srcFTPSerUrl());
-		upload.showModifyFile(_app);
-	       
-	       
+		// upload.copyFile(f,_app.get_srcFTPSerUrl());
+		
+		
+	    //File f = new File(_app.get_srcFTPCliUrl());	      
+		//upload.copyFile(_app);
+		//upload.showModifyFile(_app);		
+		upload.downloadModifyFile(_app);	       	       
 	}
 
 }
