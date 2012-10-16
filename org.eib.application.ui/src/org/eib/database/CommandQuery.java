@@ -421,17 +421,24 @@ public class CommandQuery {
                                 || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
                                 || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {	
                             cell.setCellValue(rs.getString(i));
-                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
-                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
-
+                            //System.out.println("getString: "+rs.getString(i));
+                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
                             cell.setCellValue(rs.getDouble(i));
-                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
-                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
+                            //System.out.println("getDouble: "+rs.getDouble(i));
+                       }
+                       else if(rsmd.getColumnType(i) == java.sql.Types.FLOAT
+                    		   ||rsmd.getColumnType(i) == java.sql.Types.DECIMAL)                    		
+                       {
+                            cell.setCellValue(rs.getFloat(i));
+                            //System.out.println("getFloat: "+rs.getFloat(i));
+                       } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC                                
                                 || rsmd.getColumnType(i) == java.sql.Types.INTEGER
                                 || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
                                 || rsmd.getColumnType(i) == java.sql.Types.BIGINT
                                 || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-                            cell.setCellValue(rs.getLong(i));
+                            cell.setCellValue(rs.getFloat(i));
+                            //System.out.println(rsmd.getColumnType(i)+ " getLong: "+rs.getLong(i));
+                            //System.out.println(rsmd.getColumnType(i)+ " getFloat: "+rs.getFloat(i));
                         } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 
                             java.util.Date d = new java.util.Date();
@@ -468,7 +475,7 @@ public class CommandQuery {
                                 || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
                                 || rsmd.getColumnType(i) == java.sql.Types.BIGINT
                                 || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-                            cell.setCellValue(rs.getLong(i));
+                            cell.setCellValue(rs.getFloat(i));
                         } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {	
                             java.util.Date d = new java.util.Date();
                             d.setTime(rs.getDate(i).getTime());
@@ -583,7 +590,7 @@ public class CommandQuery {
 	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
 	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
 	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
+	                            cell.setCellValue(rs.getFloat(i));
 	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 	
 	                            java.util.Date d = new java.util.Date();
@@ -622,7 +629,7 @@ public class CommandQuery {
 	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
 	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
 	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
+	                            cell.setCellValue(rs.getFloat(i));
 	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 	
 	                            java.util.Date d = new java.util.Date();

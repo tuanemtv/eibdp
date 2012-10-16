@@ -274,9 +274,9 @@ public class  FTPdownload
 	     			  
 	     			 //System.out.println(fileout.getTimestamp().getTime() + " - " + fileout.getName());
 	     			 // logger.info(strDate+" "+dateFormat.format(date)+" filename: "+filename +" "+outputFile);
-	     			  if (dateFormat.format(date).equals(strDate)){
+	     			  if (dateFormat.format(date).equals(strDate) && filename.indexOf(_app.get_srcFTPExtFile())>0){
 	     				  logger.info(" modify: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
-	     				  System.out.println(" modify: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
+	     				  //System.out.println(" modify: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
 	     			  }
 	     				 
 	                  /*
@@ -540,7 +540,7 @@ public class  FTPdownload
 
        FTPdownload   upload = new FTPdownload (server,user, pass);
        File f = new File(clientDir);
-       upload.copyFile(f,serverDir);
-      // upload.filecopy("ABC/","C:\\B");
+       //upload.copyFile(f,serverDir);
+      upload.filecopy("ABC/","C:\\B");
      }
 }
