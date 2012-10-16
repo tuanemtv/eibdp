@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Database>
+	<MySQL-test>
+		<driver>com.mysql.jdbc.Driver</driver>
+		<host>127.0.0.1</host>
+		<port>3306</port>
+		<database>athena</database>
+		<user>root</user>
+		<password> </password>
+	</MySQL-test>
+	<Oralce-AReport>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<host>10.1.36.28</host>
+		<port>1521</port>
+		<database>LORARPT</database>
+		<user>dp1</user>
+		<password>d1p28</password>
+	</Oralce-AReport>
+	<Oralce-ALive>
+		<driver>10.1.36.22</driver>
+		<host>lora11g</host>
+		<port>1521</port>
+		<database>lora11g</database>
+		<user>myquery</user>
+		<password>truongnhom</password>
+	</Oralce-ALive>
+</Database>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScriptCommon id='LN'>
+	<Query id='LN1'>
+		<queryid>LN1</queryid>
+		<querynm>LN 1</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<server> </server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\script1.sql</fileurl>
+		<getquery> </getquery>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='' name=''> </define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='LN2'>
+		<queryid>LN2</queryid>
+		<querynm>LN 2</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\script2.sql</fileurl>
+		<getquery> </getquery>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='LN3'>
+		<queryid>LN3</queryid>
+		<querynm>LN 3</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\script2.sql</fileurl>
+		<getquery> </getquery>
+		<define1 id='h_idstock' name='Ma Idstocd'>101</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>202</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='LN4'>
+		<queryid>LN4</queryid>
+		<querynm>LN 4</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\script2.sql</fileurl>
+		<getquery> </getquery>
+		<define1 id='h_idstock' name='Ma Idstocd'>103</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>206</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='LN5'>
+		<queryid>LN5</queryid>
+		<querynm>LN 5</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\script2.sql</fileurl>
+		<getquery> </getquery>
+		<define1 id='h_idstock' name='Ma Idstocd'>104</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>207</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+</ScriptCommon>
