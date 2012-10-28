@@ -214,11 +214,9 @@ public class QueryServer {
 		try {
 			Class.forName(this.getDriver()).newInstance();
 			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());
-			//System.out.println("Connect Successful !!!");
-			logger.info("Connect Database Successful !!!");
+			logger.info("Connect Database Successful");
         } catch (Exception e2) {
-			logger.error("Unable to load driver " + this.getDriver());
-			logger.error("ERROR " + e2.getMessage());        
+			logger.error("Connect Database Fail. Unable to load driver " + this.getDriver());   
         }
 	}
 	

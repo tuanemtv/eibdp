@@ -2,6 +2,9 @@ package org.eib.database;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -469,22 +472,36 @@ public class Query {
 		//doc file
 		this.readScript();		
 		this.setquery();//Set lai cau script lay
-				
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		Date date ;
+		date= new Date();
+		this.set_startDate(dateFormat.format(date));
+		
 		try {
 			CommandQuery.set_Excelrow(_app.get_excelrows());//so dong excel
 			CommandQuery.commandQueryExcel(_queryser.get_conn(), this.get_exquery(),true,false, _app.get_outurl_excel(this.get_querynm()));
-			logger.info("Query successful: "+this.get_querynm()+ " with url: "+_app.get_outurl_excel(this.get_querynm()));
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			
+			logger.info("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query successful: "+this.get_querynm()+ " with url: "+_app.get_outurl_excel(this.get_querynm()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
 			e.printStackTrace();
 		}
 	}

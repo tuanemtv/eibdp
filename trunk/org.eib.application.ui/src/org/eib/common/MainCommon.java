@@ -74,14 +74,14 @@ public class MainCommon {
 		//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
 				
 		try {
-			logger.info("congifureUrl = "+ dir1.getCanonicalPath()+rb.getString("congifureUrl"));
-			logger.info("scriptUrl = "+ dir1.getCanonicalPath()+rb.getString("scriptUrl"));
+			//logger.info("congifureUrl = "+ dir1.getCanonicalPath()+rb.getString("congifureUrl"));
+			//logger.info("scriptUrl = "+ dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			
 			Query qur = new Query(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml","Query");
-			qur.logQuery();
+			//qur.logQuery();
 			
 			QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");
-			qurcron.logQueryCron();
+			//qurcron.logQueryCron();
 			
 			_queryser =new QueryServer();
 			_appcommon = new AppCommon();	
@@ -93,17 +93,17 @@ public class MainCommon {
 			_query = new Query[qur.get_countquery()];//Tong so query			
 						
 			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml","Common1");
-			_appcommon.logAppCommon();
+			//_appcommon.logAppCommon();
 			
 			_queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());
-			_queryser.logQueryServer();
-			_queryser.connectDatabase();//Tien hanh connect
+			//_queryser.logQueryServer();
+			//_queryser.connectDatabase();//Tien hanh connect
 			
 			
 			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
 			for (int i=0; i< _query.length; i++){
-				System.out.println("["+i+"]");
-				
+				//System.out.println("["+i+"]");
+				//_query[i].logQuery();
 				//Tien hanh query
 				//_query[i].queryToExcel(_appcommon, _queryser);							
 			}
@@ -111,8 +111,10 @@ public class MainCommon {
 			
 			qurcron.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron",_querycron);
 			for (int j=0; j< _querycron.length; j++){
-				System.out.println("["+j+"]");
-				_querycron[j].logQueryCron();
+				//System.out.println("["+j+"]");
+				//_querycron[j].logQueryCron();
+				
+				
 				//_query[i].setquery();
 				//_query[i].set_queryouturl(_appcommon.get_outurl_excel(_query[i].get_querynm()));
 				
