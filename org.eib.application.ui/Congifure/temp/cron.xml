@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CronManager>
+	<Cron id='01'>
+		<cronNM>Cron1</cronNM>
+		<jobNM>dummyJobName1</jobNM>
+		<jobClass>Job1</jobClass>
+		<jobGroup>group1</jobGroup>
+		<triggerNM>dummyTriggerName</triggerNM>
+		<triggerSchedule>0/60 * * * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>		
+		<Query id='LN1'>LN1</Query>
+		<Query id='DP2'>DP2</Query>	
+		<Query id='GD1'>Dsdf</Query>	
+	</Cron>
+	<Cron id='02'>
+		<cronNM>Cron2</cronNM>
+		<jobNM>dummyJobName2</jobNM>
+		<jobClass>Job2</jobClass>
+		<jobGroup>group2</jobGroup>
+		<triggerNM>dummyTriggerName2</triggerNM>
+		<triggerSchedule>0/30 * * * * ?</triggerSchedule>
+		<triggerGroup>group2</triggerGroup>		
+		<Query id='LN1'>LN1</Query>
+		<Query id='DP2'>DP2</Query>	
+		<Query id='GD1'>Dsdf</Query>	
+	</Cron>
+</CronManager>

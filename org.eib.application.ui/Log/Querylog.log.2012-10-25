@@ -1,0 +1,166 @@
+22:55:50,974 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test
+22:55:50,998 ERROR [MainCommon:74] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\testapp.xml (The system cannot find the file specified)
+22:56:37,543 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+22:56:37,619 INFO  [AppCommon:328] scriptnums: 10
+22:56:37,620 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+22:56:42,126 ERROR [MainCommon:74] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+22:57:07,119 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+22:57:07,160 INFO  [AppCommon:328] scriptnums: 10
+22:57:07,161 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+22:57:07,163 ERROR [MainCommon:74] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+22:58:19,838 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+22:58:19,878 INFO  [AppCommon:328] scriptnums: 10
+22:58:19,879 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+22:58:24,385 ERROR [MainCommon:74] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+22:59:02,357 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+22:59:02,404 INFO  [AppCommon:328] scriptnums: 10
+22:59:02,405 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+22:59:06,912 ERROR [MainCommon:74] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+22:59:22,127 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+22:59:22,173 INFO  [AppCommon:328] scriptnums: 10
+22:59:22,174 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+22:59:22,175 ERROR [MainCommon:74] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+23:00:16,515 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:00:28,509 INFO  [AppCommon:328] scriptnums: 10
+23:00:28,513 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:19:42,398 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:19:42,438 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:19:46,954 ERROR [MainCommon:76] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+23:22:11,181 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:22:11,223 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:22:15,729 ERROR [MainCommon:76] \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql (The network path was not found)
+23:23:13,767 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:23:13,809 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:23:13,810 INFO  [AppCommon:590] _inurl: D:\
+23:23:13,810 INFO  [AppCommon:591] _outurl: D:\
+23:23:13,811 INFO  [AppCommon:592] _excelrows: 65000
+23:23:13,812 INFO  [AppCommon:594] _scriptnums: 10
+23:23:13,812 INFO  [AppCommon:595] _scriptcount: 8
+23:23:13,812 INFO  [AppCommon:596] _h_trdt: 20120615
+23:23:13,813 INFO  [AppCommon:601] _defscripturl: null
+23:23:13,813 INFO  [AppCommon:602] _defscript: 
+23:23:13,813 INFO  [AppCommon:603] _defscripturl2: null
+23:23:13,813 INFO  [AppCommon:604] _defscript2: 
+23:23:13,813 INFO  [AppCommon:605] _configureurl: \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\
+23:23:13,813 INFO  [AppCommon:607] _ftpServer: 127.0.0.1
+23:23:13,814 INFO  [AppCommon:608] _ftpUsr: tuanemtv
+23:23:13,814 INFO  [AppCommon:609] _ftpPass: 123456
+23:23:13,816 INFO  [AppCommon:610] _ftpFilename: 20120608.zip
+23:23:13,816 INFO  [AppCommon:611] _ftpUrl: GG Tran\
+23:23:13,817 INFO  [AppCommon:613] _ftpInurl: D:\Report to Excel\Result\
+23:23:13,817 INFO  [AppCommon:614] _servernm: Oralce-AReport
+23:23:13,817 INFO  [AppCommon:615] _srcFTPServer: 10.1.70.30
+23:23:13,817 INFO  [AppCommon:616] _srcFTPUser: xempc
+23:23:13,817 INFO  [AppCommon:617] _srcFTPPass: xempc
+23:23:13,817 INFO  [AppCommon:619] _srcFTPSerUrl: /keb/dp/src
+23:23:13,818 INFO  [AppCommon:620] _srcFTPCliUrl: D:\Report to Excel\Workplace\Report to Excel\PC Backup\src
+23:23:13,818 INFO  [AppCommon:621] _srcFTPExtFile: .pc
+23:23:13,818 INFO  [AppCommon:622] _srcDate: 20121010
+23:30:07,826 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:30:07,865 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:30:07,866 INFO  [AppCommon:590] _inurl: D:\
+23:30:07,866 INFO  [AppCommon:591] _outurl: D:\
+23:30:07,866 INFO  [AppCommon:592] _excelrows: 65000
+23:30:07,867 INFO  [AppCommon:594] _scriptnums: 10
+23:30:07,868 INFO  [AppCommon:595] _scriptcount: 8
+23:30:07,868 INFO  [AppCommon:596] _h_trdt: 20120615
+23:30:07,868 INFO  [AppCommon:601] _defscripturl: null
+23:30:07,868 INFO  [AppCommon:602] _defscript: 
+23:30:07,868 INFO  [AppCommon:603] _defscripturl2: null
+23:30:07,868 INFO  [AppCommon:604] _defscript2: 
+23:30:07,869 INFO  [AppCommon:605] _configureurl: \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\
+23:30:07,869 INFO  [AppCommon:607] _ftpServer: 127.0.0.1
+23:30:07,869 INFO  [AppCommon:608] _ftpUsr: tuanemtv
+23:30:07,869 INFO  [AppCommon:609] _ftpPass: 123456
+23:30:07,871 INFO  [AppCommon:610] _ftpFilename: 20120608.zip
+23:30:07,872 INFO  [AppCommon:611] _ftpUrl: GG Tran\
+23:30:07,872 INFO  [AppCommon:613] _ftpInurl: D:\Report to Excel\Result\
+23:30:07,872 INFO  [AppCommon:614] _servernm: Oralce-AReport
+23:30:07,872 INFO  [AppCommon:615] _srcFTPServer: 10.1.70.30
+23:30:07,872 INFO  [AppCommon:616] _srcFTPUser: xempc
+23:30:07,872 INFO  [AppCommon:617] _srcFTPPass: xempc
+23:30:07,872 INFO  [AppCommon:619] _srcFTPSerUrl: /keb/dp/src
+23:30:07,873 INFO  [AppCommon:620] _srcFTPCliUrl: D:\Report to Excel\Workplace\Report to Excel\PC Backup\src
+23:30:07,873 INFO  [AppCommon:621] _srcFTPExtFile: .pc
+23:30:07,873 INFO  [AppCommon:622] _srcDate: 20121010
+23:30:07,877 INFO  [QueryServer:197] host: 10.1.36.28
+23:30:07,877 INFO  [QueryServer:198] port: 1521
+23:30:07,877 INFO  [QueryServer:199] database: LORARPT
+23:30:07,877 INFO  [QueryServer:201] driver: oracle.jdbc.driver.OracleDriver
+23:30:07,877 INFO  [QueryServer:202] url: null
+23:30:07,877 INFO  [QueryServer:203] user: dp1
+23:30:07,878 INFO  [QueryServer:205] password: d1p28
+23:30:07,878 INFO  [QueryServer:206] separator: 	
+23:30:07,878 INFO  [QueryServer:207] filename: null
+23:30:32,173 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:30:32,217 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:30:32,218 INFO  [AppCommon:590] _inurl: D:\
+23:30:32,218 INFO  [AppCommon:591] _outurl: D:\
+23:30:32,218 INFO  [AppCommon:592] _excelrows: 65000
+23:30:32,220 INFO  [AppCommon:594] _scriptnums: 10
+23:30:32,220 INFO  [AppCommon:595] _scriptcount: 8
+23:30:32,220 INFO  [AppCommon:596] _h_trdt: 20120615
+23:30:32,220 INFO  [AppCommon:601] _defscripturl: null
+23:30:32,220 INFO  [AppCommon:602] _defscript: 
+23:30:32,220 INFO  [AppCommon:603] _defscripturl2: null
+23:30:32,221 INFO  [AppCommon:604] _defscript2: 
+23:30:32,221 INFO  [AppCommon:605] _configureurl: \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\
+23:30:32,221 INFO  [AppCommon:607] _ftpServer: 127.0.0.1
+23:30:32,221 INFO  [AppCommon:608] _ftpUsr: tuanemtv
+23:30:32,221 INFO  [AppCommon:609] _ftpPass: 123456
+23:30:32,224 INFO  [AppCommon:610] _ftpFilename: 20120608.zip
+23:30:32,224 INFO  [AppCommon:611] _ftpUrl: GG Tran\
+23:30:32,224 INFO  [AppCommon:613] _ftpInurl: D:\Report to Excel\Result\
+23:30:32,224 INFO  [AppCommon:614] _servernm: Oralce-AReport
+23:30:32,224 INFO  [AppCommon:615] _srcFTPServer: 10.1.70.30
+23:30:32,225 INFO  [AppCommon:616] _srcFTPUser: xempc
+23:30:32,225 INFO  [AppCommon:617] _srcFTPPass: xempc
+23:30:32,225 INFO  [AppCommon:619] _srcFTPSerUrl: /keb/dp/src
+23:30:32,225 INFO  [AppCommon:620] _srcFTPCliUrl: D:\Report to Excel\Workplace\Report to Excel\PC Backup\src
+23:30:32,225 INFO  [AppCommon:621] _srcFTPExtFile: .pc
+23:30:32,225 INFO  [AppCommon:622] _srcDate: 20121010
+23:30:32,229 INFO  [QueryServer:197] host: 10.1.36.28
+23:30:32,229 INFO  [QueryServer:198] port: 1521
+23:30:32,229 INFO  [QueryServer:199] database: LORARPT
+23:30:32,230 INFO  [QueryServer:201] driver: oracle.jdbc.driver.OracleDriver
+23:30:32,230 INFO  [QueryServer:202] url: null
+23:30:32,230 INFO  [QueryServer:203] user: dp1
+23:30:32,230 INFO  [QueryServer:205] password: d1p28
+23:30:32,230 INFO  [QueryServer:206] separator: 	
+23:30:32,230 INFO  [QueryServer:207] filename: null
+23:31:01,383 INFO  [MainCommon:47] D:\Project\Report to Excel\Workplace\Report to Excel\GG  Report to Excel\Congifure\test\
+23:31:01,430 INFO  [AppCommon:455] _ftpServer: 127.0.0.1
+23:31:01,431 INFO  [AppCommon:590] _inurl: D:\
+23:31:01,431 INFO  [AppCommon:591] _outurl: D:\
+23:31:01,431 INFO  [AppCommon:592] _excelrows: 65000
+23:31:01,433 INFO  [AppCommon:594] _scriptnums: 10
+23:31:01,433 INFO  [AppCommon:595] _scriptcount: 8
+23:31:01,433 INFO  [AppCommon:596] _h_trdt: 20120615
+23:31:01,433 INFO  [AppCommon:601] _defscripturl: null
+23:31:01,434 INFO  [AppCommon:602] _defscript: 
+23:31:01,434 INFO  [AppCommon:603] _defscripturl2: null
+23:31:01,434 INFO  [AppCommon:604] _defscript2: 
+23:31:01,434 INFO  [AppCommon:605] _configureurl: \\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\
+23:31:01,434 INFO  [AppCommon:607] _ftpServer: 127.0.0.1
+23:31:01,434 INFO  [AppCommon:608] _ftpUsr: tuanemtv
+23:31:01,435 INFO  [AppCommon:609] _ftpPass: 123456
+23:31:01,437 INFO  [AppCommon:610] _ftpFilename: 20120608.zip
+23:31:01,437 INFO  [AppCommon:611] _ftpUrl: GG Tran\
+23:31:01,437 INFO  [AppCommon:613] _ftpInurl: D:\Report to Excel\Result\
+23:31:01,437 INFO  [AppCommon:614] _servernm: Oralce-AReport
+23:31:01,438 INFO  [AppCommon:615] _srcFTPServer: 10.1.70.30
+23:31:01,438 INFO  [AppCommon:616] _srcFTPUser: xempc
+23:31:01,438 INFO  [AppCommon:617] _srcFTPPass: xempc
+23:31:01,438 INFO  [AppCommon:619] _srcFTPSerUrl: /keb/dp/src
+23:31:01,438 INFO  [AppCommon:620] _srcFTPCliUrl: D:\Report to Excel\Workplace\Report to Excel\PC Backup\src
+23:31:01,438 INFO  [AppCommon:621] _srcFTPExtFile: .pc
+23:31:01,438 INFO  [AppCommon:622] _srcDate: 20121010
+23:31:01,442 INFO  [QueryServer:197] host: 10.1.36.28
+23:31:01,442 INFO  [QueryServer:198] port: 1521
+23:31:01,442 INFO  [QueryServer:199] database: LORARPT
+23:31:01,442 INFO  [QueryServer:201] driver: oracle.jdbc.driver.OracleDriver
+23:31:01,442 INFO  [QueryServer:202] url: null
+23:31:01,443 INFO  [QueryServer:203] user: dp1
+23:31:01,443 INFO  [QueryServer:205] password: d1p28
+23:31:01,443 INFO  [QueryServer:206] separator: 	
+23:31:01,443 INFO  [QueryServer:207] filename: null
