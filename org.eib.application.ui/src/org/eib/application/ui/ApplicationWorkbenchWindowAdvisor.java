@@ -40,8 +40,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		super(configurer);
 	}
 
-	public ActionBarAdvisor createActionBarAdvisor(
-			IActionBarConfigurer configurer) {
+	public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
 		return new ApplicationActionBarAdvisor(configurer);
 	}
 
@@ -55,20 +54,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		
 		//File log4jfile = new File("./resource/log4j.properties");
 		//PropertyConfigurator.configure(log4jfile.getAbsolutePath());
-
-		
-		/*
-		Properties props = new Properties();
-		try {
-			props.load(new FileInputStream("log4j.properties"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		PropertyConfigurator.configure(props);*/
+			
 		
 		//OK
 		Properties props = new Properties();
@@ -79,7 +65,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 			e.printStackTrace();
 		}
 		PropertyConfigurator.configure(props);
-
 		
 		
 		//PropertyConfigurator.configure((new Properties()).load(new FileInputStream ("log4j.properties")));
@@ -115,90 +100,95 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	            //log.warn("Error writing log4j.properties, falling back to defaults.");
 	        }
 	    }*/
+		
+				
 
 	}
 	
 	//System Tray
-	/*
+	
 	// As of here is the new stuff
-		@Override
-		public void postWindowOpen() {
-			super.postWindowOpen();
-			window = getWindowConfigurer().getWindow();
-			trayItem = initTaskItem(window);
-			// Some OS might not support tray items
-			if (trayItem != null) {
-				minimizeBehavior();
-				// Create exit and about action on the icon
-				hookPopupMenu();
-			}
+	
+	/*
+	@Override
+	public void postWindowOpen() {
+		super.postWindowOpen();
+		window = getWindowConfigurer().getWindow();
+		trayItem = initTaskItem(window);
+		
+		// Some OS might not support tray items
+		if (trayItem != null) {
+			minimizeBehavior();
+			// Create exit and about action on the icon
+			hookPopupMenu();
 		}
+	}
 
-		// Add a listener to the shell
+	// Add a listener to the shell
 
-		private void minimizeBehavior() {
-			window.getShell().addShellListener(new ShellAdapter() {
-				// If the window is minimized hide the window
-				public void shellIconified(ShellEvent e) {
-					window.getShell().setVisible(false);
+	private void minimizeBehavior() {
+		window.getShell().addShellListener(new ShellAdapter() {
+			// If the window is minimized hide the window
+			public void shellIconified(ShellEvent e) {
+				window.getShell().setVisible(false);
+			}
+		});
+		// If user double-clicks on the tray icons the application will be
+		// visible again
+		trayItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Shell shell = window.getShell();
+				if (!shell.isVisible()) {
+					window.getShell().setMinimized(false);
+					shell.setVisible(true);
 				}
-			});
-			// If user double-clicks on the tray icons the application will be
-			// visible again
-			trayItem.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					Shell shell = window.getShell();
-					if (!shell.isVisible()) {
-						window.getShell().setMinimized(false);
-						shell.setVisible(true);
+			}
+		});
+	}
+
+	// We hook up on menu entry which allows to close the application
+	private void hookPopupMenu() {
+		trayItem.addMenuDetectListener(new MenuDetectListener() {
+
+			@Override
+			public void menuDetected(MenuDetectEvent e) {
+				Menu menu = new Menu(window.getShell(), SWT.POP_UP);
+				// Creates a new menu item that terminates the program
+				MenuItem exit = new MenuItem(menu, SWT.NONE);
+				exit.setText("Goodbye!");
+				exit.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(SelectionEvent e) {
+						window.getWorkbench().close();
 					}
-				}
-			});
-		}
-
-		// We hook up on menu entry which allows to close the application
-		private void hookPopupMenu() {
-			trayItem.addMenuDetectListener(new MenuDetectListener() {
-
-				@Override
-				public void menuDetected(MenuDetectEvent e) {
-					Menu menu = new Menu(window.getShell(), SWT.POP_UP);
-					// Creates a new menu item that terminates the program
-					MenuItem exit = new MenuItem(menu, SWT.NONE);
-					exit.setText("Goodbye!");
-					exit.addSelectionListener(new SelectionAdapter() {
-						@Override
-						public void widgetSelected(SelectionEvent e) {
-							window.getWorkbench().close();
-						}
-					});
-					// We need to make the menu visible
-					menu.setVisible(true);
-				}
-			});
-		}
-
-		// This methods create the tray item and return a reference
-		private TrayItem initTaskItem(IWorkbenchWindow window) {
-			final Tray tray = window.getShell().getDisplay().getSystemTray();
-			TrayItem trayItem = new TrayItem(tray, SWT.NONE);
-			trayImage = Activator.getImageDescriptor("/icons/alt_about.gif")
-					.createImage();
-			trayItem.setImage(trayImage);
-			trayItem.setToolTipText("TrayItem");
-			return trayItem;
-
-		}
-
-		// We need to clean-up after ourself
-		@Override
-		public void dispose() {
-			if (trayImage != null) {
-				trayImage.dispose();
+				});
+				// We need to make the menu visible
+				menu.setVisible(true);
 			}
-			if (trayItem != null) {
-				trayItem.dispose();
-			}
-		}*/
-}
+		});
+	}
+
+	// This methods create the tray item and return a reference
+	private TrayItem initTaskItem(IWorkbenchWindow window) {
+		final Tray tray = window.getShell().getDisplay().getSystemTray();
+		TrayItem trayItem = new TrayItem(tray, SWT.NONE);
+		trayImage = Activator.getImageDescriptor("/icons/alt_about.gif")
+				.createImage();
+		trayItem.setImage(trayImage);
+		trayItem.setToolTipText("TrayItem");
+		return trayItem;
+
+	}
+
+	// We need to clean-up after ourself
+	@Override
+	public void dispose() {
+		if (trayImage != null) {
+			trayImage.dispose();
+		}
+		if (trayItem != null) {
+			trayItem.dispose();
+		}
+	}*/
+}	

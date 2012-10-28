@@ -16,12 +16,10 @@ public class FolderUtil {
 		File f = new File(_folderurl);
 		try{
 			if(f.mkdir()){
-				logger.info("Directory Created: " + _folderurl);
-				System.out.println("Directory Created: "+ _folderurl);				
+				logger.info("Directory Created: " + _folderurl);						
 			}
 			else{
-				logger.info("Directory is not created: " + _folderurl);
-				System.out.println("Directory is not created: " + _folderurl);
+				logger.info("Directory is not created: " + _folderurl);				
 			}
 		}catch(Exception e){
 			logger.error(e.getMessage());
@@ -39,12 +37,10 @@ public class FolderUtil {
 		File f = new File(_folderurl+_folderName);
 		try{
 			if(f.mkdir()){
-				logger.info("Directory Created: " + _folderurl + _folderName);
-				System.out.println("Directory Created: "+ _folderurl + _folderName);				
+				logger.info("Directory Created: " + _folderurl + _folderName);						
 			}
 			else{
-				logger.info("Directory is not created: " + _folderurl + _folderName);
-				System.out.println("Directory is not created: " + _folderurl + _folderName);
+				logger.info("Directory is not created: " + _folderurl + _folderName);				
 			}
 		}catch(Exception e){
 			logger.error(e.getMessage());

@@ -16,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.eib.common.AppCommon;
+import org.eib.common.FolderUtil;
 import org.eib.common.QueryServer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -467,14 +468,16 @@ public class Query {
 	 * @param _queryser
 	 */
 	public void queryToExcel(AppCommon _app, QueryServer _queryser){
+		Date date ;
+		
+		DateFormat dateFormat;
 		
 		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());
 		//doc file
 		this.readScript();		
 		this.setquery();//Set lai cau script lay
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
-		Date date ;
+		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
 		date= new Date();
 		this.set_startDate(dateFormat.format(date));
 		
