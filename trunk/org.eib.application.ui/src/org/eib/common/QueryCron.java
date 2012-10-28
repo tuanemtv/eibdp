@@ -196,14 +196,15 @@ public class QueryCron {
 					 if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element qelement1 = (Element) qlist.item(j);
 						NodeList qfstNm = qelement1.getChildNodes();							
-						System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
+						//System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
 						_querycron[i]._queryid[j] = (qelement1.getAttribute("id"));
 					 }
 				 }
 				 
+				 /*
 				 for (int k = 0; k < _querycron[i]._queryid.length; k++) {						
 					 logger.info("k["+k+"]= "+_querycron[i]._queryid[k]);
-				 }
+				 }*/
 			  }
 		  }
 	}
