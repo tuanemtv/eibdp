@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.eib.common.FolderUtil;
 import org.eib.common.MainCommon;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -23,6 +24,23 @@ public class QueryJob implements Job{
 		
 		
 		MainCommon main = new MainCommon();
+		
+		Date date1 ;
+		DateFormat dateFormat1;
+		DateFormat dateFormat2;
+		
+		dateFormat1 = new SimpleDateFormat("yyyyMMdd");	
+		date1= new Date();
+		//Set lai duong dan out
+		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat1.format(date1)+"\\");		
+		FolderUtil.createFolder(main.get_appcommon().get_outurl());
+		
+		dateFormat2 = new SimpleDateFormat("HHmm");	
+		date1= new Date();
+		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat2.format(date1)+"\\");				
+		//Tao folder
+		FolderUtil.createFolder(main.get_appcommon().get_outurl());
+				
 		//Tim cron dung
 		for (int i=0; i< main.get_querycron().length; i++){
 			if (data.getString("_cronNM").equals(main.get_querycron()[i].get_cronNM())){
