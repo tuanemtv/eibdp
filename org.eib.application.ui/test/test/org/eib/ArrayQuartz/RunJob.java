@@ -22,10 +22,7 @@ import test.org.eib.quartz.HelloJob;
 
 public class RunJob {
 	
-	public static final String ID = "org.eib.application.ui.views.TellerView"; //$NON-NLS-1$
 	private static Logger logger =Logger.getLogger("TellerView");
-
-	
 	
 	/**
 	 * @param args
@@ -35,27 +32,31 @@ public class RunJob {
 		// TODO Auto-generated method stub
 		QueryCron[] qur;//luc khoi dau lay duoc gia tri ko?
 		QueryCron qur1 = new QueryCron();
-		qur = new QueryCron[3];
+		qur = new QueryCron[1];
 		
 		try {
-			qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			//qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			
 			for (int i=0; i< qur.length; i++){
 				
 				JobDetail job = JobBuilder.newJob(Job1.class)
-				.withIdentity(qur[i].get_jobNM(), qur[i].get_jobGroup()).build();
+						.withIdentity(qur[i].get_jobNM(), qur[i].get_jobGroup()).build();
 		 
+				job.getJobDataMap().put("color", "abc");
+				
 			//Quartz 1.6.3
 		    	//CronTrigger trigger = new CronTrigger();
 		    	//trigger.setName("dummyTriggerName");
 		    	//trigger.setCronExpression("0/5 * * * * ?");
 		 
 		    	Trigger trigger = TriggerBuilder
-				.newTrigger()
-				.withIdentity(qur[i].get_triggerNM(), qur[i].get_triggerNM())
-				.withSchedule(
+		    			.newTrigger()
+		    			.withIdentity(qur[i].get_triggerNM(), qur[i].get_triggerNM())
+		    			.withSchedule(
 					//CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
 					CronScheduleBuilder.cronSchedule(qur[i].get_triggerSchedule()))
-				.build();
+					.build();
 		 
 		    	//schedule it
 		    	Scheduler scheduler = new StdSchedulerFactory().getScheduler();

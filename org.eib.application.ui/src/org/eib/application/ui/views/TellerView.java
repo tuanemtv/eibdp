@@ -212,10 +212,10 @@ public class TellerView extends ViewPart {
 		
 		Label lblKh = new Label(grpTiuCh, SWT.NONE);
 		lblKh.setBounds(414, 48, 55, 15);
-		lblKh.setText("Kh h\u00E0ng");
+		lblKh.setText("Khách hàng");
 		
 		cboKH = new Combo(grpTiuCh, SWT.NONE);
-		cboKH.setItems(new String[] {"01 - CN", "02 - DN", "03 - TC", "04 - T\u1EA5t c\u1EA3"});
+		cboKH.setItems(new String[] {"1 - Cá nhân", "2 - Doanh nghiệp", "3 - Tất cả"});
 		cboKH.setBounds(475, 44, 91, 23);
 		
 		btnVip = new Button(grpTiuCh, SWT.CHECK);
@@ -272,9 +272,9 @@ public class TellerView extends ViewPart {
 						//try {
 							
 						//Show Dialog Progress
-						//CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));
+						//CommandQuery.commandQueryExcel(_conn, _query[i].get_exquery(),true,false, _app.get_outurl_excel(_filename+"_"+_query[i].get_querynm()));						
+						//_query[i].set_exquery("select * from athena.daily_stocks_transaction");
 						
-						_query[i].set_exquery("select * from athena.daily_stocks_transaction");
 						try {
 					          new ProgressMonitorDialog(parent.getShell()).run(true, true, new RunScriptProgressBar(_conn, _query[i], _app.get_excelrows(),_app.get_outurl_excel(_filename+"_"+_query[i].get_querynm())));
 					    } catch (InvocationTargetException e3) {

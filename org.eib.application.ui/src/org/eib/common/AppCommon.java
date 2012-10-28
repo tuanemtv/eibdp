@@ -35,7 +35,7 @@ public class AppCommon {
 	
 	private String _defscripturl2; //duong dan ngay truyen vao
 	private String _defscript2 ="";
-	private String _configureurl;//Duong dan luu file cau hinh			
+		
 
 	private String _ftpServer;
 	private String _ftpUsr;
@@ -51,6 +51,27 @@ public class AppCommon {
 	private String _srcFTPCliUrl;
 	private String _srcFTPExtFile;
 	private String _srcDate;
+	
+	private String _scriptUrl;
+	private String _logUrl;
+	private String _configureUrl;//Duong dan luu file cau hinh		
+	
+	public String get_scriptUrl() {
+		return _scriptUrl;
+	}
+
+	public void set_scriptUrl(String _scriptUrl) {
+		this._scriptUrl = _scriptUrl;
+	}
+
+	public String get_logUrl() {
+		return _logUrl;
+	}
+
+	public void set_logUrl(String _logUrl) {
+		this._logUrl = _logUrl;
+	}
+
 	
 	public String get_srcFTPServer() {
 		return _srcFTPServer;
@@ -181,10 +202,10 @@ public class AppCommon {
 	}
 	
 	public String get_configureurl() {
-		return _configureurl;
+		return _configureUrl;
 	}
 	public void set_configureurl(String _configureurl) {
-		this._configureurl = _configureurl;
+		this._configureUrl = _configureurl;
 	}
 	public int get_scriptnums() {
 		return _scriptnums;
@@ -325,13 +346,13 @@ public class AppCommon {
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 this._scriptnums = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 logger.info("scriptnums: "+this.get_scriptnums());
+				 //logger.info("scriptnums: "+this.get_scriptnums());
 					
 				 //Duong dan luu file cau hinh
 				 nodelist = element.getElementsByTagName("configureurl");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
-				 this._configureurl = (fstNm.item(0)).getNodeValue();
+				 this._configureUrl = (fstNm.item(0)).getNodeValue();
 				 
 				 //tong so script chay
 				 nodelist = element.getElementsByTagName("scriptcount");
@@ -486,6 +507,7 @@ public class AppCommon {
 				 
 				 
 				 //Doc duong dan file
+				 /*
 				 nodelist = element.getElementsByTagName("defscripturl");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes(); 
@@ -525,7 +547,7 @@ public class AppCommon {
 						 //System.out.println (strLine);
 					 }
 					 //System.out.println (this._defscript);
-				 }
+				 }*/
 				 
 				//servernm
 				 nodelist = element.getElementsByTagName("servernm");
@@ -584,5 +606,65 @@ public class AppCommon {
 		_defscript2 = _defscript2.replaceAll("&h_trdt", _h_trdt);
 	}
 	
+	
+	public void logAppCommon(){
+		if (this.get_inurl() != null)
+			logger.info("_inurl: "+this.get_inurl());
+		if (this.get_outurl() != null)
+			logger.info("_outurl: "+ this.get_outurl());
+		if (this.get_excelrows() != 0)
+			logger.info("_excelrows: "+this.get_excelrows());
+		if (this.get_scriptnums() != 0)
+			logger.info("_scriptnums: "+this.get_scriptnums());
+		if (this.get_scriptcount() != 0)
+			logger.info("_scriptcount: "+this.get_scriptcount());	
+		if (this.get_h_trdt() != null)
+			logger.info("_h_trdt: "+this.get_h_trdt());		
+		
+		//private TreeMap<String, String> _define;
+		//private TreeMap<String, String> _definenm; //Define co cot ten
+		if (this.get_defscripturl() != null)
+			logger.info("_defscripturl: "+this.get_defscripturl());		
+		if (this.get_defscript() != null)
+			logger.info("_defscript: "+this.get_defscript());	
+		if (this.get_defscripturl2() != null)
+			logger.info("_defscripturl2: "+this.get_defscripturl2());
+		if (this.get_defscript2() != null)
+			logger.info("_defscript2: "+this.get_defscript2());
+		if (this.get_configureurl() != null)
+			logger.info("_configureurl: "+this.get_configureurl());	
+		if (this.get_scriptUrl() != null)
+			logger.info("_scriptUrl: "+this.get_scriptUrl());
+		if (this.get_logUrl() != null)
+			logger.info("_logUrl: "+this.get_logUrl());
+		if (this.get_ftpServer() != null)
+			logger.info("_ftpServer: "+this.get_ftpServer());
+		if (this.get_ftpUsr() != null)
+			logger.info("_ftpUsr: "+this.get_ftpUsr());
+		if (this.get_ftpPass() != null)
+			logger.info("_ftpPass: "+this.get_ftpPass());
+		if (this.get_ftpFilename() != null)
+			logger.info("_ftpFilename: "+this.get_ftpFilename());
+		if (this.get_ftpUrl() != null)
+			logger.info("_ftpUrl: "+this.get_ftpUrl());
+		if (this.get_ftpInurl() != null)	
+			logger.info("_ftpInurl: "+this.get_ftpInurl());
+		if (this.get_servernm() != null)
+			logger.info("_servernm: "+this.get_servernm());
+		if (this.get_srcFTPServer() != null)
+			logger.info("_srcFTPServer: "+this.get_srcFTPServer());
+		if (this.get_srcFTPUser() != null)
+			logger.info("_srcFTPUser: "+this.get_srcFTPUser());
+		if (this.get_srcFTPPass() != null)
+			logger.info("_srcFTPPass: "+this.get_srcFTPPass());	
+		if (this.get_srcFTPSerUrl() != null)
+			logger.info("_srcFTPSerUrl: "+this.get_srcFTPSerUrl());
+		if (this.get_srcFTPCliUrl() != null)
+			logger.info("_srcFTPCliUrl: "+this.get_srcFTPCliUrl());
+		if (this.get_srcFTPExtFile() != null)
+			logger.info("_srcFTPExtFile: "+this.get_srcFTPExtFile());
+		if (this.get_srcDate() != null)
+			logger.info("_srcDate: "+this.get_srcDate());	
+	}	
 	
 }

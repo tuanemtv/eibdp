@@ -1,6 +1,7 @@
 package org.eib.database;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -10,6 +11,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
+import org.eib.common.AppCommon;
+import org.eib.common.QueryServer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,7 +21,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class Query {
-		
+	
+	private static Logger logger =Logger.getLogger("Query");
 	private String _queryid;
 	private String _querynm;
 	private String _queryouturl;
@@ -31,7 +36,16 @@ public class Query {
 	private String _endDate;
 	private String _description;
 	private String _note;
+	private int _countquery; //Tong so script
 	
+	public int get_countquery() {
+		return _countquery;
+	}
+
+	public void set_countquery(int _countquery) {
+		this._countquery = _countquery;
+	}
+
 	public String get_description() {
 		return _description;
 	}
@@ -103,6 +117,36 @@ public class Query {
 	public Query() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	/**
+	 * Diem so luong query duoc cau hinh
+	 * @param _filepath
+	 * @param _tagName
+	 */
+	public Query(String _filepath, String _tagName) {
+		
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(_filepath);
+			NodeList list = doc.getElementsByTagName(_tagName);
+			this._countquery = list.getLength();
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}								
 	}
 	
 	public String get_exquery() {
@@ -328,9 +372,13 @@ public class Query {
 				 _query[i].set_define(hm_temp);
 				 
 				 //Doc duong dan file
+				 
 				 nodelist = element.getElementsByTagName("fileurl");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes(); 
+				 _query[i].set_fileurl((fstNm.item(0)).getNodeValue());
+				 
+				 /* 20121027 - chua doc file
 				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
 				 {
 					 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
@@ -343,7 +391,7 @@ public class Query {
 						 _query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung	  
 						 //System.out.println (strLine);
 					 }
-				 }
+				 }*/
 				 //System.out.println ("get Query = " + _query[i].get_getquery());				 
 				  
 				  //Lay status
@@ -353,11 +401,14 @@ public class Query {
 				 _query[i].set_status((fstNm.item(0)).getNodeValue());
 				 //System.out.println("status : " + (fstNm.item(0)).getNodeValue());
 				 
-				 nodelist = element.getElementsByTagName("description");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _query[i].set_description((fstNm.item(0)).getNodeValue());
-				 
+				 if (element.getElementsByTagName("description") != null) { //xem lai
+					 nodelist = element.getElementsByTagName("description");
+				 	element1 = (Element) nodelist.item(0);
+				 	fstNm = element1.getChildNodes();
+				 	_query[i].set_description((fstNm.item(0)).getNodeValue());
+				 }else{
+					 logger.error("description is null");
+				 }
 				 
 				 nodelist = element.getElementsByTagName("note");
 				 element1 = (Element) nodelist.item(0);
@@ -374,6 +425,99 @@ public class Query {
 	 * @param _urlfile
 	 */
 	public void WriteScriptToXML(Query[] _query, String _urlfile){
+		
+	}
+	
+	/**
+	 * Doc duong dan script
+	 */
+	public void readScript(){
+		
+		FileInputStream fstream;
+		try {
+			fstream = new FileInputStream(this.get_fileurl());
+			DataInputStream in = new DataInputStream(fstream);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			String strLine;
+			while ((strLine = br.readLine()) != null)   {	
+				//Neu bat dau bang select thi moi them vao.
+				this.set_getquery(this.get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung	  
+				 //System.out.println (strLine);
+			}			 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		 // Get the object of DataInputStream
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+		 
+	}
+	
+	/**
+	 * Thuc hien query to Excel
+	 * @param _app
+	 * @param _queryser
+	 */
+	public void queryToExcel(AppCommon _app, QueryServer _queryser){
+		
+		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());
+		//doc file
+		this.readScript();		
+		this.setquery();//Set lai cau script lay
+				
+		try {
+			CommandQuery.set_Excelrow(_app.get_excelrows());//so dong excel
+			CommandQuery.commandQueryExcel(_queryser.get_conn(), this.get_exquery(),true,false, _app.get_outurl_excel(this.get_querynm()));
+			logger.info("Query successful: "+this.get_querynm()+ " with url: "+_app.get_outurl_excel(this.get_querynm()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public void logQuery(){		
+		if (this.get_countquery() != 0)
+			logger.info("_countquery: "+this.get_countquery());
+		if (this.get_queryid() != null)
+			logger.info("_queryid: "+this.get_queryid());
+		if (this.get_querynm() != null)
+			logger.info("_querynm: "+this.get_querynm());
+		if (this.get_queryouturl() != null)
+			logger.info("_queryouturl: "+this.get_queryouturl());
+		if (this.get_queryinurl() != null)
+			logger.info("_queryinurl: "+this.get_queryinurl());
+		if (this.get_status() != null)
+			logger.info("_status: "+this.get_status());
+		if (this.get_module() != null)
+			logger.info("_module: "+this.get_module());
+		if (this.get_fileurl() != null)
+			logger.info("_fileurl: "+this.get_fileurl());
+		if (this.get_exquery() != null)
+			logger.info("_exquery: "+this.get_exquery());
+		if (this.get_getquery() != null)
+			logger.info("_getquery: "+this.get_getquery());
+		if (this.get_startDate() != null)
+			logger.info("_startDate: "+this.get_startDate());
+		if (this.get_endDate() != null)
+			logger.info("_endDate: "+this.get_endDate());
+		if (this.get_description() != null)
+			logger.info("_description: "+this.get_description());
+		if (this.get_note() != null)
+			logger.info("_note: "+this.get_note());
 		
 	}
 	

@@ -12,7 +12,7 @@ import org.eib.database.Query;
 import org.xml.sax.SAXException;
 
 public class TestQueryCron {
-	public static final String ID = "org.eib.application.ui.views.TellerView"; //$NON-NLS-1$
+	
 	private static Logger logger =Logger.getLogger("TellerView");
 	private AppCommon _app;
 	AppMessageBox _appMes;
@@ -28,7 +28,7 @@ public class TestQueryCron {
 		qur = new QueryCron[3];
 		
 		try {
-			qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 			for (int i=0; i< qur.length; i++){
 				//logger.info("["+(i+1)+"] queryid: " + _query[i].get_queryid()+", name: "+_query[i].get_querynm());
 				//System.out.println("\n["+(i+1)+"] queryid : " + _query[i].get_queryid());
