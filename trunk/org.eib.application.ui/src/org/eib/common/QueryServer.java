@@ -2,11 +2,15 @@ package org.eib.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
+import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,6 +19,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class QueryServer {
+	
+	private static Logger logger =Logger.getLogger("QueryServer");
+	
 	private String host = null;
     private int port = -1;
     private String database = null;
@@ -29,8 +36,18 @@ public class QueryServer {
     private boolean showMetaData = false;
     private boolean showSummary = false;
     private Query _script[];
+    private Connection _conn = null; 
     
-    public Query[] get_script() {
+    
+    public Connection get_conn() {
+		return _conn;
+	}
+
+	public void set_conn(Connection _conn) {
+		this._conn = _conn;
+	}
+
+	public Query[] get_script() {
 		return _script;
 	}
 
@@ -188,4 +205,45 @@ public class QueryServer {
 			  }
 		  }
     }
+	
+	/**
+	 * Tien hanh connect Database
+	 */
+	public void connectDatabase(){
+		this.setUrl(JDBCURLHelper.generateURL(this.getDriver(), this.getHost(), this.getPort(), this.getDatabase()));
+		try {
+			Class.forName(this.getDriver()).newInstance();
+			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());
+			//System.out.println("Connect Successful !!!");
+			logger.info("Connect Database Successful !!!");
+        } catch (Exception e2) {
+			logger.error("Unable to load driver " + this.getDriver());
+			logger.error("ERROR " + e2.getMessage());        
+        }
+	}
+	
+	/**
+	 * 
+	 */
+	public void logQueryServer(){
+		logger.info("host: "+this.getHost());
+		logger.info("port: "+this.getPort());
+		logger.info("database: "+this.getDatabase());
+		
+		logger.info("driver: "+this.getDriver());
+		logger.info("url: "+this.getUrl());
+		logger.info("user: "+this.getUser());
+		
+		logger.info("password: "+this.getPassword());
+		logger.info("separator: "+this.getSeparator());
+		logger.info("filename: "+this.getFilename());
+		//logger.info("showHeaders: "+this.isShowHeaders);
+		//logger.info("showMetaData: "+this.getFilename());
+		//logger.info("showSummary: "+this.getFilename());
+
+
+	    //private String query[];
+	   
+	    //private Query _script[];
+	}
 }

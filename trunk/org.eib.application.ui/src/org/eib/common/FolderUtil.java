@@ -68,4 +68,24 @@ public class FolderUtil {
 			//System.out.println("File deleted.");
 		 }
 	}
+	
+	/**
+	 * Dem so luong file trong folder
+	 * @param folder
+	 * @return
+	 */
+	public static int getFileInFolder(String folder){
+		File curFolder = new File(folder);
+        int totalFiles = 0;
+        //for loop to count the files in the directory using listfiles method
+        for (File file : curFolder.listFiles()) {
+            //determine if the file object is a file
+            if (file.isFile()) {
+                //count files ++
+                totalFiles++;
+            }
+        }
+        
+        return totalFiles;
+	}
 }

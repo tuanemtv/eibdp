@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.quartz.Job;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
  
@@ -18,6 +19,12 @@ public class Job1 implements Job
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] dd/MM/yyyy");
 		Date date = new Date();
 		System.out.println(dateFormat.format(date));
+		
+		JobDataMap data = context.getJobDetail().getJobDataMap();
+		//int count = data.getString("color");
+		
+		System.out.println("color = " + data.getString("color"));
+		
 		
  
 	}

@@ -505,7 +505,7 @@ public class CommandQuery {
         
         //System.out.println("--> OK");
         //_dperComplete = 100;
-        logger.info("> OK");
+        //logger.info("> OK");
         if (stmt != null) {
         	stmt.close();
         }                   

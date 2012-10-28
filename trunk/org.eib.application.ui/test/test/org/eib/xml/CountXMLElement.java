@@ -13,7 +13,7 @@ public class CountXMLElement {
   public static void main(String argv[]) {
  
 	try {
-		String filepath = "D:\\Query to Excel\\Congifure\\script.xml";
+		String filepath = "D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\script.xml";
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		Document doc = docBuilder.parse(filepath);
