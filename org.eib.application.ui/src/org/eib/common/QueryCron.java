@@ -189,6 +189,7 @@ public class QueryCron {
 				 _querycron[i].set_triggerGroup((fstNm.item(0)).getNodeValue());
 				 //System.out.println("triggerGroup : " + (fstNm.item(0)).getNodeValue());	
 				 
+				 
 				 NodeList qlist = doc.getElementsByTagName("Query");
 				 _querycron[i]._queryid = new String[qlist.getLength()];
 				 for (int j = 0; j < qlist.getLength(); j++) {	

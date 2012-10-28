@@ -473,7 +473,7 @@ public class AppCommon {
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 this._ftpServer = (fstNm.item(0)).getNodeValue();
-				 logger.info("_ftpServer: "+this.get_ftpServer());
+				 //logger.info("_ftpServer: "+this.get_ftpServer());
 				 
 				 //ftpuser
 				 nodelist = element.getElementsByTagName("ftpuser");
