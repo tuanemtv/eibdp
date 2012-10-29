@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CronManager>
+	<Cron id='01'> <!-- Phien 17h15 -->
+		<cronNM>Cron01</cronNM>
+		<jobNM>dummyJobName1</jobNM>
+		<jobClass>Job1</jobClass>
+		<jobGroup>group1</jobGroup>
+		<triggerNM>dummyTriggerName</triggerNM>
+		<triggerSchedule>0 15 17 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>
+		<Query id='Cron01.S001'>Cron01.S001</Query>		
+		<Query id='Cron01.S002'>Cron01.S002</Query>
+		<Query id='Cron01.S003'>Cron01.S003</Query>
+		<Query id='Cron01.S004'>Cron01.S004</Query>
+		<Query id='Cron01.S006'>Cron01.S006</Query>
+		<Query id='Cron01.S007'>Cron01.S007</Query>
+		<Query id='Cron01.S008'>Cron01.S008</Query>
+		<Query id='Cron01.S009'>Cron01.S009</Query>	
+	</Cron>
+	<Cron id='02'> <!-- Chay cac phien trong ngay -->
+		<cronNM>Cron02</cronNM>
+		<jobNM>dummyJobName2</jobNM>
+		<jobClass>Job2</jobClass>
+		<jobGroup>group2</jobGroup>
+		<triggerNM>dummyTriggerName2</triggerNM>
+		<triggerSchedule>0 0 10,11,14,15 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>				
+		<Query id='Cron02.S001'>Cron02.S001</Query>
+		<Query id='Cron02.S002'>Cron02.S002</Query>
+		<Query id='Cron02.S003'>Cron02.S003</Query>
+		<Query id='Cron02.S004'>Cron02.S004</Query>
+		<Query id='Cron02.S006'>Cron02.S006</Query>
+		<Query id='Cron02.S007'>Cron02.S007</Query>
+		<Query id='Cron02.S008'>Cron02.S008</Query>
+		<Query id='Cron02.S009'>Cron02.S009</Query>			
+	</Cron>
+	<Cron id='03'> <!-- Truong hop lay ngang -->
+		<cronNM>Cron03</cronNM>
+		<jobNM>dummyJobName3</jobNM>
+		<jobClass>Job3</jobClass>
+		<jobGroup>group3</jobGroup>
+		<triggerNM>dummyTriggerName3</triggerNM>
+		<triggerSchedule>0 16 13 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>				
+		<Query id='Cron03.S001'>Cron03.S001</Query>
+		<Query id='Cron03.S002'>Cron03.S002</Query>
+		<Query id='Cron03.S003'>Cron03.S003</Query>
+		<Query id='Cron03.S004'>Cron03.S004</Query>
+		<Query id='Cron03.S006'>Cron03.S006</Query>
+		<Query id='Cron03.S007'>Cron03.S007</Query>
+		<Query id='Cron03.S008'>Cron03.S008</Query>
+		<Query id='Cron03.S009'>Cron03.S009</Query>			
+	</Cron>
+	<Cron id='04'> <!-- Chay phien luc 7h00 lay ngay hom truoc -->
+		<cronNM>Cron04</cronNM>
+		<jobNM>dummyJobName4</jobNM>
+		<jobClass>Job4</jobClass>
+		<jobGroup>group4</jobGroup>
+		<triggerNM>dummyTriggerName4</triggerNM>
+		<triggerSchedule>0 0 7 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>				
+		<Query id='Cron04.P001'>Cron04.P001</Query>
+		<Query id='Cron04.P002'>Cron04.P002</Query>
+		<Query id='Cron04.P003'>Cron04.P003</Query>
+		<Query id='Cron04.P004'>Cron04.P004</Query>
+		<Query id='Cron04.P006'>Cron04.P006</Query>
+		<Query id='Cron04.P007'>Cron04.P007</Query>
+		<Query id='Cron04.P008'>Cron04.P008</Query>
+		<Query id='Cron04.P009'>Cron04.P009</Query>			
+	</Cron>
+</CronManager>
