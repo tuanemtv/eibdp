@@ -29,17 +29,11 @@ public class MainCommon {
 	private static Logger logger =Logger.getLogger("MainCommon");
 	
 	private AppCommon _appcommon;
-	private QueryServer _queryser;
+	private QueryServer[] _queryser;
 	private QueryCron[] _querycron;
 	private Query[] _query;
 	
-	
-	public QueryServer get_queryser() {
-		return _queryser;
-	}
-	public void set_queryser(QueryServer _queryser) {
-		this._queryser = _queryser;
-	}		
+			
 	
 	public QueryCron[] get_querycron() {
 		return _querycron;
@@ -53,17 +47,32 @@ public class MainCommon {
 	public void set_appcommon(AppCommon _appcommon) {
 		this._appcommon = _appcommon;
 	}
-	public QueryServer getQueryser() {
+
+	public QueryServer[] get_queryser() {
 		return _queryser;
 	}
-	public void setQueryser(QueryServer queryser) {
-		this._queryser = queryser;
+	public void set_queryser(QueryServer[] _queryser) {
+		this._queryser = _queryser;
 	}
 	public Query[] get_query() {
 		return _query;
 	}
 	public void set_query(Query[] _query) {
 		this._query = _query;
+	}
+	
+	
+	public QueryServer getQueryServerFromID(String _qurser){
+		QueryServer queryser = new QueryServer();
+		
+		for (int i = 0; i<this._queryser.length;i++){
+			if (_queryser[i].get_id().equals(_qurser)){
+				queryser = _queryser[i];				
+			}
+		}
+		
+		queryser.logQueryServer();
+		return queryser;
 	}
 	
 	//Khoi tao
@@ -77,33 +86,41 @@ public class MainCommon {
 			//logger.info("congifureUrl = "+ dir1.getCanonicalPath()+rb.getString("congifureUrl"));
 			//logger.info("scriptUrl = "+ dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			
+			QueryServer qurserver= new QueryServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml","Database");
+			
 			Query qur = new Query(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml","Query");
 			//qur.logQuery();
 			
 			QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");
 			//qurcron.logQueryCron();
-			
-			_queryser =new QueryServer();
+						
 			_appcommon = new AppCommon();	
 			_appcommon.set_scriptUrl(dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			_appcommon.set_logUrl(dir1.getCanonicalPath()+rb.getString("logtUrl"));
 			
+			_query = new Query[qur.get_countquery()];//Tong so query
+			_querycron = new QueryCron[qurcron.get_countcron()];								
+			_queryser =new QueryServer[qurserver.get_countdatabase()];
 			
-			_querycron = new QueryCron[qurcron.get_countcron()];		
-			_query = new Query[qur.get_countquery()];//Tong so query			
-						
 			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml","Common1");
 			//_appcommon.logAppCommon();
 			
-			_queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());
+			//_queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());\
 			//_queryser.logQueryServer();
 			//_queryser.connectDatabase();//Tien hanh connect
+			
+			qurserver.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml", "Database", _queryser);
+			for (int i=0; i< _queryser.length; i++){
+				System.out.println("["+i+"]");
+				_queryser[i].logQueryServer();									
+			}
+			
 			
 			
 			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
 			for (int i=0; i< _query.length; i++){
-				//System.out.println("["+i+"]");
-				//_query[i].logQuery();
+				System.out.println("["+i+"]");
+				_query[i].logQuery();
 				//Tien hanh query
 				//_query[i].queryToExcel(_appcommon, _queryser);							
 			}
@@ -111,10 +128,9 @@ public class MainCommon {
 			
 			qurcron.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron",_querycron);
 			for (int j=0; j< _querycron.length; j++){
-				//System.out.println("["+j+"]");
-				//_querycron[j].logQueryCron();
-				
-				
+				System.out.println("["+j+"]");
+				_querycron[j].logQueryCron();
+								
 				//_query[i].setquery();
 				//_query[i].set_queryouturl(_appcommon.get_outurl_excel(_query[i].get_querynm()));
 				
