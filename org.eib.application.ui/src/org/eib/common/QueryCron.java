@@ -31,6 +31,16 @@ public class QueryCron {
 	private String _triggerNM;
 	private String _triggerSchedule;
 	private String _triggerGroup;
+	private String _databaseID;
+	
+	
+	public String get_databaseID() {
+		return _databaseID;
+	}
+	public void set_databaseID(String _databaseID) {
+		this._databaseID = _databaseID;
+	}
+
 	private String[] _queryid;
 	
 	
@@ -189,7 +199,11 @@ public class QueryCron {
 				 _querycron[i].set_triggerGroup((fstNm.item(0)).getNodeValue());
 				 //System.out.println("triggerGroup : " + (fstNm.item(0)).getNodeValue());	
 				 
-				 
+				 nodelist = element.getElementsByTagName("databaseID");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 _querycron[i].set_databaseID((fstNm.item(0)).getNodeValue());
+				 				 
 				 NodeList qlist = doc.getElementsByTagName("Query");
 				 _querycron[i]._queryid = new String[qlist.getLength()];
 				 for (int j = 0; j < qlist.getLength(); j++) {	
@@ -225,6 +239,8 @@ public class QueryCron {
 			logger.info("_triggerSchedule: "+this.get_triggerSchedule());
 		if (this.get_triggerGroup() != null)
 			logger.info("_triggerGroup: "+this.get_triggerGroup());
+		if (this.get_databaseID() != null)
+			logger.info("_databaseID: "+this.get_databaseID());
 		
 		/*
 		if (_queryid.length != null){

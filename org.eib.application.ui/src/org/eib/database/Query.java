@@ -509,6 +509,9 @@ public class Query {
 		}
 	}
 	
+	/*
+	 * Log cho Query
+	 */
 	public void logQuery(){		
 		if (this.get_countquery() != 0)
 			logger.info("_countquery: "+this.get_countquery());

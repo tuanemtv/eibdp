@@ -7,6 +7,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.eib.common.FolderUtil;
 import org.eib.common.MainCommon;
+import org.eib.common.QueryServer;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -64,8 +65,14 @@ public class QueryJob implements Job{
 							main.get_query()[k].set_querynm(dateFormat.format(date)+" - "+main.get_query()[k].get_querynm());
 							
 							//Connect va chay Query
-							main.get_queryser().connectDatabase();							
-							main.get_query()[k].queryToExcel(main.get_appcommon(), main.getQueryser());
+							//main.get_queryser().connectDatabase();							
+							//main.get_query()[k].queryToExcel(main.get_appcommon(), main.getQueryser());
+							
+							QueryServer _qurser = new QueryServer();
+							_qurser = main.getQueryServerFromID(main.get_querycron()[i].get_databaseID());
+							_qurser.connectDatabase();
+							main.get_query()[k].queryToExcel(main.get_appcommon(), _qurser);
+							
 						}
 					}
 				}
