@@ -111,16 +111,16 @@ public class MainCommon {
 			
 			qurserver.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml", "Database", _queryser);
 			for (int i=0; i< _queryser.length; i++){
-				System.out.println("["+i+"]");
-				_queryser[i].logQueryServer();									
+				//System.out.println("["+i+"]");
+				//_queryser[i].logQueryServer();									
 			}
 			
 			
 			
 			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
 			for (int i=0; i< _query.length; i++){
-				System.out.println("["+i+"]");
-				_query[i].logQuery();
+				//System.out.println("["+i+"]");
+				//_query[i].logQuery();
 				//Tien hanh query
 				//_query[i].queryToExcel(_appcommon, _queryser);							
 			}
@@ -128,8 +128,8 @@ public class MainCommon {
 			
 			qurcron.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron",_querycron);
 			for (int j=0; j< _querycron.length; j++){
-				System.out.println("["+j+"]");
-				_querycron[j].logQueryCron();
+				//System.out.println("["+j+"]");
+				//_querycron[j].logQueryCron();
 								
 				//_query[i].setquery();
 				//_query[i].set_queryouturl(_appcommon.get_outurl_excel(_query[i].get_querynm()));
