@@ -55,7 +55,7 @@ public class JavaUtil {
 		while(j.hasNext()) {
 			Entry<String, String> me = j.next();
 			//System.out.println(me.getKey() + ": "+me.getValue());			
-			logger.info(me.getKey() + ": "+me.getValue());
+			logger.info("Key["+me.getKey() + "] --> Value["+me.getValue()+"]");
 		}
 	}
 }

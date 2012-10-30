@@ -160,6 +160,35 @@ public class CommandQuery {
             }
         }
     }
+    
+    
+    /**
+     * Thuc thi Functions or create Table
+     * @param conn
+     * @param query
+     */
+    public static void commandFunctions(Connection conn, String query) {
+        Statement stmt = null;
+        try {
+            stmt = conn.createStatement();
+            boolean resp = stmt.execute(query);
+            if (resp) {
+                //Ko lam gi                
+                
+            } else {
+                stmt.getUpdateCount();
+            }
+        } catch (Exception e) {
+        	logger.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+            }
+        }
+    }
+    
 
     /*
     public static void commandQueryExcel(Connection conn, String query,

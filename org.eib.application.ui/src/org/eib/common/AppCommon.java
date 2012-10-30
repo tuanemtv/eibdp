@@ -665,6 +665,10 @@ public class AppCommon {
 			logger.info("_srcFTPExtFile: "+this.get_srcFTPExtFile());
 		if (this.get_srcDate() != null)
 			logger.info("_srcDate: "+this.get_srcDate());	
+		
+		JavaUtil.showHashMap(this.get_define());
+		JavaUtil.showHashMap(this.get_definenm());	
+			
 	}	
 	
 }

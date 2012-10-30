@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.eib.common.AppCommon;
 import org.eib.common.FolderUtil;
+import org.eib.common.JavaUtil;
 import org.eib.common.QueryServer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,6 +42,8 @@ public class Query {
 	private String _description;
 	private String _note;
 	private int _countquery; //Tong so script
+	private TreeMap<String, String> _define;
+	
 	
 	public int get_countquery() {
 		return _countquery;
@@ -65,9 +68,6 @@ public class Query {
 	public void set_note(String _note) {
 		this._note = _note;
 	}
-
-	private TreeMap<String, String> _define;
-	
 	
 	public String get_startDate() {
 		return _startDate;
@@ -509,6 +509,57 @@ public class Query {
 		}
 	}
 	
+	/**
+	 * Tai function cho Dababase
+	 * @param _app
+	 * @param _queryser
+	 */
+	public void queryToFunctions(AppCommon _app, QueryServer _queryser){
+		Date date ;		
+		DateFormat dateFormat;
+		
+		//Bat buoc
+		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());//Lay duong dan he thong cau hinh
+		this.readScript();//doc file		
+		this.setquery();//Set lai cau script lay
+		
+		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
+		date= new Date();
+		this.set_startDate(dateFormat.format(date));
+		CommandQuery.commandFunctions(_queryser.get_conn(), this.get_exquery());
+		date= new Date();
+		this.set_endDate(dateFormat.format(date));
+		
+		logger.info("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Execute script successful with name: "+this.get_querynm());
+		
+	}
+	
+	
+	/**
+	 * Lay gia tri dua vao define cua App
+	 * @param _app
+	 * @param _queryser
+	 */
+	public void queryToAppDefine(AppCommon _app, QueryServer _queryser){
+		Date date ;		
+		DateFormat dateFormat;
+		
+		//Bat buoc
+		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());//Lay duong dan he thong cau hinh
+		this.readScript();//doc file		
+		this.setquery();//Set lai cau script lay - Lay define cua Query (neu cau set lai define cua Appcomon)
+		
+		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
+		date= new Date();
+		this.set_startDate(dateFormat.format(date));
+		_app.set_define(CommandQuery.queryGetVar(_queryser.get_conn(), this.get_exquery()));
+		date= new Date();
+		this.set_endDate(dateFormat.format(date));
+		
+		logger.info("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. queryToAppDefine successful with name: "+this.get_querynm());
+		
+	}
+	
 	/*
 	 * Log cho Query
 	 */
@@ -542,6 +593,7 @@ public class Query {
 		if (this.get_note() != null)
 			logger.info("_note: "+this.get_note());
 		
+		JavaUtil.showHashMap(this.get_define());
 	}
 	
 }
