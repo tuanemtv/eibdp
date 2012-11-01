@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScriptCommon id='DP'>
+	<Query id='DP001'>
+		<queryid>DP001</queryid>
+		<querynm>DP001 -  039_GD1</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP001 -  039_GD1.sql</fileurl>		
+		<description>DP001</description>
+		<note>DP001</note>
+	</Query>
+	<Query id='DP002'>
+		<queryid>DP002</queryid>
+		<querynm>DP002 -  039_USD</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP002 -  039_USD.sql</fileurl>		
+		<description>DP002</description>
+		<note>DP002</note>
+	</Query>
+	<Query id='DP003'>
+		<queryid>DP003</queryid>
+		<querynm>DP003 -  039_VND</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP003 -  039_VND.sql</fileurl>		
+		<description>DP003</description>
+		<note>DP003</note>
+	</Query>	
+	<Query id='DP004'>
+		<queryid>DP004</queryid>
+		<querynm>DP004 -  BC01_CAC_MON_TU_DONG_TAI_TUC</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP004 -  BC01_CAC_MON_TU_DONG_TAI_TUC.sql</fileurl>		
+		<description>DP004</description>
+		<note>DP004</note>
+	</Query>
+	<Query id='DP005'>
+		<queryid>DP005</queryid>
+		<querynm>DP005 -  BC02_CAC_MON_RUT_DUNG_HAN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP005 -  BC02_CAC_MON_RUT_DUNG_HAN.sql</fileurl>		
+		<description>DP005</description>
+		<note>DP005</note>
+	</Query>
+	<Query id='DP006'>
+		<queryid>DP006</queryid>
+		<querynm>DP006 -  BC03_CAC_MON_GUI_MOI</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP006 -  BC03_CAC_MON_GUI_MOI.sql</fileurl>		
+		<description>DP006</description>
+		<note>DP006</note>
+	</Query>
+	<Query id='DP008'>
+		<queryid>DP008</queryid>
+		<querynm>DP008 -  DS nop rut KHDN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP008 -  DS nop rut KHDN.sql</fileurl>		
+		<description>DP008</description>
+		<note>DP008</note>
+	</Query>
+	<Query id='DP009'>
+		<queryid>DP009</queryid>
+		<querynm>DP009 -  So du tai khoan KHDN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP009 -  So du tai khoan KHDN.sql</fileurl>		
+		<description>DP009</description>
+		<note>DP009</note>
+	</Query>
+	<Query id='DP010'>
+		<queryid>DP010</queryid>
+		<querynm>DP010 -  So du tai khoan KHDN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP010 -  Dao han huy dong von KHDN chi tiet.sql</fileurl>		
+		<description>DP010</description>
+		<note>DP010</note>
+	</Query>
+</ScriptCommon>
