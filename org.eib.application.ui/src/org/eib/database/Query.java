@@ -120,6 +120,10 @@ public class Query {
 	
 	public Query() {
 		super();
+		this.set_define(new TreeMap<String, String>()) ;
+		this.set_exquery("");
+		this.set_getquery("");
+		this.set_status("0");
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -282,15 +286,16 @@ public class Query {
 				 _query[i].set_module((fstNm.item(0)).getNodeValue());
 				 //System.out.println("module : " + (fstNm.item(0)).getNodeValue());
 				 
-				 
+				 /*
 				 nodelist = element.getElementsByTagName("getquery");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 _query[i].set_getquery((fstNm.item(0)).getNodeValue());
 				 //System.out.println("getquery : " + (fstNm.item(0)).getNodeValue());
-				 
+				 */
 				 
 				 //Add define
+				 /*
 				 TreeMap<String, String> hm_temp = new TreeMap<String, String>();
 				 
 				 nodelist = element.getElementsByTagName("define1");
@@ -374,9 +379,9 @@ public class Query {
 				 }
 				 //Dua vao define
 				 _query[i].set_define(hm_temp);
+				 */
 				 
 				 //Doc duong dan file
-				 
 				 nodelist = element.getElementsByTagName("fileurl");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes(); 
@@ -399,11 +404,13 @@ public class Query {
 				 //System.out.println ("get Query = " + _query[i].get_getquery());				 
 				  
 				  //Lay status
+				 /*
 				 nodelist = element.getElementsByTagName("status");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 _query[i].set_status((fstNm.item(0)).getNodeValue());
 				 //System.out.println("status : " + (fstNm.item(0)).getNodeValue());
+				 */
 				 
 				 if (element.getElementsByTagName("description") != null) { //xem lai
 					 nodelist = element.getElementsByTagName("description");
@@ -475,6 +482,7 @@ public class Query {
 		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());
 		//doc file
 		this.readScript();		
+		this.set_define(_app.get_define());
 		this.setquery();//Set lai cau script lay
 		
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
@@ -520,7 +528,8 @@ public class Query {
 		
 		//Bat buoc
 		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());//Lay duong dan he thong cau hinh
-		this.readScript();//doc file		
+		this.readScript();//doc file	
+		this.set_define(_app.get_define());
 		this.setquery();//Set lai cau script lay
 		
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
@@ -547,7 +556,9 @@ public class Query {
 		//Bat buoc
 		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());//Lay duong dan he thong cau hinh
 		this.readScript();//doc file		
+		this.set_define(_app.get_define());
 		this.setquery();//Set lai cau script lay - Lay define cua Query (neu cau set lai define cua Appcomon)
+		this.logQuery();
 		
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
 		date= new Date();
