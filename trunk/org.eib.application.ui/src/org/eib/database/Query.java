@@ -43,8 +43,17 @@ public class Query {
 	private String _note;
 	private int _countquery; //Tong so script
 	private TreeMap<String, String> _define;
+	private int _priority;
 	
 	
+	public int get_priority() {
+		return _priority;
+	}
+
+	public void set_priority(int _priority) {
+		this._priority = _priority;
+	}
+
 	public int get_countquery() {
 		return _countquery;
 	}
@@ -426,6 +435,11 @@ public class Query {
 				 fstNm = element1.getChildNodes();
 				 _query[i].set_note((fstNm.item(0)).getNodeValue());
 				 
+				 nodelist = element.getElementsByTagName("priority");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 _query[i].set_priority(Integer.parseInt((fstNm.item(0)).getNodeValue()));
+				 
 			  }
 		  }
 	}
@@ -603,6 +617,8 @@ public class Query {
 			logger.info("_description: "+this.get_description());
 		if (this.get_note() != null)
 			logger.info("_note: "+this.get_note());
+		if (this.get_priority() != 0)
+			logger.info("_priority: "+this.get_priority());
 		
 		JavaUtil.showHashMap(this.get_define());
 	}

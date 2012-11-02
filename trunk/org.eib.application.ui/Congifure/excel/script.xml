@@ -8,6 +8,7 @@
 		<fileurl>Query to Excel\DP\DP001 -  039_GD1.sql</fileurl>		
 		<description>DP001</description>
 		<note>DP001</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP002'>
 		<queryid>DP002</queryid>
@@ -16,6 +17,7 @@
 		<fileurl>Query to Excel\DP\DP002 -  039_USD.sql</fileurl>		
 		<description>DP002</description>
 		<note>DP002</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP003'>
 		<queryid>DP003</queryid>
@@ -23,7 +25,8 @@
 		<module>DP</module>		
 		<fileurl>Query to Excel\DP\DP003 -  039_VND.sql</fileurl>		
 		<description>DP003</description>
-		<note>DP003</note>
+		<note>DP003</note>		
+		<priority>10</priority>
 	</Query>	
 	<Query id='DP004'>
 		<queryid>DP004</queryid>
@@ -32,6 +35,7 @@
 		<fileurl>Query to Excel\DP\DP004 -  BC01_CAC_MON_TU_DONG_TAI_TUC.sql</fileurl>		
 		<description>DP004</description>
 		<note>DP004</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP005'>
 		<queryid>DP005</queryid>
@@ -40,6 +44,7 @@
 		<fileurl>Query to Excel\DP\DP005 -  BC02_CAC_MON_RUT_DUNG_HAN.sql</fileurl>		
 		<description>DP005</description>
 		<note>DP005</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP006'>
 		<queryid>DP006</queryid>
@@ -48,6 +53,7 @@
 		<fileurl>Query to Excel\DP\DP006 -  BC03_CAC_MON_GUI_MOI.sql</fileurl>		
 		<description>DP006</description>
 		<note>DP006</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP008'>
 		<queryid>DP008</queryid>
@@ -56,6 +62,7 @@
 		<fileurl>Query to Excel\DP\DP008 -  DS nop rut KHDN.sql</fileurl>		
 		<description>DP008</description>
 		<note>DP008</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP009'>
 		<queryid>DP009</queryid>
@@ -64,6 +71,7 @@
 		<fileurl>Query to Excel\DP\DP009 -  So du tai khoan KHDN.sql</fileurl>		
 		<description>DP009</description>
 		<note>DP009</note>
+		<priority>10</priority>
 	</Query>
 	<Query id='DP010'>
 		<queryid>DP010</queryid>
@@ -72,5 +80,339 @@
 		<fileurl>Query to Excel\DP\DP010 -  Dao han huy dong von KHDN chi tiet.sql</fileurl>		
 		<description>DP010</description>
 		<note>DP010</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP011'>
+		<queryid>DP011</queryid>
+		<querynm>DP011 -  Dao han huy dong von theo ngay</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP011 -  Dao han huy dong von theo ngay.sql</fileurl>		
+		<description>DP011</description>
+		<note>DP011</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP012'>
+		<queryid>DP012</queryid>
+		<querynm>DP012 -  BC01_CAC_MON_TU_DONG_TAI_TUC_PHAN_LOAI_CIF</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP012 -  BC01_CAC_MON_TU_DONG_TAI_TUC_PHAN_LOAI_CIF.sql</fileurl>		
+		<description>DP012</description>
+		<note>DP012</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP013'>
+		<queryid>DP013</queryid>
+		<querynm>DP013 -  Bao cao 22 co ky han doanh nghiep</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP013 -  Bao cao 22 co ky han doanh nghiep.sql</fileurl>		
+		<description>DP013</description>
+		<note>DP013</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP014'>
+		<queryid>DP014</queryid>
+		<querynm>DP014 -  Bao cao 22 khong ky han doanh nghiep</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP014 -  Bao cao 22 khong ky han doanh nghiep.sql</fileurl>		
+		<description>DP014</description>
+		<note>DP014</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP015'>
+		<queryid>DP015</queryid>
+		<querynm>DP015 -  So du huy dong KHDN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP015 -  So du huy dong KHDN.sql</fileurl>		
+		<description>DP015</description>
+		<note>DP015</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP016'>
+		<queryid>DP016</queryid>
+		<querynm>DP016 -  So du ky quy KHDN</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP016 -  So du ky quy KHDN.sql</fileurl>		
+		<description>DP016</description>
+		<note>DP016</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP017'>
+		<queryid>DP017</queryid>
+		<querynm>DP017 -  Cac mon thuong luong con so du da duoc hso duyet deal_cn_usd</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP017 -  Cac mon thuong luong con so du da duoc hso duyet deal_cn_usd.sql</fileurl>		
+		<description>DP017</description>
+		<note>DP017</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP018'>
+		<queryid>DP018</queryid>
+		<querynm>DP018 -  Cac mon thuong luong con so du da duoc hso duyet deal_cn_vnd</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP018 -  Cac mon thuong luong con so du da duoc hso duyet deal_cn_vnd.sql</fileurl>		
+		<description>DP018</description>
+		<note>DP018</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP019'>
+		<queryid>DP019</queryid>
+		<querynm>DP019 -  Cac mon thuong luong con so du da duoc hso duyet deal_dn_vnd</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP019 -  Cac mon thuong luong con so du da duoc hso duyet deal_dn_vnd.sql</fileurl>		
+		<description>DP019</description>
+		<note>DP019</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP020'>
+		<queryid>DP020</queryid>
+		<querynm>DP020 -  105 - USD - Doanh so gui rut huy dong lon nhat KHCN - TQ</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP020 -  105 - USD - Doanh so gui rut huy dong lon nhat KHCN - TQ.sql</fileurl>		
+		<description>DP020</description>
+		<note>DP020</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP021'>
+		<queryid>DP021</queryid>
+		<querynm>DP021 -  105 - VND - Doanh so gui rut huy dong lon nhat KHCN - TQ</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP021 -  105 - VND - Doanh so gui rut huy dong lon nhat KHCN - TQ.sql</fileurl>		
+		<description>DP021</description>
+		<note>DP021</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP026'>
+		<queryid>DP026</queryid>
+		<querynm>DP026 -  135 - CN - NT QD USD - Thong ke KH gui tien tai cac PGD</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP026 -  135 - CN - NT QD USD - Thong ke KH gui tien tai cac PGD.sql</fileurl>		
+		<description>DP026</description>
+		<note>DP026</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP030'>
+		<queryid>DP030</queryid>
+		<querynm>DP030 -  135 - DN - NT QD USD - Thong ke KH gui tien tai cac PGD</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP030 -  135 - DN - NT QD USD - Thong ke KH gui tien tai cac PGD.sql</fileurl>		
+		<description>DP030</description>
+		<note>DP030</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP033'>
+		<queryid>DP033</queryid>
+		<querynm>DP033 -  105 - USD - Doanh so gui rut huy dong lon nhat KHCN - CT</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP033 -  105 - USD - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
+		<description>DP033</description>
+		<note>DP033</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP034'>
+		<queryid>DP034</queryid>
+		<querynm>DP034 -  105 - VND - Doanh so gui rut huy dong lon nhat KHCN - CT</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP034 -  105 - VND - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
+		<description>DP034</description>
+		<note>DP034</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP035'>
+		<queryid>DP035</queryid>
+		<querynm>DP035 -  105 - GD1 - Doanh so gui rut huy dong lon nhat KHCN - CT</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP035 -  105 - GD1 - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
+		<description>DP035</description>
+		<note>DP035</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP036'>
+		<queryid>DP036</queryid>
+		<querynm>DP036 -  108 Thong ke so luong KH theo ma PGD toan he thong</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP036 -  108 Thong ke so luong KH theo ma PGD toan he thong.sql</fileurl>		
+		<description>DP036</description>
+		<note>DP036</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP032'>
+		<queryid>DP032</queryid>
+		<querynm>DP032 -  GD1 - Vang giu ho - Huy dong vang</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP032 -  GD1 - Vang giu ho - Huy dong vang.sql</fileurl>		
+		<description>DP032</description>
+		<note>DP032</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP037'>
+		<queryid>DP037</queryid>
+		<querynm>DP037 -  108 Thong ke so luong KH theo ma PGD Ca Nhan</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP037 -  108 Thong ke so luong KH theo ma PGD Ca Nhan.sql</fileurl>		
+		<description>DP037</description>
+		<note>DP037</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP038'>
+		<queryid>DP038</queryid>
+		<querynm>DP038 -  108 Thong ke so luong KH theo ma PGD Doanh Nghiep</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP038 -  108 Thong ke so luong KH theo ma PGD Doanh Nghiep.sql</fileurl>		
+		<description>DP038</description>
+		<note>DP038</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP039'>
+		<queryid>DP039</queryid>
+		<querynm>DP039 -  FTP - Tong quat - KKH, CKH.sql</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP039 -  FTP - Tong quat - KKH, CKH.sql</fileurl>		
+		<description>DP039</description>
+		<note>DP039</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP041'>
+		<queryid>DP041</queryid>
+		<querynm>DP041 -  CN - GD1 - FTP chi tiet</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP041 -  CN - GD1 - FTP chi tiet.sql</fileurl>		
+		<description>DP041</description>
+		<note>DP041</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP042'>
+		<queryid>DP042</queryid>
+		<querynm>DP042 -  FTP - Co ky han - Tong hop</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP042 -  FTP - Co ky han - Tong hop.sql</fileurl>		
+		<description>DP042</description>
+		<note>DP042</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP043'>
+		<queryid>DP043</queryid>
+		<querynm>DP043 -  FTP - TCTD - Chi tiet</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP043 -  FTP - TCTD - Chi tiet.sql</fileurl>		
+		<description>DP043</description>
+		<note>DP043</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP044'>
+		<queryid>DP044</queryid>
+		<querynm>DP044 -  FTP - TCTD - Chi tiet</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP044 -  FTP - DN - Chi tiet.sql</fileurl>		
+		<description>DP044</description>
+		<note>DP044</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP045'>
+		<queryid>DP045</queryid>
+		<querynm>DP045 -  153 - CN - So du huy dong theo KH mo CIF moi</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP045 -  153 - CN - So du huy dong theo KH mo CIF moi.sql</fileurl>		
+		<description>DP045</description>
+		<note>DP045</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP047'>
+		<queryid>DP047</queryid>
+		<querynm>DP047 -  So du dao han Vang con lai</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP047 -  So du dao han Vang con lai.sql</fileurl>		
+		<description>DP047</description>
+		<note>DP047</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP048'>
+		<queryid>DP048</queryid>
+		<querynm>DP048 -  Mua ban ngoai te</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP048 -  Mua ban ngoai te.sql</fileurl>		
+		<description>DP048</description>
+		<note>DP048</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP049'>
+		<queryid>DP049</queryid>
+		<querynm>DP049 -  Liet ke giao dich thu chi lai</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP049 -  Liet ke giao dich thu chi lai.sql</fileurl>		
+		<description>DP049</description>
+		<note>DP049</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP050'>
+		<queryid>DP050</queryid>
+		<querynm>DP050 -  Doanh so tai tuc huy dong khac VGH</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP050 -  Doanh so tai tuc huy dong khac VGH.sql</fileurl>		
+		<description>DP050</description>
+		<note>DP050</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP051'>
+		<queryid>DP051</queryid>
+		<querynm>DP051 -  Cancel tat toan tien gui, tiet kiem</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP051 -  Cancel tat toan tien gui, tiet kiem.sql</fileurl>		
+		<description>DP051</description>
+		<note>DP051</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP052'>
+		<queryid>DP052</queryid>
+		<querynm>DP052 -  VND - RPT 105 - Von huy dong CN gui rut dung han, truoc han</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP052 -  VND - RPT 105 - Von huy dong CN gui rut dung han, truoc han.sql</fileurl>		
+		<description>DP052</description>
+		<note>DP052</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP053'>
+		<queryid>DP053</queryid>
+		<querynm>DP053 -  USD - RPT 105 - Von huy dong CN gui rut dung han, truoc han</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP053 -  USD - RPT 105 - Von huy dong CN gui rut dung han, truoc han.sql</fileurl>		
+		<description>DP053</description>
+		<note>DP053</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP054'>
+		<queryid>DP054</queryid>
+		<querynm>DP054 -  GD1 - RPT 105 - Von huy dong CN gui rut dung han, truoc han</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP054 -  GD1 - RPT 105 - Von huy dong CN gui rut dung han, truoc han.sql</fileurl>		
+		<description>DP054</description>
+		<note>DP054</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP055'>
+		<queryid>DP055</queryid>
+		<querynm>DP055 -  RPT 105 - KhacVND_GD1 - Doanh so gui rut huy dong lon nhat KHCN - CT</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP055 -  RPT 105 - KhacVND_GD1 - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
+		<description>DP055</description>
+		<note>DP055</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP056'>
+		<queryid>DP056</queryid>
+		<querynm>DP056 -  FTP Chi Nhanh Quan 11</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP056 -  FTP Chi Nhanh Quan 11.sql</fileurl>		
+		<description>DP056</description>
+		<note>DP056</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DP060'>
+		<queryid>DP060</queryid>
+		<querynm>DP060  - Money Gap</querynm>
+		<module>DP</module>		
+		<fileurl>Query to Excel\DP\DP060  - Money Gap.sql</fileurl>		
+		<description>DP060</description>
+		<note>DP060</note>
+		<priority>10</priority>
 	</Query>
 </ScriptCommon>
