@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 
 import test.org.eib.ArrayQuartz.Job1;
 import test.org.eib.ArrayQuartz.JobQuery;
+import test.org.eib.sort.Person2;
 
 public class MainCommon {
 	
@@ -62,6 +63,26 @@ public class MainCommon {
 	}
 	
 	
+	
+	public void sortQueryWithPriority() {
+	    int in, out;
+
+	    for (out = 1; out < _query.length; out++) {
+	      Query temp = _query[out]; // out is dividing line
+	      in = out; // start shifting at out
+
+	      while (in > 0 && // until smaller one found,
+	    		  _query[in - 1].get_priority() > temp.get_priority()) {
+	    	  _query[in] = _query[in - 1]; // shift item to the right
+	        --in; // go left one position
+	      }
+	      _query[in] = temp; // insert marked item
+	    }	    	    	  	 	    
+	}
+	
+	
+	
+	
 	public QueryServer getQueryServerFromID(String _qurser){
 		QueryServer queryser = new QueryServer();
 		
@@ -74,6 +95,7 @@ public class MainCommon {
 		queryser.logQueryServer();
 		return queryser;
 	}
+	
 	
 	//Khoi tao
 	public MainCommon(){
