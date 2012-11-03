@@ -531,6 +531,55 @@ public class Query {
 		}
 	}
 	
+	
+	/**
+	 * Thuc hien query to Excel
+	 * @param _app
+	 * @param _queryser
+	 */
+	public void queryToStringExcel(AppCommon _app, QueryServer _queryser){
+		Date date ;
+		
+		DateFormat dateFormat;
+		
+		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());
+		//doc file
+		this.readScript();		
+		this.set_define(_app.get_define());
+		this.setquery();//Set lai cau script lay
+		
+		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
+		date= new Date();
+		this.set_startDate(dateFormat.format(date));
+		
+		try {
+			CommandQuery.set_Excelrow(_app.get_excelrows());//so dong excel
+			CommandQuery.commandQueryStringExcel(_queryser.get_conn(), this.get_exquery(),true,false, _app.get_outurl_excel(this.get_querynm()));
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			
+			logger.info("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query successful: "+this.get_querynm()+ " with url: "+_app.get_outurl_excel(this.get_querynm()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			date= new Date();
+			this.set_endDate(dateFormat.format(date));
+			logger.error("S["+this.get_startDate()+"], E["+this.get_endDate()+"]. Query Fail: "+ e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Tai function cho Dababase
 	 * @param _app
