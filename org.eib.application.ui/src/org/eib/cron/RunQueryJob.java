@@ -1,6 +1,8 @@
 package org.eib.cron;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -29,11 +31,16 @@ public class RunQueryJob {
 		// TODO Auto-generated method stub
 		QueryCron[] qur;//luc khoi dau lay duoc gia tri ko?
 		QueryCron qur1 = new QueryCron();
-		qur = new QueryCron[2];
+		
+		File dir1 = new File(".");
+        ResourceBundle rb = ResourceBundle.getBundle("app");        			
 		
 		try {
-			//qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
-			qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");			
+			qur = new QueryCron[qurcron.get_countcron()];
+			
+			//qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			qur1.getXMLToCron("D:\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\cron\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 			
 			for (int i=0; i< qur.length; i++){
 				
