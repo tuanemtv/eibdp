@@ -7,11 +7,11 @@ public class TreeMapExample{
 		System.out.println("Tree Map Example!\n");
 		TreeMap <String, String>tMap = new TreeMap<String, String>();
 		//Addding data to a tree map
-		//tMap.put("05h_predt", "20120607");
-		//tMap.put("01h_trdt", "20120608");
-		//tMap.put("02h_startdt", "20120601");
-		//tMap.put("03h_enddt", "20120531");
-		//tMap.put("04h_bstartdt", "20120601");
+		tMap.put("05h_predt", "20120607");
+		tMap.put("01h_trdt", "20120608");
+		tMap.put("02h_startdt", "20120601");
+		tMap.put("03h_enddt", "20120531");
+		tMap.put("04h_bstartdt", "20120601");
 		
 		
 		/*
@@ -39,7 +39,6 @@ public class TreeMapExample{
 		// Get an iterator
 		Iterator i = set.iterator();
 		// Display elements
-		
 		while(i.hasNext()) {
 			Map.Entry me = (Map.Entry)i.next();
 			System.out.print(me.getKey() + ": ");
