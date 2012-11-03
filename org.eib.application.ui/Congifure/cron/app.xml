@@ -3,7 +3,7 @@
 <App>
 	<Common1>
 		<inurl>D:\</inurl>
-		<outurl>D:\Query Result\</outurl>
+		<outurl>D:\Query Result\</outurl>  <!--D:\Query Result\  -->
 		<excelrows>65000</excelrows>
 		<scriptnums>3</scriptnums> <!-- max 5 script-->
 		<servernm>Oralce-ALONE29</servernm>
