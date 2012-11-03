@@ -178,7 +178,7 @@ public class CommandMultiQuery extends Thread{
             query.set_status("8");//OK            
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Done. STARTDT["+ query.get_startDate()+"] ENDDT[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
             conn.close();//dong connect lai
             //System.out.println(" >>script= "+query.get_queryid()+": OK ");
         } catch (Exception e) {
@@ -188,7 +188,7 @@ public class CommandMultiQuery extends Thread{
             //Set thoi gian ket thuc           
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Done. STARTDT["+ query.get_startDate()+"] ENDDT[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
             logger.error(e.getMessage());                                    
         }finally {
             try {
