@@ -6,8 +6,11 @@
 		<jobClass>Job1</jobClass>
 		<jobGroup>group1</jobGroup>
 		<triggerNM>dummyTriggerName</triggerNM>
-		<triggerSchedule>0 15 17 * * ?</triggerSchedule>
+		<triggerSchedule>0 15 17 * * ?</triggerSchedule> <!-- 30 11 -->
 		<triggerGroup>group1</triggerGroup>
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<Query id='Cron01.G001'>Cron01.G001</Query>
+		<Query id='Cron01.G002'>Cron01.G002</Query>    
 		<Query id='Cron01.S001'>Cron01.S001</Query>		
 		<Query id='Cron01.S002'>Cron01.S002</Query>
 		<Query id='Cron01.S003'>Cron01.S003</Query>
@@ -15,7 +18,7 @@
 		<Query id='Cron01.S006'>Cron01.S006</Query>
 		<Query id='Cron01.S007'>Cron01.S007</Query>
 		<Query id='Cron01.S008'>Cron01.S008</Query>
-		<Query id='Cron01.S009'>Cron01.S009</Query>	
+		<Query id='Cron01.S009'>Cron01.S009</Query>					
 	</Cron>
 	<Cron id='02'> <!-- Chay cac phien trong ngay -->
 		<cronNM>Cron02</cronNM>
@@ -23,8 +26,11 @@
 		<jobClass>Job2</jobClass>
 		<jobGroup>group2</jobGroup>
 		<triggerNM>dummyTriggerName2</triggerNM>
-		<triggerSchedule>0 0 10,11,14,15 * * ?</triggerSchedule>
-		<triggerGroup>group1</triggerGroup>				
+		<triggerSchedule>0 0 9,10,11,14,15,17 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>
+		<databaseID>Oralce-ALONE29</databaseID>   	
+		<Query id='Cron02.G002'>Cron02.G002</Query>		
+		<Query id='Cron02.G001'>Cron02.G001</Query>				
 		<Query id='Cron02.S001'>Cron02.S001</Query>
 		<Query id='Cron02.S002'>Cron02.S002</Query>
 		<Query id='Cron02.S003'>Cron02.S003</Query>
@@ -32,33 +38,18 @@
 		<Query id='Cron02.S006'>Cron02.S006</Query>
 		<Query id='Cron02.S007'>Cron02.S007</Query>
 		<Query id='Cron02.S008'>Cron02.S008</Query>
-		<Query id='Cron02.S009'>Cron02.S009</Query>			
+		<Query id='Cron02.S009'>Cron02.S009</Query>				
 	</Cron>
-	<Cron id='03'> <!-- Truong hop lay ngang -->
-		<cronNM>Cron03</cronNM>
-		<jobNM>dummyJobName3</jobNM>
-		<jobClass>Job3</jobClass>
-		<jobGroup>group3</jobGroup>
-		<triggerNM>dummyTriggerName3</triggerNM>
-		<triggerSchedule>0 16 13 * * ?</triggerSchedule>
-		<triggerGroup>group1</triggerGroup>				
-		<Query id='Cron03.S001'>Cron03.S001</Query>
-		<Query id='Cron03.S002'>Cron03.S002</Query>
-		<Query id='Cron03.S003'>Cron03.S003</Query>
-		<Query id='Cron03.S004'>Cron03.S004</Query>
-		<Query id='Cron03.S006'>Cron03.S006</Query>
-		<Query id='Cron03.S007'>Cron03.S007</Query>
-		<Query id='Cron03.S008'>Cron03.S008</Query>
-		<Query id='Cron03.S009'>Cron03.S009</Query>			
-	</Cron>
-	<Cron id='04'> <!-- Chay phien luc 7h00 lay ngay hom truoc -->
+	<!--  Chay phien luc 7h00 lay ngay hom truoc-->	
+	<Cron id='04'>
 		<cronNM>Cron04</cronNM>
 		<jobNM>dummyJobName4</jobNM>
 		<jobClass>Job4</jobClass>
 		<jobGroup>group4</jobGroup>
 		<triggerNM>dummyTriggerName4</triggerNM>
-		<triggerSchedule>0 0 7 * * ?</triggerSchedule>
-		<triggerGroup>group1</triggerGroup>				
+		<triggerSchedule>0 48 8 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID>   	
 		<Query id='Cron04.P001'>Cron04.P001</Query>
 		<Query id='Cron04.P002'>Cron04.P002</Query>
 		<Query id='Cron04.P003'>Cron04.P003</Query>
@@ -66,6 +57,66 @@
 		<Query id='Cron04.P006'>Cron04.P006</Query>
 		<Query id='Cron04.P007'>Cron04.P007</Query>
 		<Query id='Cron04.P008'>Cron04.P008</Query>
-		<Query id='Cron04.P009'>Cron04.P009</Query>			
+		<Query id='Cron04.P009'>Cron04.P009</Query>
+		<Query id='Cron04.G001'>Cron04.G001</Query>
+		<Query id='Cron04.G002'>Cron04.G002</Query>			
 	</Cron>
+	<Cron id='05'> <!-- GL -->
+		<cronNM>Cron05</cronNM>
+		<jobNM>dummyJobName5</jobNM>
+		<jobClass>Job5</jobClass>
+		<jobGroup>group5</jobGroup>
+		<triggerNM>dummyTriggerName5</triggerNM>
+		<triggerSchedule>0 55 14,16 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID>   
+		<Query id='Cron05.G002'>Cron05.G002</Query>		
+		<Query id='Cron05.G001'>Cron05.G001</Query>						
+	</Cron>
+	<Cron id='06'> <!-- GL -->
+		<cronNM>Cron06</cronNM>
+		<jobNM>dummyJobName6</jobNM>
+		<jobClass>Job6</jobClass>
+		<jobGroup>group6</jobGroup>
+		<triggerNM>dummyTriggerName6</triggerNM>
+		<triggerSchedule>0 25 11 * * ?</triggerSchedule> <!--   -->
+		<triggerGroup>group6</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID>
+		<Query id='Cron06.G002'>Cron06.G002</Query>   	
+		<Query id='Cron06.G001'>Cron06.G001</Query>
+		<Query id='Cron06.S001'>Cron06.S001</Query>
+		<Query id='Cron06.S002'>Cron06.S002</Query>
+		<Query id='Cron06.S003'>Cron06.S003</Query>
+		<Query id='Cron06.S004'>Cron06.S004</Query>
+		<Query id='Cron06.S006'>Cron06.S006</Query>
+		<Query id='Cron06.S007'>Cron06.S007</Query>
+		<Query id='Cron06.S008'>Cron06.S008</Query>
+		<Query id='Cron06.S009'>Cron06.S009</Query>								
+	</Cron>
+	<Cron id='07'> <!-- GL -->
+		<cronNM>Cron07</cronNM>
+		<jobNM>dummyJobName7</jobNM>
+		<jobClass>Job7</jobClass>
+		<jobGroup>group7</jobGroup>
+		<triggerNM>dummyTriggerName7</triggerNM>
+		<triggerSchedule>0 7 10 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID>   
+		<Query id='Cron07.G002'>Cron07.G002</Query>		
+		<Query id='Cron07.G001'>Cron07.G001</Query>						
+	</Cron>
+	<!-- Test
+	<Cron id='07'> 
+		<cronNM>Cron07</cronNM>
+		<jobNM>dummyJobName7</jobNM>
+		<jobClass>Job7</jobClass>
+		<jobGroup>group7</jobGroup>
+		<triggerNM>dummyTriggerName7</triggerNM>
+		<triggerSchedule>40 15 14 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID>   	
+		<Query id='Cron07.S007'>Cron07.S007</Query>
+		<Query id='Cron07.S008'>Cron07.S008</Query>
+		<Query id='Cron07.S009'>Cron07.S009</Query>			
+	</Cron> -->
 </CronManager>

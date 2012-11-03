@@ -3,7 +3,7 @@
 <ScriptCommon id='S001'>
 	<Query id='S001'>
 		<queryid>S001</queryid>
-		<querynm>Gui rut - Ca nhan</querynm>
+		<querynm>DP - Gui rut - Ca nhan</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -27,7 +27,7 @@
 	</Query>
 	<Query id='S002'>
 		<queryid>S002</queryid>
-		<querynm>Gui rut - Doanh nghiep</querynm>
+		<querynm>DP - Gui rut - Doanh nghiep</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -50,7 +50,7 @@
 	</Query>
 	<Query id='S003'>
 		<queryid>S003</queryid>
-		<querynm>Gui rut - Ca nhan - Khac VGH</querynm>
+		<querynm>DP - Gui rut - Ca nhan - Khac VGH</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -73,7 +73,7 @@
 	</Query>
 	<Query id='S004'>
 		<queryid>S004</queryid>
-		<querynm>Gui rut - Thau chi</querynm>
+		<querynm>DP - Gui rut - Thau chi</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -96,7 +96,7 @@
 	</Query>
 	<Query id='S005'>
 		<queryid>S005</queryid>
-		<querynm>Gui rut - Phong giao dich</querynm>
+		<querynm>DP - Gui rut - Phong giao dich</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -119,7 +119,7 @@
 	</Query>
 	<Query id='S006'>
 		<queryid>S006</queryid>
-		<querynm>Tong Gui Rut - Ngoai te qui doi USD</querynm>
+		<querynm>DP - Tong Gui Rut - Ngoai te qui doi USD</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -142,7 +142,7 @@
 	</Query>
 	<Query id='S007'>
 		<queryid>S007</queryid>
-		<querynm>Tong Gui Rut - USD</querynm>
+		<querynm>DP - Tong Gui Rut - USD</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -165,7 +165,7 @@
 	</Query>	
 	<Query id='S008'>
 		<queryid>S008</queryid>
-		<querynm>Tong Gui Rut - Vang</querynm>
+		<querynm>DP - Tong Gui Rut - Vang</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -188,7 +188,7 @@
 	</Query>
 	<Query id='S009'>
 		<queryid>S009</queryid>
-		<querynm>Tong Gui Rut - VND</querynm>
+		<querynm>DP - Tong Gui Rut - VND</querynm>
 		<queryouturl> </queryouturl>
 		<queryinurl> </queryinurl>
 		<status>0</status>
@@ -408,6 +408,75 @@
 		<note>Note 9</note>
 		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
 		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='G001'>
+		<queryid>G001</queryid>
+		<querynm>GL - Misfunding - CN</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>GL</module>
+		<exquery> </exquery>
+		<fileurl>GL script\G0001_Misfunding - CN.sql</fileurl>
+		<getquery> </getquery>
+		<description>Script 10</description> <!--Mieu ta cau script-->
+		<note>Note 10</note>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='G002'>
+		<queryid>G002</queryid>
+		<querynm>GL - Misfunding - CN_NT</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>GL</module>
+		<exquery> </exquery>
+		<fileurl>GL script\G0002_Misfunding - CN_NT.sql</fileurl>
+		<getquery> </getquery>
+		<description>Script 10</description> <!--Mieu ta cau script-->
+		<note>Note 10</note>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
+	</Query>
+	<Query id='FUN001'>
+		<queryid>FUN001</queryid>
+		<querynm>CHKOPEN2</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>Functions script\FUN001_CHKOPEN2.sql</fileurl>
+		<getquery> </getquery>
+		<description>CHKOPEN2</description> <!--Mieu ta cau script-->
+		<note>CHKOPEN2</note>
+		<define1 id='' name=''> </define1>
+		<define2 id='' name=''> </define2>
 		<define3 id='' name=''> </define3>
 		<define4 id='' name=''> </define4>
 		<define5 id='' name=''> </define5>
