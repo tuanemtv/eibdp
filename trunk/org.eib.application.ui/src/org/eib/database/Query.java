@@ -236,7 +236,8 @@ public class Query {
 			//System.out.println("a = "+me.getKey());
 			//System.out.println("b = "+"&"+(String)me.getKey().substring(3));
 			//System.out.println("getValue = "+(String)me.getValue());
-			_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(3), (String)me.getValue());
+			//_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(3), (String)me.getValue());
+			_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(2), "'"+(String)me.getValue()+"'"); //Tu ky tu thu 2
 		}
 	}
 	
@@ -489,21 +490,24 @@ public class Query {
 	 * @param _queryser
 	 */
 	public void queryToExcel(AppCommon _app, QueryServer _queryser){
-		Date date ;
-		
+		Date date ;		
 		DateFormat dateFormat;
 		
 		this.set_fileurl(_app.get_scriptUrl()+this.get_fileurl());
 		//doc file
-		this.readScript();		
+		this.readScript();
+		
+		//this.logQuery();
 		this.set_define(_app.get_define());
-		this.setquery();//Set lai cau script lay
+		this.setquery();//Set lai cau script lay		
+		//this.logQuery();
 		
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
 		date= new Date();
 		this.set_startDate(dateFormat.format(date));
 		
 		try {
+			logger.info(">>> "+this.get_querynm());
 			CommandQuery.set_Excelrow(_app.get_excelrows());//so dong excel
 			CommandQuery.commandQueryExcel(_queryser.get_conn(), this.get_exquery(),true,false, _app.get_outurl_excel(this.get_querynm()));
 			date= new Date();
@@ -621,7 +625,7 @@ public class Query {
 		this.readScript();//doc file		
 		this.set_define(_app.get_define());
 		this.setquery();//Set lai cau script lay - Lay define cua Query (neu cau set lai define cua Appcomon)
-		this.logQuery();
+		//this.logQuery();
 		
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
 		date= new Date();

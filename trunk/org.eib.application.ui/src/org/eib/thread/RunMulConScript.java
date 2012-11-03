@@ -38,16 +38,13 @@ public class RunMulConScript {
 				//if (checkStatus8(_query) == _query.length){//Ko con trang thai 0
 				if ((checkStatus0(_query) == 0) && (checkStatus1(_query) == 0)){//Ko con trang thai 0
 					//ko con trang thai 0 va 1
-					bcheck = true;
-					System.out.println("\n>>> Run all script succesfull");
+					bcheck = true;					
 					logger.info("\n>>> Run all script succesfull");
-					
-					
+										
 					//Show tat ca gia tri chay
 					logger.info("\n\n");
-					for (int k=0; k<_query.length;k++){
-						System.out.println("STARTDT["+ _query[k].get_startDate()+"] ENDDT[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name="+_query[k].get_querynm());
-						logger.info("STARTDT["+ _query[k].get_startDate()+"] ENDDT[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name="+_query[k].get_querynm());
+					for (int k=0; k<_query.length;k++){						
+						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name="+_query[k].get_querynm());
 					}
 				}			
 							
@@ -55,20 +52,22 @@ public class RunMulConScript {
 					//Kiem tra lan chay dau tien bang cach diem TT = 0 bang so luong mang
 					//Chay so luong
 					if (checkStatus0(_query) == _query.length){//Moi bang dau chay	
-						System.out.println("App scriptnums: "+_app.get_scriptnums());
+						//System.out.println("App scriptnums: "+_app.get_scriptnums());
 						logger.info("App scriptnums: "+_app.get_scriptnums());
 						
 						for (int l=0; l <_app.get_scriptnums();l++){//so script dang ky chay							
 							//Khoi tai conect							
-							queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
+							//queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
 							
 					        //System.out.println("url = "+queryser.getUrl());
-							java.sql.Connection conn = null;
+							//java.sql.Connection conn = null;
 							try {
-								Class.forName(queryser.getDriver()).newInstance();
-								conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
+								//Class.forName(queryser.getDriver()).newInstance();
+								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
+								queryser.connectDatabase();
+								
 								//da dong connect trong script
-								CommandMultiQuery cq1 = new CommandMultiQuery(conn,_query[l],_app);
+								CommandMultiQuery cq1 = new CommandMultiQuery(queryser.get_conn(),_query[l],_app);
 								//Trang thai bat dau
 								_query[l].set_status("1");
 								
@@ -82,7 +81,7 @@ public class RunMulConScript {
 					            logger.error("Unable to load driver "+ queryser.getDriver() +"ERROR " + e2.getMessage());
 					            //return;				        
 					        }																										
-							System.out.println(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
+							//System.out.println(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
 							logger.info(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
 							/*
 							try {
@@ -104,14 +103,15 @@ public class RunMulConScript {
 							
 							//Tang 1 script len				
 							//Khoi tai conect							
-							queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
+							//queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
 					        //System.out.println("url = "+queryser.getUrl());
-							 java.sql.Connection conn = null;
+							// java.sql.Connection conn = null;
 							try {
-								Class.forName(queryser.getDriver()).newInstance();
-								conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
-								//da dong connect trong script								
-								CommandMultiQuery cq3 = new CommandMultiQuery(conn,_query[i],_app);
+								//Class.forName(queryser.getDriver()).newInstance();
+								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
+								//da dong connect trong script
+								queryser.connectDatabase();
+								CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
 								_query[i].set_status("1");
 								
 								//Set thoi gian chay
@@ -128,8 +128,7 @@ public class RunMulConScript {
 							//Date date = new Date();
 							//dateFormat.format(date)+
 							//System.out.println(">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
-							logger.info("NEXT >>Run ="+_query[i].get_queryid()+", name="+_query[i].get_querynm());
-							System.out.println("NEXT >>Run ="+_query[i].get_queryid()+", name="+_query[i].get_querynm());
+							logger.info("NEXT >>Run ="+_query[i].get_queryid()+", name="+_query[i].get_querynm());							
 							/*
 							try {
 								//delay for one second

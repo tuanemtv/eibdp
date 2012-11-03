@@ -6,7 +6,7 @@
 		<jobClass>Job1</jobClass>
 		<jobGroup>group1</jobGroup>
 		<triggerNM>dummyTriggerName</triggerNM>
-		<triggerSchedule>0 25 11 * * ?</triggerSchedule> <!-- 30 11 -->
+		<triggerSchedule>0 15 17 * * ?</triggerSchedule> <!-- 30 11 -->
 		<triggerGroup>group1</triggerGroup>
 		<databaseID>Oralce-ALONE29</databaseID> 
 		<Query id='Cron01.G001'>Cron01.G001</Query>

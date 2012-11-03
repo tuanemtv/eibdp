@@ -2,6 +2,10 @@ package org.eib.database;
 
 import java.io.FileOutputStream;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
@@ -45,8 +49,23 @@ public class CommandMultiQuery extends Thread{
         	
         	//Bat dau chay set status = 1
         	query.set_status("1");
-        	//System.out.println(" >>Run script= "+query.get_queryid()+", name="+query.get_querynm()+", status= "+query.get_status());
-        	        	
+        	System.out.println(" >>Run script= "+query.get_queryid()+", name="+query.get_querynm()+", status= "+query.get_status());
+        	
+        	Date date1 ;
+        	Date date2 ;
+    		DateFormat dateFormat;
+    		
+    		int i1, i2;
+    		
+    		Calendar ca1 = Calendar.getInstance();
+    		
+        	dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");	        	
+    		date1= new Date();
+    		query.set_startDate(dateFormat.format(date1));    		
+    		ca1.setTime(date1);
+    		i1= ca1.get(Calendar.DATE);
+    		logger.info("i1="+i1);
+    		
         	//ResourceBundle rb = ResourceBundle.getBundle("database");		
         	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
         	//System.out.println("_Excelrow= "+_Excelrow);
@@ -96,36 +115,73 @@ public class CommandMultiQuery extends Thread{
     	                HSSFRow	 row = sheet.createRow((int) 1);	                   	                   
 	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 	                    	HSSFCell cell = row.createCell(i - 1);
-	                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
+	                    	
+	                    	if (rsmd.getColumnType(i) == java.sql.Types.CHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {
-	
+	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {      
 	                            cell.setCellValue(rs.getString(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
-	                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
-	
+	                            //logger.info("getString: "+rs.getString(i));
+	                       }
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
+	                    	   //cell.setCellValue(rs.getString(i));
 	                            cell.setCellValue(rs.getDouble(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
-	                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
-	                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
-	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
+	                            //logger.info("DOUBLE - getDouble: "+rs.getDouble(i));                                                  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.DECIMAL) { //Thuong vo kieu nay
+	                            cell.setCellValue( rs.getDouble(i));
+	                    	   //cell.setCellValue( rs.getString(i));//Dung
+	                            //logger.info("[1]DECIMAL - getDouble: "+rs.getDouble(i));  
+	                            //logger.info("[2]DECIMAL - getString: "+rs.getString(i));  
+	                            //logger.info("[3]DECIMAL - getBigDecimal: "+rs.getBigDecimal(i));                              
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.FLOAT ){
+	                           cell.setCellValue(rs.getDouble(i));
+	                    	   //cell.setCellValue( rs.getString(i));
+	                          // logger.info("FLOAT - getFloat: "+rs.getFloat(i));  
+	                           //logger.info("FLOAT - getDouble: "+rs.getDouble(i));
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.NUMERIC ){
+	                           cell.setCellValue(rs.getDouble(i));
+	                    	   //cell.setCellValue(rs.getString(i)); //Dung
+	                           //logger.info("[1]NUMERIC  - getLong: "+rs.getLong(i));  
+	                           //logger.info("[2]NUMERIC  - getDouble: "+rs.getDouble(i)); //Oracle sai
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.INTEGER ){
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info("INTEGER  - getLong: "+rs.getLong(i));  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.SMALLINT ){
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info("SMALLINT - getLong: "+rs.getLong(i));  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.BIGINT ){ //Thuong vo kieu nay
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                          // logger.info("[1]BIGINT - getLong: "+rs.getLong(i));  
+	                           //logger.info("[2]BIGINT - getBigDecimal: "+rs.getBigDecimal(i));                                                      
+	                       }
+	                       else if ( rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
 	                            cell.setCellValue(rs.getLong(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
-	
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info(" TINYINT: "+rs.getLong(i));                                                        
+	                       } 
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 	                            java.util.Date d = new java.util.Date();
 	                            d.setTime(rs.getDate(i).getTime());
 	                            cell.setCellValue(d);
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
+	                       } 
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
 	                            java.util.Date d = new java.util.Date();
 	                            d.setTime(rs.getTimestamp(i).getTime());
 	                            cell.setCellValue(d);
-	                        } else {
+	                       } 
+	                       else {
 	                            cell.setCellValue("" + rs.getString(i));
-	                        }
+	                       } 
 	                    }
                 	}
                 	else
@@ -136,41 +192,88 @@ public class CommandMultiQuery extends Thread{
 	                   
 	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
 	                    	HSSFCell cell = row.createCell(i - 1);
-	                        if (rsmd.getColumnType(i) == java.sql.Types.CHAR
+	                    	
+	                    	if (rsmd.getColumnType(i) == java.sql.Types.CHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.VARCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.NCHAR
 	                                || rsmd.getColumnType(i) == java.sql.Types.LONGVARCHAR
-	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {
-	
+	                                || rsmd.getColumnType(i) == java.sql.Types.LONGNVARCHAR) {      
 	                            cell.setCellValue(rs.getString(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE
-	                                || rsmd.getColumnType(i) == java.sql.Types.FLOAT) {
-	
+	                            //logger.info("getString: "+rs.getString(i));
+	                       }
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
+	                    	   //cell.setCellValue(rs.getString(i));
 	                            cell.setCellValue(rs.getDouble(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.NUMERIC
-	                                || rsmd.getColumnType(i) == java.sql.Types.DECIMAL
-	                                || rsmd.getColumnType(i) == java.sql.Types.INTEGER
-	                                || rsmd.getColumnType(i) == java.sql.Types.SMALLINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.BIGINT
-	                                || rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
+	                            //logger.info("DOUBLE - getDouble: "+rs.getDouble(i));                                                  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.DECIMAL) { //Thuong vo kieu nay
+	                            cell.setCellValue( rs.getDouble(i));
+	                    	   //cell.setCellValue( rs.getString(i));//Dung
+	                            //logger.info("[1]DECIMAL - getDouble: "+rs.getDouble(i));  
+	                            //logger.info("[2]DECIMAL - getString: "+rs.getString(i));  
+	                            //logger.info("[3]DECIMAL - getBigDecimal: "+rs.getBigDecimal(i));                              
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.FLOAT ){
+	                           cell.setCellValue(rs.getDouble(i));
+	                    	   //cell.setCellValue( rs.getString(i));
+	                          // logger.info("FLOAT - getFloat: "+rs.getFloat(i));  
+	                           //logger.info("FLOAT - getDouble: "+rs.getDouble(i));
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.NUMERIC ){
+	                           cell.setCellValue(rs.getDouble(i));
+	                    	   //cell.setCellValue(rs.getString(i)); //Dung
+	                           //logger.info("[1]NUMERIC  - getLong: "+rs.getLong(i));  
+	                           //logger.info("[2]NUMERIC  - getDouble: "+rs.getDouble(i)); //Oracle sai
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.INTEGER ){
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info("INTEGER  - getLong: "+rs.getLong(i));  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.SMALLINT ){
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info("SMALLINT - getLong: "+rs.getLong(i));  
+	                       }
+	                       else if(rsmd.getColumnType(i) == java.sql.Types.BIGINT ){ //Thuong vo kieu nay
+	                           cell.setCellValue(rs.getLong(i));
+	                    	   //cell.setCellValue(rs.getString(i));
+	                          // logger.info("[1]BIGINT - getLong: "+rs.getLong(i));  
+	                           //logger.info("[2]BIGINT - getBigDecimal: "+rs.getBigDecimal(i));                                                      
+	                       }
+	                       else if ( rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
 	                            cell.setCellValue(rs.getLong(i));
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
-	
+	                    	   //cell.setCellValue(rs.getString(i));
+	                           //logger.info(" TINYINT: "+rs.getLong(i));                                                        
+	                       } 
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
 	                            java.util.Date d = new java.util.Date();
 	                            d.setTime(rs.getDate(i).getTime());
 	                            cell.setCellValue(d);
-	                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
+	                       } 
+	                       else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
 	                            java.util.Date d = new java.util.Date();
 	                            d.setTime(rs.getTimestamp(i).getTime());
 	                            cell.setCellValue(d);
-	                        } else {
+	                       } 
+	                       else {
 	                            cell.setCellValue("" + rs.getString(i));
-	                        }
+	                       } 
 	                    }
                 	}
                     rowPos++;
                 }
-                book.write(new FileOutputStream(query.get_queryouturl()));
+                //book.write(new FileOutputStream(query.get_queryouturl()));
+                date2= new Date();        		
+        		//Calendar ca2 = Calendar.getInstance();
+        		query.set_endDate(dateFormat.format(date2));
+        		ca1.setTime(date2);
+        		i2= ca1.get(Calendar.DATE);
+        		logger.info("i2="+i2);
+        		//query.set_endDate(DateTimeUtil.getDateTime());
+        		
+                //book.write(new FileOutputStream(_app.get_outurl_excel("["+query.get_startDate()+"]["+query.get_endDate()+"]"+query.get_querynm())));
+        		book.write(new FileOutputStream(_app.get_outurl_excel(" ["+query.get_startDate()+"]["+query.get_endDate()+"]"+query.get_querynm()+"["+ String.valueOf(i2-i1)+"s]")));
             } else {
                 stmt.getUpdateCount();
             }  
