@@ -11,7 +11,7 @@ public class TestQuery {
          */
         public static void main(String[] args) {
                 // TODO Auto-generated method stub
-                MainCommon main =new MainCommon();
+                MainCommon main =new MainCommon("app");
                
                 QueryServer _qurser = new QueryServer();
                 Query _qur = new Query();
@@ -23,7 +23,7 @@ public class TestQuery {
                 //main.get_query()[3].queryToExcel(main.get_appcommon(), _qurser); //Test query Number
                 //main.get_query()[4].queryToFunctions(main.get_appcommon(), _qurser); //Test create Function
        
-                //main.get_query()[5].queryToAppDefine(main.get_appcommon(), _qurser);//Test get define
+                main.get_query()[5].queryToAppDefine(main.get_appcommon(), _qurser);//Test get define
                                
                 //main.get_appcommon().logAppCommon();            
                 //main.get_query()[5].logQuery();

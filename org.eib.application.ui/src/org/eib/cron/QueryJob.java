@@ -24,7 +24,7 @@ public class QueryJob implements Job{
 		logger.info("_cronNM= " + data.getString("_cronNM"));
 		
 		
-		MainCommon main = new MainCommon();
+		MainCommon main = new MainCommon("app");
 		
 		Date date1 ;
 		DateFormat dateFormat1;

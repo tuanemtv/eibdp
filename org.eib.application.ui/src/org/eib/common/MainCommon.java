@@ -80,9 +80,27 @@ public class MainCommon {
 	    }	    	    	  	 	    
 	}
 	
+	/**
+	 * Lay Query tu queryid
+	 * @param _queryid
+	 * @return
+	 */
+	public Query getQueryFromID(String _queryid){
+		Query _que = new Query();
+		
+		for (int i = 0; i<this._query.length;i++){
+			if (_query[i].get_queryid().equals(_queryid)){
+				_que = _query[i];				
+			}
+		}			
+		return _que; 		
+	}
 	
-	
-	
+	/**
+	 * 
+	 * @param _qurser
+	 * @return
+	 */
 	public QueryServer getQueryServerFromID(String _qurser){
 		QueryServer queryser = new QueryServer();
 		
@@ -90,18 +108,18 @@ public class MainCommon {
 			if (_queryser[i].get_id().equals(_qurser)){
 				queryser = _queryser[i];				
 			}
-		}
-		
+		}		
 		queryser.logQueryServer();
 		return queryser;
 	}
 	
 	
 	//Khoi tao
-	public MainCommon(){
+	public MainCommon(String _proName){
 		
 		File dir1 = new File(".");
-		ResourceBundle rb = ResourceBundle.getBundle("app");
+		//ResourceBundle rb = ResourceBundle.getBundle("app");
+		ResourceBundle rb = ResourceBundle.getBundle(_proName);
 		//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
 				
 		try {
@@ -124,7 +142,7 @@ public class MainCommon {
 			_querycron = new QueryCron[qurcron.get_countcron()];								
 			_queryser =new QueryServer[qurserver.get_countdatabase()];
 			
-			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml","Common1");
+			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml",rb.getString("app_configure_common")); //Common1
 			//_appcommon.logAppCommon();
 			
 			//_queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());\
@@ -135,8 +153,7 @@ public class MainCommon {
 			for (int i=0; i< _queryser.length; i++){
 				//System.out.println("["+i+"]");
 				//_queryser[i].logQueryServer();									
-			}
-			
+			}			
 			
 			
 			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
@@ -183,10 +200,8 @@ public class MainCommon {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-				   */ 				
-				    	
-			}
-			
+				   */ 								    
+			}			
 			
 			//thuc thi 
 			

@@ -3,487 +3,191 @@
 <ScriptCommon id='S001'>
 	<Query id='S001'>
 		<queryid>S001</queryid>
-		<querynm>DP - Gui rut - Ca nhan</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<server> </server> <!--Server chay o che do multiserver-->
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S001_Gui rut - Ca nhan.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Gui rut - Ca nhan</querynm>						
+		<module>DP</module>		
+		<fileurl>Cron script\S001_Gui rut - Ca nhan.sql</fileurl>		
 		<description>Script 1</description> <!--Mieu ta cau script-->
 		<note>Note 1</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='' name=''> </define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>		
 	</Query>
 	<Query id='S002'>
 		<queryid>S002</queryid>
-		<querynm>DP - Gui rut - Doanh nghiep</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S002_Gui rut - Doanh nghiep.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Gui rut - Doanh nghiep</querynm>		
+		<module>DP</module>		
+		<fileurl>Cron script\S002_Gui rut - Doanh nghiep.sql</fileurl>		
 		<description>Script 2</description> <!--Mieu ta cau script-->
 		<note>Note2</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>		
 	</Query>
 	<Query id='S003'>
 		<queryid>S003</queryid>
-		<querynm>DP - Gui rut - Ca nhan - Khac VGH</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S003_Gui rut - Ca nhan - Khac VGH.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Gui rut - Ca nhan - Khac VGH</querynm>				
+		<module>DP</module>		
+		<fileurl>Cron script\S003_Gui rut - Ca nhan - Khac VGH.sql</fileurl>		
 		<description>Script 3</description> <!--Mieu ta cau script-->
 		<note>Note3</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>
 	</Query>
 	<Query id='S004'>
 		<queryid>S004</queryid>
-		<querynm>DP - Gui rut - Thau chi</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S004_Gui rut - Thau chi.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Gui rut - Thau chi</querynm>				
+		<module>DP</module>		
+		<fileurl>Cron script\S004_Gui rut - Thau chi.sql</fileurl>		
 		<description>Script 4</description> <!--Mieu ta cau script-->
 		<note>Note 4</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>
 	</Query>
 	<Query id='S005'>
 		<queryid>S005</queryid>
-		<querynm>DP - Gui rut - Phong giao dich</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S005_Gui rut - Phong giao dich.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Gui rut - Phong giao dich</querynm>		
+		<module>DP</module>		
+		<fileurl>Cron script\S005_Gui rut - Phong giao dich.sql</fileurl>		
 		<description>Script 5</description> <!--Mieu ta cau script-->
-		<note>Note 5</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 5</note>		
+		<priority>10</priority>
 	</Query>
 	<Query id='S006'>
 		<queryid>S006</queryid>
-		<querynm>DP - Tong Gui Rut - Ngoai te qui doi USD</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S006_Tong Gui Rut - Ngoai te qui doi USD.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Tong Gui Rut - Ngoai te qui doi USD</querynm>				
+		<module>DP</module>		
+		<fileurl>Cron script\S006_Tong Gui Rut - Ngoai te qui doi USD.sql</fileurl>		
 		<description>Script 6</description> <!--Mieu ta cau script-->
-		<note>Note 6</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 6</note>		
+		<priority>10</priority>
 	</Query>
 	<Query id='S007'>
 		<queryid>S007</queryid>
-		<querynm>DP - Tong Gui Rut - USD</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S007_Tong Gui Rut - USD.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Tong Gui Rut - USD</querynm>		
+		<module>DP</module>		
+		<fileurl>Cron script\S007_Tong Gui Rut - USD.sql</fileurl>		
 		<description>Script 7</description> <!--Mieu ta cau script-->
-		<note>Note 7</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 7</note>		
+		<priority>10</priority>
 	</Query>	
 	<Query id='S008'>
 		<queryid>S008</queryid>
-		<querynm>DP - Tong Gui Rut - Vang</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S008_Tong Gui Rut - Vang.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Tong Gui Rut - Vang</querynm>		
+		<module>DP</module>		
+		<fileurl>Cron script\S008_Tong Gui Rut - Vang.sql</fileurl>		
 		<description>Script 8</description> <!--Mieu ta cau script-->
-		<note>Note 8</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 8</note>		
+		<priority>10</priority>
 	</Query>
 	<Query id='S009'>
 		<queryid>S009</queryid>
-		<querynm>DP - Tong Gui Rut - VND</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Cron script\S009_Tong Gui Rut - VND.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>DP - Tong Gui Rut - VND</querynm>		
+		<module>DP</module>		
+		<fileurl>Cron script\S009_Tong Gui Rut - VND.sql</fileurl>		
 		<description>Script 9</description> <!--Mieu ta cau script-->
-		<note>Note 9</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 9</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P001'>
 		<queryid>P001</queryid>
-		<querynm>Gui rut - Ca nhan</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<server> </server> <!--Server chay o che do multiserver-->
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P001_Gui rut - Ca nhan.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Gui rut - Ca nhan</querynm>				
+		<module>DP</module>		
+		<fileurl>Prebusday script\P001_Gui rut - Ca nhan.sql</fileurl>		
 		<description>Script 1</description> <!--Mieu ta cau script-->
-		<note>Note 1</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='' name=''> </define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 1</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P002'>
 		<queryid>P002</queryid>
-		<querynm>Gui rut - Doanh nghiep</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P002_Gui rut - Doanh nghiep.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Gui rut - Doanh nghiep</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P002_Gui rut - Doanh nghiep.sql</fileurl>		
 		<description>Script 2</description> <!--Mieu ta cau script-->
-		<note>Note2</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note2</note>		
+		<priority>10</priority>
 	</Query>
 	<Query id='P003'>
 		<queryid>P003</queryid>
-		<querynm>Gui rut - Ca nhan - Khac VGH</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P003_Gui rut - Ca nhan - Khac VGH.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Gui rut - Ca nhan - Khac VGH</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P003_Gui rut - Ca nhan - Khac VGH.sql</fileurl>		
 		<description>Script 3</description> <!--Mieu ta cau script-->
-		<note>Note3</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note3</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P004'>
 		<queryid>P004</queryid>
-		<querynm>Gui rut - Thau chi</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P004_Gui rut - Thau chi.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Gui rut - Thau chi</querynm>			
+		<module>DP</module>		
+		<fileurl>Prebusday script\P004_Gui rut - Thau chi.sql</fileurl>		
 		<description>Script 4</description> <!--Mieu ta cau script-->
-		<note>Note 4</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 4</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P005'>
 		<queryid>P005</queryid>
-		<querynm>Gui rut - Phong giao dich</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P005_Gui rut - Phong giao dich.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Gui rut - Phong giao dich</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P005_Gui rut - Phong giao dich.sql</fileurl>		
 		<description>Script 5</description> <!--Mieu ta cau script-->
-		<note>Note 5</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 5</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P006'>
 		<queryid>P006</queryid>
-		<querynm>Tong Gui Rut - Ngoai te qui doi USD</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P006_Tong Gui Rut - Ngoai te qui doi USD.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Tong Gui Rut - Ngoai te qui doi USD</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P006_Tong Gui Rut - Ngoai te qui doi USD.sql</fileurl>		
 		<description>Script 6</description> <!--Mieu ta cau script-->
-		<note>Note 6</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 6</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P007'>
 		<queryid>P007</queryid>
-		<querynm>Tong Gui Rut - USD</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P007_Tong Gui Rut - USD.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Tong Gui Rut - USD</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P007_Tong Gui Rut - USD.sql</fileurl>		
 		<description>Script 7</description> <!--Mieu ta cau script-->
 		<note>Note 7</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>
 	</Query>	
 	<Query id='P008'>
 		<queryid>P008</queryid>
 		<querynm>Tong Gui Rut - Vang</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P008_Tong Gui Rut - Vang.sql</fileurl>
-		<getquery> </getquery>
+		<module>DP</module>		
+		<fileurl>Prebusday script\P008_Tong Gui Rut - Vang.sql</fileurl>		
 		<description>Script 8</description> <!--Mieu ta cau script-->
-		<note>Note 8</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<note>Note 8</note>	
+		<priority>10</priority>	
 	</Query>
 	<Query id='P009'>
 		<queryid>P009</queryid>
-		<querynm>Tong Gui Rut - VND</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Prebusday script\P009_Tong Gui Rut - VND.sql</fileurl>
-		<getquery> </getquery>
+		<querynm>Tong Gui Rut - VND</querynm>		
+		<module>DP</module>		
+		<fileurl>Prebusday script\P009_Tong Gui Rut - VND.sql</fileurl>		
 		<description>Script 9</description> <!--Mieu ta cau script-->
 		<note>Note 9</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>
 	</Query>
 	<Query id='G001'>
 		<queryid>G001</queryid>
 		<querynm>GL - Misfunding - CN</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>GL</module>
-		<exquery> </exquery>
-		<fileurl>GL script\G0001_Misfunding - CN.sql</fileurl>
-		<getquery> </getquery>
+		<module>GL</module>		
+		<fileurl>GL script\G0001_Misfunding - CN.sql</fileurl>		
 		<description>Script 10</description> <!--Mieu ta cau script-->
 		<note>Note 10</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>1</priority>
 	</Query>
 	<Query id='G002'>
 		<queryid>G002</queryid>
 		<querynm>GL - Misfunding - CN_NT</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>GL</module>
-		<exquery> </exquery>
-		<fileurl>GL script\G0002_Misfunding - CN_NT.sql</fileurl>
-		<getquery> </getquery>
+		<module>GL</module>		
+		<fileurl>GL script\G0002_Misfunding - CN_NT.sql</fileurl>		
 		<description>Script 10</description> <!--Mieu ta cau script-->
 		<note>Note 10</note>
-		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
-		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>1</priority>
 	</Query>
 	<Query id='FUN001'>
 		<queryid>FUN001</queryid>
 		<querynm>CHKOPEN2</querynm>
-		<queryouturl> </queryouturl>
-		<queryinurl> </queryinurl>
-		<status>0</status>
-		<module>DP</module>
-		<exquery> </exquery>
-		<fileurl>Functions script\FUN001_CHKOPEN2.sql</fileurl>
-		<getquery> </getquery>
+		<module>DP</module>		
+		<fileurl>Functions script\FUN001_CHKOPEN2.sql</fileurl>		
 		<description>CHKOPEN2</description> <!--Mieu ta cau script-->
 		<note>CHKOPEN2</note>
-		<define1 id='' name=''> </define1>
-		<define2 id='' name=''> </define2>
-		<define3 id='' name=''> </define3>
-		<define4 id='' name=''> </define4>
-		<define5 id='' name=''> </define5>
-		<define6 id='' name=''> </define6>
-		<define7 id='' name=''> </define7>
-		<define8 id='' name=''> </define8>
-		<define9 id='' name=''> </define9>
-		<define10 id='' name=''> </define10>
+		<priority>10</priority>
 	</Query>
 </ScriptCommon>

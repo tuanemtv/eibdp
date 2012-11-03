@@ -4,55 +4,71 @@
 	<Query id='S1'>
 		<queryid>S1</queryid>
 		<querynm>Script 1</querynm>
-		<module>DP</module>		
-		<fileurl>MySQL\script1.sql</fileurl>		
-		<description>Script1</description>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
+		<server> </server> <!--Server chay o che do multiserver-->
+		<module>DP</module>
+		<exquery> </exquery>
+		<fileurl>MySQL\script1.sql</fileurl>
+		<getquery> </getquery>
+		<description>Script1</description> <!--Mieu ta cau script-->
 		<note>Note1</note>
-		<priority>9</priority>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='' name=''> </define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
 	</Query>
 	<Query id='S2'>
 		<queryid>S2</queryid>
 		<querynm>Script 2</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
 		<module>DP</module>
+		<exquery> </exquery>
 		<fileurl>MySQL\script2.sql</fileurl>
-		<description>Script2</description> 
+		<getquery> </getquery>
+		<description>Script2</description> <!--Mieu ta cau script-->
 		<note>Note2</note>
-		<priority>6</priority>
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
 	</Query>
 	<Query id='S3'>
 		<queryid>S3</queryid>
 		<querynm>Script 3</querynm>
+		<queryouturl> </queryouturl>
+		<queryinurl> </queryinurl>
+		<status>0</status>
 		<module>DP</module>
+		<exquery> </exquery>
 		<fileurl>MySQL\script2.sql</fileurl>
-		<description>Script3</description> 
+		<getquery> </getquery>
+		<description>Script3</description> <!--Mieu ta cau script-->
 		<note>Note3</note>
-		<priority>1</priority>
-	</Query>
-	<Query id='S4'>
-		<queryid>S4</queryid>
-		<querynm>Script 4</querynm>
-		<module>DP</module>
-		<fileurl>MySQL\testNumber.sql</fileurl>
-		<description>Script4</description>
-		<note>Note4</note>
-		<priority>6</priority>		
-	</Query>
-	<Query id='S5'>
-		<queryid>S5</queryid>
-		<querynm>Create Table</querynm>
-		<module>DP</module>
-		<fileurl>MySQL\createTable.sql</fileurl>
-		<description>Script4</description>
-		<note>Note4</note>
-		<priority>8</priority>		
-	</Query>
-	<Query id='S6'>
-		<queryid>S6</queryid>
-		<querynm>Get define</querynm>
-		<module>DP</module>
-		<fileurl>MySQL\getDefine.sql</fileurl>
-		<description>Script6</description> 
-		<note>Note6</note>	
-		<priority>10</priority>	
+		<define1 id='h_idstock' name='Ma Idstocd'>100</define1>
+		<define2 id='h_idstock2' name='Ma Idstocd 2'>203</define2>
+		<define3 id='' name=''> </define3>
+		<define4 id='' name=''> </define4>
+		<define5 id='' name=''> </define5>
+		<define6 id='' name=''> </define6>
+		<define7 id='' name=''> </define7>
+		<define8 id='' name=''> </define8>
+		<define9 id='' name=''> </define9>
+		<define10 id='' name=''> </define10>
 	</Query>	
 </ScriptCommon>

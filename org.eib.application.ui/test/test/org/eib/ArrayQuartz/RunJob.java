@@ -35,9 +35,15 @@ public class RunJob {
 		qur = new QueryCron[1];
 		
 		try {
+<<<<<<< .mine
+			//qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			qur1.getXMLToCron("D:\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
+			
+=======
 			//qur1.getXMLToCron("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 			qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 			
+>>>>>>> .r53
 			for (int i=0; i< qur.length; i++){
 				
 				JobDetail job = JobBuilder.newJob(Job1.class)

@@ -497,18 +497,20 @@ public class CommandQuery {
                             cell.setCellValue(rs.getLong(i));
                     	   //cell.setCellValue(rs.getString(i));
                            //logger.info(" TINYINT: "+rs.getLong(i));                                                        
-                        } else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
+                       } 
+                       else if (rsmd.getColumnType(i) == java.sql.Types.DATE) {
                             java.util.Date d = new java.util.Date();
                             d.setTime(rs.getDate(i).getTime());
                             cell.setCellValue(d);
-                        } else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
+                       } 
+                       else if (rsmd.getColumnType(i) == java.sql.Types.TIMESTAMP) {
                             java.util.Date d = new java.util.Date();
                             d.setTime(rs.getTimestamp(i).getTime());
                             cell.setCellValue(d);
-                        } else {
+                       } 
+                       else {
                             cell.setCellValue("" + rs.getString(i));
-                        }
-                       
+                       }                       
                     }
                 }
                 else
