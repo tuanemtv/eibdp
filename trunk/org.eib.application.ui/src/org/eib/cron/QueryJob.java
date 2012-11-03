@@ -55,7 +55,7 @@ public class QueryJob implements Job{
 						
 						if (main.get_querycron()[i].get_queryid()[j].equals(main.get_querycron()[i].get_cronNM()+"."+main.get_query()[k].get_queryid())){
 							
-							//logger.info("[k="+k+"] bang roi = " +main.get_query()[k].get_queryid());
+							logger.info("[k="+k+"] = " +main.get_query()[k].get_queryid());
 														
 							DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 							Date date = new Date();
@@ -71,7 +71,11 @@ public class QueryJob implements Job{
 							QueryServer _qurser = new QueryServer();
 							_qurser = main.getQueryServerFromID(main.get_querycron()[i].get_databaseID());
 							_qurser.connectDatabase();
-							main.get_query()[k].queryToExcel(main.get_appcommon(), _qurser);
+							if (main.get_query()[k].get_queryid().equals("G001") || main.get_query()[k].get_queryid().equals("G002") ){
+								main.get_query()[k].queryToStringExcel(main.get_appcommon(), _qurser);
+							}else{
+								main.get_query()[k].queryToExcel(main.get_appcommon(), _qurser);
+							}
 							
 						}
 					}
