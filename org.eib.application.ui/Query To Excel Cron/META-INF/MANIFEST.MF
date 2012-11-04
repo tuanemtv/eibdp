@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Query_To_Excel_Cron
+Bundle-SymbolicName: Query_To_Excel_Cron; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eib.cron.application.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
