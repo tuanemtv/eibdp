@@ -9,8 +9,6 @@ select a.trdt, sav.brcd, sav.custseq, gen.nmloc,
 from tbdp_trlst a, tbcm_general gen, tbdp_idxacct sav
 where a.trdt in (select prebusday from tbcs_brcd where brcd ='1000')
 --and sav.brcd ='1801'
---and sav.brcd ='1001' -- test
---and sav.custseq = '101500862'
 and sav.brcd = gen.brcd
 and sav.custseq = gen.custseq
 and sav.brcd = a.brcd
