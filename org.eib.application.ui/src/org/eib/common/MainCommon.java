@@ -126,46 +126,47 @@ public class MainCommon {
 			//logger.info("congifureUrl = "+ dir1.getCanonicalPath()+rb.getString("congifureUrl"));
 			//logger.info("scriptUrl = "+ dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			
-			QueryServer qurserver= new QueryServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml","Database");
+			_appcommon = new AppCommon();	
+			_appcommon.set_configureurl(dir1.getCanonicalPath()+rb.getString("congifureUrl"));			
+			_appcommon.getAppCom(_appcommon.get_configureurl()+"app.xml",rb.getString("app_configure_common")); //Common1
+			_appcommon.set_logUrl(dir1.getCanonicalPath()+rb.getString("logtUrl"));
+			_appcommon.set_scriptUrl(dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			
-			Query qur = new Query(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml","Query");
-			//qur.logQuery();
-			
-			QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");
+			QueryServer qurserver= new QueryServer(_appcommon.get_configureurl()+"database.xml","Database");			
+			Query qur = new Query(_appcommon.get_configureurl()+"script.xml","Query");
+			//qur.logQuery();			
+			QueryCron qurcron = new QueryCron(_appcommon.get_configureurl()+"cron.xml","Cron");
 			//qurcron.logQueryCron();
 						
-			_appcommon = new AppCommon();	
-			_appcommon.set_scriptUrl(dir1.getCanonicalPath()+rb.getString("scriptUrl"));
-			_appcommon.set_logUrl(dir1.getCanonicalPath()+rb.getString("logtUrl"));
 			
 			_query = new Query[qur.get_countquery()];//Tong so query
 			_querycron = new QueryCron[qurcron.get_countcron()];								
 			_queryser =new QueryServer[qurserver.get_countdatabase()];
 			
-			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml",rb.getString("app_configure_common")); //Common1
+			
 			//_appcommon.logAppCommon();
 			
 			//_queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());\
 			//_queryser.logQueryServer();
 			//_queryser.connectDatabase();//Tien hanh connect
 			
-			qurserver.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml", "Database", _queryser);
+			qurserver.getXMLToScript(_appcommon.get_configureurl()+"database.xml", "Database", _queryser);
 			for (int i=0; i< _queryser.length; i++){
 				//System.out.println("["+i+"]");
 				//_queryser[i].logQueryServer();									
 			}			
 			
 			
-			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
+			qur.getXMLToScript(_appcommon.get_configureurl()+"script.xml", "Query", _query);			
 			for (int i=0; i< _query.length; i++){
 				//System.out.println("["+i+"]");
 				//_query[i].logQuery();
 				//Tien hanh query
 				//_query[i].queryToExcel(_appcommon, _queryser);							
 			}
+
 			
-			
-			qurcron.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron",_querycron);
+			qurcron.getXMLToCron(_appcommon.get_configureurl()+"cron.xml","Cron",_querycron);
 			for (int j=0; j< _querycron.length; j++){
 				//System.out.println("["+j+"]");
 				//_querycron[j].logQueryCron();
@@ -224,7 +225,133 @@ public class MainCommon {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param _proName
+	 * @param _kind
+	 * 0: Duong dan he thong, 1: Duong dan trong file cau hinh
+	 */
+	public MainCommon(String _proName, String _kind){
+		
+		String url="";		
+		ResourceBundle rb = ResourceBundle.getBundle(_proName);
+				
+		_kind = rb.getString("app_kind");
+		
+		//ResourceBundle rb = ResourceBundle.getBundle("app");		
+		//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
+				
+		try {
+			//logger.info("congifureUrl = "+ dir1.getCanonicalPath()+rb.getString("congifureUrl"));
+			//logger.info("scriptUrl = "+ dir1.getCanonicalPath()+rb.getString("scriptUrl"));
+			
+			if (_kind.equals("0")){//Lay duong dan he thong
+				File dir1 = new File(".");
+				url = dir1.getCanonicalPath();
+			}
+			else{ //Lay duong dan file cau hinh
+				url = rb.getString("app_configure_url");
+			}
+			
+			_appcommon = new AppCommon();	
+			_appcommon.set_configureurl(url+rb.getString("congifureUrl"));
+			_appcommon.getAppCom(_appcommon.get_configureurl()+"app.xml",rb.getString("app_configure_common")); //Common1
+			_appcommon.set_scriptUrl(url+rb.getString("scriptUrl"));
+			_appcommon.set_logUrl(url+rb.getString("logtUrl"));
+			
+			
+			//_appcommon.logAppCommon();
+			
+			QueryServer qurserver= new QueryServer(_appcommon.get_configureurl()+"database.xml","Database");
+			
+			Query qur = new Query(_appcommon.get_configureurl()+"script.xml","Query");
+			//qur.logQuery();
+			
+			QueryCron qurcron = new QueryCron(_appcommon.get_configureurl()+"cron.xml","Cron");
+			//qurcron.logQueryCron();
+						
+			_query = new Query[qur.get_countquery()];//Tong so query
+			_querycron = new QueryCron[qurcron.get_countcron()];								
+			_queryser =new QueryServer[qurserver.get_countdatabase()];
+			
+			//queryser.getServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml",_appcommon.get_servernm());\
+			//_queryser.logQueryServer();
+			//_queryser.connectDatabase();//Tien hanh connect
+			
+			qurserver.getXMLToScript(_appcommon.get_configureurl()+"database.xml", "Database", _queryser);
+			for (int i=0; i< _queryser.length; i++){
+				//System.out.println("["+i+"]");
+				//_queryser[i].logQueryServer();									
+			}			
+			
+			
+			qur.getXMLToScript(url+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
+			for (int i=0; i< _query.length; i++){
+				//System.out.println("["+i+"]");
+				//_query[i].logQuery();
+				//Tien hanh query
+				//_query[i].queryToExcel(_appcommon, _queryser);							
+			}
+			
+			
+			qurcron.getXMLToCron(_appcommon.get_configureurl()+"cron.xml","Cron",_querycron);
+			for (int j=0; j< _querycron.length; j++){
+				//System.out.println("["+j+"]");
+				//_querycron[j].logQueryCron();
+								
+				//_query[i].setquery();
+				//_query[i].set_queryouturl(_appcommon.get_outurl_excel(_query[i].get_querynm()));
+				
+				/*
+				JobDetail job = JobBuilder.newJob(JobQuery.class)
+						.withIdentity(_querycron[j].get_jobNM(), _querycron[j].get_jobGroup()).build();
+				 
+					//Quartz 1.6.3
+				    	//CronTrigger trigger = new CronTrigger();
+				    	//trigger.setName("dummyTriggerName");
+				    	//trigger.setCronExpression("0/5 * * * * ?");
+						
+				    	Trigger trigger = TriggerBuilder
+						.newTrigger()
+						.withIdentity(_querycron[j].get_triggerNM(), _querycron[j].get_triggerNM())
+						.withSchedule(
+							//CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
+							CronScheduleBuilder.cronSchedule(_querycron[j].get_triggerSchedule()))
+						.build();
+				 
+				    	//schedule it
+				    	Scheduler scheduler;
+						try {
+							scheduler = new StdSchedulerFactory().getScheduler();
+							scheduler.start();
+					    	scheduler.scheduleJob(job, trigger);		
+						} catch (SchedulerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				   */ 								    
+			}			
+			
+			//thuc thi 
+			
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block			
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block			
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			return;	
+		}
+	}
 	
 	
 }

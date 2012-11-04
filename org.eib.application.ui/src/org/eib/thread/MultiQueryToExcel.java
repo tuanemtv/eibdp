@@ -31,7 +31,7 @@ public class MultiQueryToExcel {
 		//Lay define tu he thong
 		QueryServer _qurser = new QueryServer();
         Query _qur = new Query();
-		_qurser = a.getQueryServerFromID("Oralce-ALONE29"); //Oralce-AReport                
+		_qurser = a.getQueryServerFromID("MySQL-test"); //Oralce-AReport , Oralce-ALONE29                
         _qurser.connectDatabase();
         
         _qur = a.getQueryFromID("DEF001");
@@ -50,7 +50,7 @@ public class MultiQueryToExcel {
         	//a.get_query()[j].logQuery();
         }
         
-        RunMulConScript.commandMulQueryExcel(_qurser, a.get_query(), a.get_appcommon());
+        //RunMulConScript.commandMulQueryExcel(_qurser, a.get_query(), a.get_appcommon());
         
         //Chay thu 1 script
         //_qur = a.getQueryFromID("DP005");
