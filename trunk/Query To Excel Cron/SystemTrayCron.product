@@ -3,6 +3,7 @@
 
 <product name="Query To Excel Cron" id="Query_To_Excel_Cron.product" application="Query_To_Excel_Cron.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
+
    <configIni use="default">
    </configIni>
 
@@ -10,7 +11,19 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages/>
+   <windowImages i16="/Query To Excel Cron/icons/Main history.png"/>
+
+
+   <launcher>
+      <solaris/>
+      <win useIco="true">
+         <bmp/>
+      </win>
+   </launcher>
+
+
+   <vm>
+   </vm>
 
 
    <plugins>
