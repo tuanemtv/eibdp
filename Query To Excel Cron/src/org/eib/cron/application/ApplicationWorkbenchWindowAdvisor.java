@@ -9,6 +9,9 @@ import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -41,7 +44,94 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     configurer.setShowStatusLine(false);
     configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
   }
+  
+  
+  //TH2
+  @Override  
+  public boolean preWindowShellClose() {  
+   final TrayItem item = new TrayItem(  
+     Display.getCurrent().getSystemTray(), SWT.NONE);  
+   final Image image = Activator.getImageDescriptor("icons/Main history.png")  
+     .createImage();  
+   item.setImage(image);  
+   item.setToolTipText("RCPMail - Tray Icon");  
+   getWindowConfigurer().getWindow().getShell().setVisible(false);  
+   item.addSelectionListener(new SelectionAdapter() {  
+    public void widgetDefaultSelected(SelectionEvent e) {  
+     Shell workbenchWindowShell = getWindowConfigurer().getWindow()  
+       .getShell();  
+     workbenchWindowShell.setVisible(true);  
+     workbenchWindowShell.setActive();  
+     workbenchWindowShell.setFocus();  
+     workbenchWindowShell.setMinimized(false);  
+     image.dispose();  
+     item.dispose();  
+    }  
+   });  
+    
+   Shell workbenchWindowShell = getWindowConfigurer().getWindow()  
+     .getShell();  
+   // Create a Menu  
+   final Menu menu = new Menu(workbenchWindowShell, SWT.POP_UP);  
+   // Create the exit menu item.  
+   final MenuItem exit = new MenuItem(menu, SWT.PUSH);  
+   exit.setText("Exit");  
+    
+   // Create the open menu item.  
+   final MenuItem open = new MenuItem(menu, SWT.PUSH);  
+   open.setText("Open");  
+   // make the workbench visible in the event handler for exit menu item.  
+   open.addListener(SWT.Selection, new Listener() {  
+    public void handleEvent(Event event) {  
+     // Do a workbench close in the event handler for exit menu item.  
+     exit.addListener(SWT.Selection, new Listener() {  
+      public void handleEvent(Event event) {  
+       image.dispose();  
+       item.dispose();  
+       open.dispose();  
+       exit.dispose();  
+       menu.dispose();  
+       getWindowConfigurer().getWorkbenchConfigurer().getWorkbench()  
+         .close();  
+      }  
+     });    Shell workbenchWindowShell = getWindowConfigurer().getWindow()  
+       .getShell();  
+     workbenchWindowShell.setVisible(true);  
+     workbenchWindowShell.setActive();  
+     workbenchWindowShell.setFocus();  
+     workbenchWindowShell.setMinimized(false);  
+     image.dispose();  
+     item.dispose();  
+     open.dispose();  
+     exit.dispose();  
+     menu.dispose();  
+    }  
+   });  
+   item.addListener(SWT.MenuDetect, new Listener() {  
+    public void handleEvent(Event event) {  
+     menu.setVisible(true);  
+    }
 
+	
+   });  
+   // Do a workbench close in the event handler for exit menu item.  
+   exit.addListener(SWT.Selection, new Listener() {  
+    public void handleEvent(Event event) {  
+     image.dispose();  
+     item.dispose();  
+     open.dispose();  
+     exit.dispose();  
+     menu.dispose();  
+     getWindowConfigurer().getWorkbenchConfigurer().getWorkbench()  
+       .close();  
+    }  
+   });  
+   return false;  
+  }
+  
+  
+
+  /* TH 1
   // As of here is the new stuff
   @Override
   public void postWindowOpen() {
@@ -123,5 +213,5 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
       trayItem.dispose();
     }
   }
-
+*/
 } 

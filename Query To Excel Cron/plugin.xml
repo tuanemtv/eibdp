@@ -66,6 +66,10 @@
                name="appName"
                value="Query To Excel Cron">
          </property>
+         <property
+               name="windowImages"
+               value="icons/Main history.png">
+         </property>
       </product>
    </extension>   
 </plugin>

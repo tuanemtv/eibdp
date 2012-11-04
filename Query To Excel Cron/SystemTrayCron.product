@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Query To Excel Cron" id="Query_To_Excel_Cron.product" application="Query_To_Excel_Cron.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Query To Excel Cron" uid="System Tray Cron" id="Query_To_Excel_Cron.product" application="Query_To_Excel_Cron.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
 
    <configIni use="default">
@@ -14,7 +14,7 @@
    <windowImages i16="/Query To Excel Cron/icons/Main history.png"/>
 
 
-   <launcher>
+   <launcher name="Cron">
       <solaris/>
       <win useIco="true">
          <bmp/>
@@ -23,6 +23,7 @@
 
 
    <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JRE-1.1</windows>
    </vm>
 
 
