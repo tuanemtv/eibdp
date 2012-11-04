@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<App>
+        <Common1>
+                <inurl>D:\</inurl>
+                <outurl>D:\Query Result\</outurl>  <!--D:\Query Result\  -->
+                <excelrows>65000</excelrows>
+                <scriptnums>3</scriptnums> <!-- max 5 script-->
+                <servernm>Oralce-ALONE29</servernm>
+                <!--<configureurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\</configureurl>  -->
+                <configureurl>D:\Report to Excel\Result\</configureurl>
+                <scriptcount>123</scriptcount> <!-- Tong so script chay-->
+                <multiserver>0</multiserver> <!-- 0:chay chi 1 server, chay nhieu server-->
+                <defscripturl> </defscripturl> <!-- Duong dan lay tham so file cau hình-->
+                <defscripturl2>D:\Query to Excel\Script\Configure\QueryDate2.sql</defscripturl2> <!-- Duong dan lay tham so file cau hình - lay ngay chon vao-->
+                <define1 id='h_idstock' name='Ma Idstocd'>101</define1>
+                <define2 id='h_idstock2' name='Ma Idstocd 2'>202</define2>
+                <define3 id='' name=''> </define3>
+                <define4 id='' name=''> </define4>
+                <define5 id='' name=''> </define5>
+                <define6 id='' name=''> </define6>
+                <define7 id='' name=''> </define7>
+                <define8 id='' name=''> </define8>
+                <define9 id='' name=''> </define9>
+                <define10 id='' name=''> </define10>
+                <ftpserver>127.0.0.1</ftpserver>
+                <ftpuser>tuanemtv</ftpuser>
+                <ftppass>123456</ftppass>
+                <ftpfilename>CS - 02. Ma CIC cua chi nhanh.xls</ftpfilename>
+                <ftpurl>GG Tran\</ftpurl>
+                <ftpinturl>D:\Query to Excel\Result\20120608\</ftpinturl>
+                <srcFTPServer>10.1.70.30</srcFTPServer>
+                <srcFTPUser>xempc</srcFTPUser>
+                <srcFTPPass>xempc</srcFTPPass>
+                <srcFTPSerUrl>/keb/dp/src</srcFTPSerUrl>
+                <srcFTPCliUrl>D:\B</srcFTPCliUrl>
+                <srcFTPExtFile>.pc</srcFTPExtFile>
+                <srcDate>TODAY</srcDate>
+        </Common1>
+        <Common2>
+                <inurl>D:\</inurl>
+                <outurl>D:\TEST\</outurl>
+                <excelrows>65000</excelrows>
+                <scriptnums>20</scriptnums> <!-- max 5 script-->
+                <servernm>Oralce-AReport</servernm>
+                <!--<configureurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\</configureurl>  -->
+                <configureurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\</configureurl>
+                <scriptcount>8</scriptcount> <!-- Tong so script chay-->
+                <multiserver>0</multiserver> <!-- 0:chay chi 1 server, chay nhieu server-->
+                <defscripturl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql</defscripturl> <!-- Duong dan lay tham so file cau hình - lay ngay he thong-->
+                <defscripturl2>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate2.sql</defscripturl2> <!-- Duong dan lay tham so file cau hình - lay ngay chon vao-->
+                <define1 id='01h_trdt' name='Ngay query du lieu'>20120615</define1>
+                <define2 id='02h_startdt' name='Ngay dau thang'>20120601</define2>
+                <define3 id='03h_enddt' name='Ngay cuoi thang truoc'>20120531</define3>
+                <define4 id='04h_bstartdt' name='Ngay gdich dau thang nay'>20120601</define4>
+                <define5 id='05h_predt' name='Ngay giao dich truoc'>20120614</define5>
+                <define6 id='' name=''> </define6>
+                <define7 id='' name=''> </define7>
+                <define8 id='' name=''> </define8>
+                <define9 id='' name=''> </define9>
+                <define10 id='' name=''> </define10>
+                <ftpserver>127.0.0.1</ftpserver>
+                <ftpuser>tuanemtv</ftpuser>
+                <ftppass>123456</ftppass>
+                <ftpfilename>20120608.zip</ftpfilename>
+                <ftpurl>GG Tran\</ftpurl>
+                <ftpinturl>D:\Report to Excel\Result\</ftpinturl>
+                <srcFTPServer>10.1.70.30</srcFTPServer>
+                <srcFTPUser>xempc</srcFTPUser>
+                <srcFTPPass>xempc</srcFTPPass>
+                <srcFTPSerUrl>/keb/dp/src</srcFTPSerUrl>
+                <srcFTPCliUrl>D:\Report to Excel\Workplace\Report to Excel\PC Backup\src</srcFTPCliUrl> <!-- duong dan luu-->
+                <srcFTPExtFile>.pc</srcFTPExtFile>
+                <srcDate>20121010</srcDate>
+        </Common2>
+</App>
