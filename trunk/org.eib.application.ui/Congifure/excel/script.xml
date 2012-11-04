@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<ScriptCommon id='DP'>	
+<ScriptCommon id='DP'>
 	<Query id='DP001'>
 		<queryid>DP001</queryid>
 		<querynm>DP001 -  039_GD1</querynm>
@@ -414,14 +414,5 @@
 		<description>DP060</description>
 		<note>DP060</note>
 		<priority>10</priority>
-	</Query>
-	<Query id='DEF001'>
-		<queryid>DEF001</queryid>
-		<querynm>DEF001_Date from BRCD</querynm>
-		<module>DP</module>		
-		<fileurl>Define script\DEF001_Date from BRCD.sql</fileurl>		
-		<description>DEF001</description>
-		<note>DEF001</note>
-		<priority>1</priority>
 	</Query>
 </ScriptCommon>

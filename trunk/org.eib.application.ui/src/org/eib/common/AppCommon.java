@@ -349,10 +349,12 @@ public class AppCommon {
 				 //logger.info("scriptnums: "+this.get_scriptnums());
 					
 				 //Duong dan luu file cau hinh
+				 /*
 				 nodelist = element.getElementsByTagName("configureurl");
 				 element1 = (Element) nodelist.item(0);
 				 fstNm = element1.getChildNodes();
 				 this._configureUrl = (fstNm.item(0)).getNodeValue();
+				 */
 				 
 				 //tong so script chay
 				 nodelist = element.getElementsByTagName("scriptcount");
