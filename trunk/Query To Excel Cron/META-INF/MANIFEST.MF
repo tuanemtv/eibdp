@@ -8,4 +8,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ Lib/GG excel.jar,
+ Lib/log4j-1.2.11.jar,
+ Lib/ojdbc6.jar,
+ Lib/quartz-2.1.6.jar,
+ Lib/slf4j-api-1.6.1.jar,
+ Lib/slf4j-log4j12-1.6.1.jar,
+ Lib/xmlbeans-2.3.0.jar,
+ Lib/org.eclipse.ui.console_3.5.100.v20110511.jar

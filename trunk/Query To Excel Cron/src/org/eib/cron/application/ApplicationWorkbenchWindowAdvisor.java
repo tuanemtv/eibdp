@@ -1,5 +1,9 @@
 package org.eib.cron.application;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -43,6 +47,16 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
     configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
+    
+  //Doc log 4 j
+	Properties props = new Properties();
+	try {
+		props.load(getClass().getResourceAsStream("/Resource/log4j.properties"));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	PropertyConfigurator.configure(props);
   }
   
   
