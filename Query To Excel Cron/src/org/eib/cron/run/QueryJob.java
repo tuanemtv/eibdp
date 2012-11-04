@@ -22,8 +22,7 @@ public class QueryJob implements Job{
 		
 		JobDataMap data = context.getJobDetail().getJobDataMap();		
 		logger.info("_cronNM= " + data.getString("_cronNM"));
-		
-		
+				
 		MainCommon main = new MainCommon("/resource/app","1");
 		
 		Date date1 ;
