@@ -8,8 +8,7 @@ select a.trdt, sav.brcd, sav.custseq, gen.nmloc,
 		--cs1.excrosscal('1000', 'VND', a.trdt, a.ccycd, sum(decode(sign(a.bftrbal-a.aftrbal),1, a.trccyamt + a.acctccyodamt , 0 )), '01', 'VND', '01') Tongrut_QD
 from tbdp_trlst a, tbcm_general gen, tbdp_idxacct sav
 where a.trdt in (select curbusday from tbcs_brcd where brcd ='1000')
---and sav.brcd ='1001'
---and sav.custseq ='108606603'
+--and sav.brcd ='1801'
 and sav.brcd = gen.brcd
 and sav.custseq = gen.custseq
 and sav.brcd = a.brcd
