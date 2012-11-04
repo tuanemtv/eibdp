@@ -5,7 +5,8 @@
    <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
-      <application>
+      <application
+            icon="icons/Main history.png">
          <run
                class="org.eib.cron.application.Application">
          </run>
@@ -14,29 +15,49 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="RCP Perspective"
             class="org.eib.cron.application.Perspective"
-            id="Query_To_Excel_Cron.perspective">
+            icon="icons/Main history.png"
+            id="Query_To_Excel_Cron.perspective"
+            name="RCP Perspective">
       </perspective>
    </extension>
+    <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eib.cron.application.views.CronView"
+            icon="icons/History.png"
+            id="org.eib.cron.application.views.CronView"
+            name="Cron Manager">
+      </view>
+      <view
+         allowMultiple="true"
+         class="org.eib.cron.application.views.LightweightConsoleView"
+         id="org.eib.cron.application.views.LightweightConsoleView"
+         name="Log">
+	  </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               standalone="true"
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="top"
+               id="org.eib.cron.application.views.CronView">
+         </view>
+         <!--
+         <view
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="bottom"
+               id="org.eib.cron.application.views.LightweightConsoleView">
+         </view> -->
+      </perspectiveExtension>      
+   </extension>            
    <extension
          id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="Query_To_Excel_Cron.application"
-            name="Query To Excel Cron">
-      </product>
-   </extension>
-   <extension
-         id="product1"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="GG__Report_to_Excel.product2"
-            name="Query To Excel Cron">
-      </product>
-   </extension>
-   <extension
-         id="product2"
          point="org.eclipse.core.runtime.products">
       <product
             application="Query_To_Excel_Cron.application"
@@ -46,6 +67,5 @@
                value="Query To Excel Cron">
          </property>
       </product>
-   </extension>
-
+   </extension>   
 </plugin>
