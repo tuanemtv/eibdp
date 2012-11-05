@@ -14,8 +14,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 public class QueryJob implements Job{
-	private static Logger logger =Logger.getLogger("QueryJob");
-	
+	private static Logger logger =Logger.getLogger("QueryJob");	
 	
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
