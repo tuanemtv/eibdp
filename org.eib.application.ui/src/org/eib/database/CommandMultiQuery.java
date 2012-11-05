@@ -55,7 +55,7 @@ public class CommandMultiQuery extends Thread{
         	Date date2 ;
     		DateFormat dateFormat;
     		
-    		int i1, i2;
+    		//int i1, i2;
     		
     		Calendar ca1 = Calendar.getInstance();
     		
@@ -63,8 +63,8 @@ public class CommandMultiQuery extends Thread{
     		date1= new Date();
     		query.set_startDate(dateFormat.format(date1));    		
     		ca1.setTime(date1);
-    		i1= ca1.get(Calendar.DATE);
-    		logger.info("i1="+i1);
+    		//i1= ca1.get(Calendar.DATE);
+    		//logger.info("i1="+i1);
     		
         	//ResourceBundle rb = ResourceBundle.getBundle("database");		
         	//_Excelrow = Long.parseLong(rb.getString("excelrows"));   
@@ -268,12 +268,12 @@ public class CommandMultiQuery extends Thread{
         		//Calendar ca2 = Calendar.getInstance();
         		query.set_endDate(dateFormat.format(date2));
         		ca1.setTime(date2);
-        		i2= ca1.get(Calendar.DATE);
-        		logger.info("i2="+i2);
-        		//query.set_endDate(DateTimeUtil.getDateTime());
+        		//i2= ca1.get(Calendar.DATE);
+        		//logger.info("i2="+i2);
         		
+        		//query.set_endDate(DateTimeUtil.getDateTime());        		
                 //book.write(new FileOutputStream(_app.get_outurl_excel("["+query.get_startDate()+"]["+query.get_endDate()+"]"+query.get_querynm())));
-        		book.write(new FileOutputStream(_app.get_outurl_excel(" ["+query.get_startDate()+"]["+query.get_endDate()+"]"+query.get_querynm()+"["+ String.valueOf(i2-i1)+"s]")));
+        		book.write(new FileOutputStream(_app.get_outurl_excel(" ["+query.get_startDate()+"]["+query.get_endDate()+"]- "+query.get_querynm()+" ["+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s]")));
             } else {
                 stmt.getUpdateCount();
             }  
@@ -281,7 +281,7 @@ public class CommandMultiQuery extends Thread{
             query.set_status("8");//OK            
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. STARTDT["+ query.get_startDate()+"] ENDDT[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
             conn.close();//dong connect lai
             //System.out.println(" >>script= "+query.get_queryid()+": OK ");
         } catch (Exception e) {
@@ -291,7 +291,7 @@ public class CommandMultiQuery extends Thread{
             //Set thoi gian ket thuc           
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. STARTDT["+ query.get_startDate()+"] ENDDT[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
             logger.error(e.getMessage());                                    
         }finally {
             try {
@@ -306,7 +306,7 @@ public class CommandMultiQuery extends Thread{
             	 //Set thoi gian ket thuc                 
         		query.set_endDate(DateTimeUtil.getDateTime());
         		
-                logger.info(">Done. STARTDT["+ query.get_startDate()+"] ENDDT[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+                logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
                 logger.error(ex.getMessage());
             }
         }

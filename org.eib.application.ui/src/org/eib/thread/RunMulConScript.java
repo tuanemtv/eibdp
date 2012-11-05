@@ -117,7 +117,7 @@ public class RunMulConScript {
 								//Set thoi gian chay
 								_query[i].set_startDate(DateTimeUtil.getDateTime());
 								
-								cq3.start();						
+								cq3.start();								
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
 					            //System.out.println("ERROR " + e2.getMessage());
