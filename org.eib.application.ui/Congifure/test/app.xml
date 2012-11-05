@@ -41,7 +41,7 @@
 		<inurl>D:\</inurl>
 		<outurl>D:\</outurl>
 		<excelrows>65000</excelrows>
-		<scriptnums>10</scriptnums> <!-- max 5 script-->
+		<scriptnums>3</scriptnums> <!-- max 5 script-->
 		<servernm>Oralce-AReport</servernm>
 		<!--<configureurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\</configureurl>  -->
 		<configureurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\</configureurl> 

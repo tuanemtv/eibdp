@@ -18,10 +18,11 @@
 		<jobClass>Job2</jobClass>
 		<jobGroup>group2</jobGroup>
 		<triggerNM>dummyTriggerName2</triggerNM>
-		<triggerSchedule>0/30 * * * * ?</triggerSchedule>
+		<triggerSchedule>0/50 * * * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>	
 		<databaseID>MySQL-test</databaseID>			
 		<Query id='Cron02.S3'>Cron02.S3</Query>
 		<Query id='Cron02.S1'>Cron02.S1</Query>
+		<Query id='Cron02.S2'>Cron02.S2</Query>
 	</Cron>
 </CronManager>
