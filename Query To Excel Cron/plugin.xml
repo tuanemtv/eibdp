@@ -47,13 +47,13 @@
                relationship="top"
                id="org.eib.cron.application.views.CronView">
          </view>
-         
+         <!--  -->
          <view
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="bottom"
                id="org.eib.cron.application.views.LightweightConsoleView">
-         </view> 
+         </view>
       </perspectiveExtension>      
    </extension>            
    <extension

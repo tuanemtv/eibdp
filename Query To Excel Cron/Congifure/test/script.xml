@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScriptCommon id='S1'>
+	<Query id='S1'>
+		<queryid>S1</queryid>
+		<querynm>Script 1</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>Script1</description>
+		<note>Note1</note>
+		<priority>2</priority>
+	</Query>
+	<Query id='S2'>
+		<queryid>S2</queryid>
+		<querynm>Script 2</querynm>
+		<module>DP</module>
+		<fileurl>MySQL\script2.sql</fileurl>
+		<description>Script2</description> 
+		<note>Note2</note>
+		<priority>6</priority>
+	</Query>
+	<Query id='S3'>
+		<queryid>S3</queryid>
+		<querynm>Script 3</querynm>
+		<module>DP</module>
+		<fileurl>MySQL\script2.sql</fileurl>
+		<description>Script3</description> 
+		<note>Note3</note>
+		<priority>6</priority>
+	</Query>
+	<Query id='S4'>
+		<queryid>S4</queryid>
+		<querynm>Script 4</querynm>
+		<module>DP</module>
+		<fileurl>MySQL\testNumber.sql</fileurl>
+		<description>Script4</description>
+		<note>Note4</note>
+		<priority>6</priority>		
+	</Query>
+	<Query id='S5'>
+		<queryid>S5</queryid>
+		<querynm>Create Table</querynm>
+		<module>DP</module>
+		<fileurl>MySQL\createTable.sql</fileurl>
+		<description>Script4</description>
+		<note>Note4</note>
+		<priority>8</priority>		
+	</Query>
+	<Query id='S6'>
+		<queryid>S6</queryid>
+		<querynm>Get define</querynm>
+		<module>DP</module>
+		<fileurl>MySQL\getDefine.sql</fileurl>
+		<description>Script6</description> 
+		<note>Note6</note>	
+		<priority>10</priority>	
+	</Query>	
+</ScriptCommon>
