@@ -25,6 +25,8 @@ public class QueryJob implements Job{
 		
 		
 		MainCommon main = new MainCommon("app");
+		main.get_querycron()[0].logQueryCron();
+		main.get_querycron()[1].logQueryCron();
 		
 		Date date1 ;
 		DateFormat dateFormat1;
@@ -45,8 +47,7 @@ public class QueryJob implements Job{
 		//Tim cron dung
 		for (int i=0; i< main.get_querycron().length; i++){
 			if (data.getString("_cronNM").equals(main.get_querycron()[i].get_cronNM())){
-				//logger.info("[i="+i+"] bang roi");
-				
+				//logger.info("[i="+i+"] bang roi");				
 				//Tim query
 				for (int j=0; j< main.get_querycron()[i].get_queryid().length;j++){//For cai queryid cua Cron
 					//logger.info("[j="+j+"] bang roi" +main.get_querycron()[i].get_queryid()[j]);
@@ -70,6 +71,7 @@ public class QueryJob implements Job{
 							
 							QueryServer _qurser = new QueryServer();
 							_qurser = main.getQueryServerFromID(main.get_querycron()[i].get_databaseID());
+							
 							_qurser.connectDatabase();
 							if (main.get_query()[k].get_queryid().equals("G001") || main.get_query()[k].get_queryid().equals("G002") ){
 								main.get_query()[k].queryToStringExcel(main.get_appcommon(), _qurser);

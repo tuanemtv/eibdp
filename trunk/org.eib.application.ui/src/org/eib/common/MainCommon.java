@@ -63,7 +63,46 @@ public class MainCommon {
 	}
 	
 	
+	/**
+	 * Lay mang query tu queryid
+	 * @param _queID
+	 * @return
+	 */
+	public Query[] getQueryFromQueryID(String [] _queID){
+		Query[] qur = new Query[_queID.length];
+		
+		for (int j=0; j<_queID.length;j++){
+			for (int i = 0; i< this._query.length;i++){
+				if (_query[i].get_queryid().equals(_queID[j])){
+					qur[j] = _query[i];
+				}
+			}
+		}		
+		return qur;
+	}
 	
+	/**
+	 * 
+	 * @param _cronNM
+	 * @param _queID
+	 * @return
+	 */
+	public Query[] getQueryFromQueryID(String _cronNM, String [] _queID){
+		Query[] qur = new Query[_queID.length];
+		
+		for (int j=0; j<_queID.length;j++){
+			for (int i = 0; i< this._query.length;i++){
+				if (_queID[j].equals(_cronNM+"."+_query[i].get_queryid())){
+					qur[j] = _query[i];
+				}
+			}
+		}		
+		return qur;
+	}
+	
+	/**
+	 * 
+	 */
 	public void sortQueryWithPriority() {
 	    int in, out;
 
@@ -96,6 +135,50 @@ public class MainCommon {
 		return _que; 		
 	}
 	
+	
+	/**
+	 * Lay QueryCron tu _cronNM
+	 * @param _cronNM
+	 * @return
+	 */
+	public QueryCron getQueryCronFromName(String _cronNM){
+		QueryCron _quec = new QueryCron();
+		
+		for (int i = 0; i<this._querycron.length;i++){
+			if (_querycron[i].get_cronNM().equals(_cronNM)){
+				_quec = _querycron[i];				
+			}
+		}			
+		return _quec; 		
+	}
+	
+	
+	
+	public String[] getQueryIDFromName(String _cronNM){
+		int count=0;
+		
+		for (int i = 0; i<this._querycron[0].get_queryid().length;i++){
+			if (_cronNM.equals(_querycron[0].get_queryid()[i].substring(0, 6))){
+				count ++;
+			}
+		}			
+		
+		String [] _strQueryid = new String[count];
+		
+		int j=0;
+		for (int i = 0; i<this._querycron[0].get_queryid().length;i++){
+			if (_cronNM.equals(_querycron[0].get_queryid()[i].substring(0, 6))){
+				_strQueryid[j] = _querycron[0].get_queryid()[i].substring(7);
+				//System.out.println("j= "+j+" = "+_strQueryid[j]);
+				j++;
+				
+			}
+		}
+		
+		return _strQueryid; 		
+	}
+	
+	
 	/**
 	 * 
 	 * @param _qurser
@@ -109,7 +192,7 @@ public class MainCommon {
 				queryser = _queryser[i];				
 			}
 		}		
-		queryser.logQueryServer();
+		//queryser.logQueryServer();
 		return queryser;
 	}
 	
@@ -353,5 +436,29 @@ public class MainCommon {
 		}
 	}
 	
+	
+	
+	public void logQuery(){
+		for (int i = 0; i<_query.length;i++){
+			logger.info("["+i+"]-------------------------------");
+			_query[i].logQuery();
+		}
+	}
+	
+	
+	public void logQueryServer(){
+		for (int i = 0; i<_queryser.length;i++){
+			logger.info("["+i+"]-------------------------------");
+			_queryser[i].logQueryServer();
+		}
+	}
+	
+	
+	public void logQueryCron(){
+		for (int i = 0; i<_querycron.length;i++){
+			logger.info("["+i+"]-------------------------------");
+			_querycron[i].logQueryCron();
+		}
+	}
 	
 }

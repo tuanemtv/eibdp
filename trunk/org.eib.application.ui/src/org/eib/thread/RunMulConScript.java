@@ -63,8 +63,9 @@ public class RunMulConScript {
 							//java.sql.Connection conn = null;
 							try {
 								//Class.forName(queryser.getDriver()).newInstance();
-								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
+								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());																
 								queryser.connectDatabase();
+								//_query[l].logQuery();
 								
 								//da dong connect trong script
 								CommandMultiQuery cq1 = new CommandMultiQuery(queryser.get_conn(),_query[l],_app);

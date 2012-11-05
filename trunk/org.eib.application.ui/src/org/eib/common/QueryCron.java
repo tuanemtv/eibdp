@@ -32,6 +32,7 @@ public class QueryCron {
 	private String _triggerSchedule;
 	private String _triggerGroup;
 	private String _databaseID;
+	private String[] _queryid;
 	
 	
 	public String get_databaseID() {
@@ -41,9 +42,6 @@ public class QueryCron {
 		this._databaseID = _databaseID;
 	}
 
-	private String[] _queryid;
-	
-	
 	public String[] get_queryid() {
 		return _queryid;
 	}

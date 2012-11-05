@@ -8,7 +8,7 @@
 		<fileurl>MySQL\script1.sql</fileurl>		
 		<description>Script1</description>
 		<note>Note1</note>
-		<priority>9</priority>
+		<priority>2</priority>
 	</Query>
 	<Query id='S2'>
 		<queryid>S2</queryid>
@@ -26,7 +26,7 @@
 		<fileurl>MySQL\script2.sql</fileurl>
 		<description>Script3</description> 
 		<note>Note3</note>
-		<priority>1</priority>
+		<priority>6</priority>
 	</Query>
 	<Query id='S4'>
 		<queryid>S4</queryid>
