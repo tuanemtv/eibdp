@@ -112,13 +112,19 @@ public class RunMulConScript {
 								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());
 								//da dong connect trong script
 								queryser.connectDatabase();
-								CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
-								_query[i].set_status("1");
-								
+								_query[i].set_status("1");								
 								//Set thoi gian chay
 								_query[i].set_startDate(DateTimeUtil.getDateTime());
+								//if (_query[i].get_queryid().equals("G001")||_query[i].get_queryid().equals("G002")){									
+									//CommandMultiQueryStr cq2 = new CommandMultiQueryStr(queryser.get_conn(),_query[i],_app);
+									//cq2.start();
+								//}else{
+									CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
+									cq3.start();				
+								//}
 								
-								cq3.start();								
+								
+												
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
 					            //System.out.println("ERROR " + e2.getMessage());

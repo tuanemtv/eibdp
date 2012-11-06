@@ -1,5 +1,6 @@
 package org.eib.database;
 
+
 import java.io.FileOutputStream;
 import java.sql.*;
 import java.text.DateFormat;
@@ -12,12 +13,12 @@ import org.apache.poi.hssf.usermodel.*;
 import org.eib.common.AppCommon;
 import org.eib.common.DateTimeUtil;
 
-public class CommandMultiQuery extends Thread{
+public class commandMulQueryStr extends Thread{
 	
 	Connection _conn;
 	Query _query;  
 	AppCommon _app;
-	private static Logger logger =Logger.getLogger("CommandMultiQuery");
+	private static Logger logger =Logger.getLogger("commandMulQueryStrExcel");
 	
 	
 	public void run()
@@ -43,7 +44,8 @@ public class CommandMultiQuery extends Thread{
     public static void commandMulQueryExcel(Connection conn, 
     										Query query,
     										AppCommon _app,
-       boolean showHeaders, boolean showMetaData) throws InterruptedException {
+    	boolean showHeaders, boolean showMetaData) throws InterruptedException {
+    	
         Statement stmt = null;        
         try {
         	
@@ -126,46 +128,46 @@ public class CommandMultiQuery extends Thread{
 	                       }
 	                       else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
 	                    	   //cell.setCellValue(rs.getString(i));
-	                            cell.setCellValue(rs.getDouble(i));
+	                            cell.setCellValue(rs.getString(i));
 	                            //logger.info("DOUBLE - getDouble: "+rs.getDouble(i));                                                  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.DECIMAL) { //Thuong vo kieu nay
-	                            cell.setCellValue( rs.getDouble(i));
+	                            cell.setCellValue( rs.getString(i));
 	                    	   //cell.setCellValue( rs.getString(i));//Dung
 	                            //logger.info("[1]DECIMAL - getDouble: "+rs.getDouble(i));  
 	                            //logger.info("[2]DECIMAL - getString: "+rs.getString(i));  
 	                            //logger.info("[3]DECIMAL - getBigDecimal: "+rs.getBigDecimal(i));                              
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.FLOAT ){
-	                           cell.setCellValue(rs.getDouble(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue( rs.getString(i));
 	                          // logger.info("FLOAT - getFloat: "+rs.getFloat(i));  
 	                           //logger.info("FLOAT - getDouble: "+rs.getDouble(i));
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.NUMERIC ){
-	                           cell.setCellValue(rs.getDouble(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i)); //Dung
 	                           //logger.info("[1]NUMERIC  - getLong: "+rs.getLong(i));  
 	                           //logger.info("[2]NUMERIC  - getDouble: "+rs.getDouble(i)); //Oracle sai
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.INTEGER ){
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info("INTEGER  - getLong: "+rs.getLong(i));  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.SMALLINT ){
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info("SMALLINT - getLong: "+rs.getLong(i));  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.BIGINT ){ //Thuong vo kieu nay
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                          // logger.info("[1]BIGINT - getLong: "+rs.getLong(i));  
 	                           //logger.info("[2]BIGINT - getBigDecimal: "+rs.getBigDecimal(i));                                                      
 	                       }
 	                       else if ( rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
+	                            cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info(" TINYINT: "+rs.getLong(i));                                                        
 	                       } 
@@ -203,46 +205,46 @@ public class CommandMultiQuery extends Thread{
 	                       }
 	                       else if (rsmd.getColumnType(i) == java.sql.Types.DOUBLE) {
 	                    	   //cell.setCellValue(rs.getString(i));
-	                            cell.setCellValue(rs.getDouble(i));
+	                            cell.setCellValue(rs.getString(i));
 	                            //logger.info("DOUBLE - getDouble: "+rs.getDouble(i));                                                  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.DECIMAL) { //Thuong vo kieu nay
-	                            cell.setCellValue( rs.getDouble(i));
+	                            cell.setCellValue( rs.getString(i));
 	                    	   //cell.setCellValue( rs.getString(i));//Dung
 	                            //logger.info("[1]DECIMAL - getDouble: "+rs.getDouble(i));  
 	                            //logger.info("[2]DECIMAL - getString: "+rs.getString(i));  
 	                            //logger.info("[3]DECIMAL - getBigDecimal: "+rs.getBigDecimal(i));                              
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.FLOAT ){
-	                           cell.setCellValue(rs.getDouble(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue( rs.getString(i));
 	                          // logger.info("FLOAT - getFloat: "+rs.getFloat(i));  
 	                           //logger.info("FLOAT - getDouble: "+rs.getDouble(i));
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.NUMERIC ){
-	                           cell.setCellValue(rs.getDouble(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i)); //Dung
 	                           //logger.info("[1]NUMERIC  - getLong: "+rs.getLong(i));  
 	                           //logger.info("[2]NUMERIC  - getDouble: "+rs.getDouble(i)); //Oracle sai
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.INTEGER ){
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info("INTEGER  - getLong: "+rs.getLong(i));  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.SMALLINT ){
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info("SMALLINT - getLong: "+rs.getLong(i));  
 	                       }
 	                       else if(rsmd.getColumnType(i) == java.sql.Types.BIGINT ){ //Thuong vo kieu nay
-	                           cell.setCellValue(rs.getLong(i));
+	                           cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                          // logger.info("[1]BIGINT - getLong: "+rs.getLong(i));  
 	                           //logger.info("[2]BIGINT - getBigDecimal: "+rs.getBigDecimal(i));                                                      
 	                       }
 	                       else if ( rsmd.getColumnType(i) == java.sql.Types.TINYINT) {
-	                            cell.setCellValue(rs.getLong(i));
+	                            cell.setCellValue(rs.getString(i));
 	                    	   //cell.setCellValue(rs.getString(i));
 	                           //logger.info(" TINYINT: "+rs.getLong(i));                                                        
 	                       } 
@@ -324,7 +326,7 @@ public class CommandMultiQuery extends Thread{
         */
     }
 
-	public CommandMultiQuery(Connection _conn, Query _query, AppCommon _app) {
+	public commandMulQueryStr(Connection _conn, Query _query, AppCommon _app) {
 		super();
 		this._conn = _conn;
 		this._query = _query;
