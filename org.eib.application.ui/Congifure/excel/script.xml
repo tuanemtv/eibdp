@@ -8,7 +8,7 @@
 		<fileurl>Query to Excel\DP\DP001 -  039_GD1.sql</fileurl>		
 		<description>DP001</description>
 		<note>DP001</note>
-		<priority>10</priority>
+		<priority>3</priority>
 	</Query>
 	<Query id='DP002'>
 		<queryid>DP002</queryid>
@@ -17,7 +17,7 @@
 		<fileurl>Query to Excel\DP\DP002 -  039_USD.sql</fileurl>		
 		<description>DP002</description>
 		<note>DP002</note>
-		<priority>10</priority>
+		<priority>3</priority>
 	</Query>
 	<Query id='DP003'>
 		<queryid>DP003</queryid>
@@ -26,7 +26,7 @@
 		<fileurl>Query to Excel\DP\DP003 -  039_VND.sql</fileurl>		
 		<description>DP003</description>
 		<note>DP003</note>		
-		<priority>10</priority>
+		<priority>2</priority>
 	</Query>	
 	<Query id='DP004'>
 		<queryid>DP004</queryid>
@@ -35,7 +35,7 @@
 		<fileurl>Query to Excel\DP\DP004 -  BC01_CAC_MON_TU_DONG_TAI_TUC.sql</fileurl>		
 		<description>DP004</description>
 		<note>DP004</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 	<Query id='DP005'>
 		<queryid>DP005</queryid>
@@ -44,7 +44,7 @@
 		<fileurl>Query to Excel\DP\DP005 -  BC02_CAC_MON_RUT_DUNG_HAN.sql</fileurl>		
 		<description>DP005</description>
 		<note>DP005</note>
-		<priority>10</priority>
+		<priority>3</priority>
 	</Query>
 	<Query id='DP006'>
 		<queryid>DP006</queryid>
@@ -53,7 +53,7 @@
 		<fileurl>Query to Excel\DP\DP006 -  BC03_CAC_MON_GUI_MOI.sql</fileurl>		
 		<description>DP006</description>
 		<note>DP006</note>
-		<priority>10</priority>
+		<priority>3</priority>
 	</Query>
 	<Query id='DP008'>
 		<queryid>DP008</queryid>
@@ -98,7 +98,7 @@
 		<fileurl>Query to Excel\DP\DP012 -  BC01_CAC_MON_TU_DONG_TAI_TUC_PHAN_LOAI_CIF.sql</fileurl>		
 		<description>DP012</description>
 		<note>DP012</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 	<Query id='DP013'>
 		<queryid>DP013</queryid>
@@ -215,7 +215,7 @@
 		<fileurl>Query to Excel\DP\DP034 -  105 - VND - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
 		<description>DP034</description>
 		<note>DP034</note>
-		<priority>10</priority>
+		<priority>2</priority>
 	</Query>
 	<Query id='DP035'>
 		<queryid>DP035</queryid>
@@ -251,7 +251,7 @@
 		<fileurl>Query to Excel\DP\DP037 -  108 Thong ke so luong KH theo ma PGD Ca Nhan.sql</fileurl>		
 		<description>DP037</description>
 		<note>DP037</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 	<Query id='DP038'>
 		<queryid>DP038</queryid>
@@ -260,7 +260,7 @@
 		<fileurl>Query to Excel\DP\DP038 -  108 Thong ke so luong KH theo ma PGD Doanh Nghiep.sql</fileurl>		
 		<description>DP038</description>
 		<note>DP038</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 	<Query id='DP039'>
 		<queryid>DP039</queryid>
@@ -314,7 +314,7 @@
 		<fileurl>Query to Excel\DP\DP045 -  153 - CN - So du huy dong theo KH mo CIF moi.sql</fileurl>		
 		<description>DP045</description>
 		<note>DP045</note>
-		<priority>10</priority>
+		<priority>3</priority>
 	</Query>
 	<Query id='DP047'>
 		<queryid>DP047</queryid>
@@ -323,7 +323,7 @@
 		<fileurl>Query to Excel\DP\DP047 -  So du dao han Vang con lai.sql</fileurl>		
 		<description>DP047</description>
 		<note>DP047</note>
-		<priority>10</priority>
+		<priority>2</priority>
 	</Query>
 	<Query id='DP048'>
 		<queryid>DP048</queryid>
@@ -368,7 +368,7 @@
 		<fileurl>Query to Excel\DP\DP052 -  VND - RPT 105 - Von huy dong CN gui rut dung han, truoc han.sql</fileurl>		
 		<description>DP052</description>
 		<note>DP052</note>
-		<priority>10</priority>
+		<priority>2</priority>
 	</Query>
 	<Query id='DP053'>
 		<queryid>DP053</queryid>
@@ -377,7 +377,7 @@
 		<fileurl>Query to Excel\DP\DP053 -  USD - RPT 105 - Von huy dong CN gui rut dung han, truoc han.sql</fileurl>		
 		<description>DP053</description>
 		<note>DP053</note>
-		<priority>10</priority>
+		<priority>2</priority>
 	</Query>
 	<Query id='DP054'>
 		<queryid>DP054</queryid>
@@ -395,7 +395,7 @@
 		<fileurl>Query to Excel\DP\DP055 -  RPT 105 - KhacVND_GD1 - Doanh so gui rut huy dong lon nhat KHCN - CT.sql</fileurl>		
 		<description>DP055</description>
 		<note>DP055</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 	<Query id='DP056'>
 		<queryid>DP056</queryid>
@@ -413,6 +413,6 @@
 		<fileurl>Query to Excel\DP\DP060  - Money Gap.sql</fileurl>		
 		<description>DP060</description>
 		<note>DP060</note>
-		<priority>10</priority>
+		<priority>1</priority>
 	</Query>
 </ScriptCommon>
