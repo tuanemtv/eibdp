@@ -211,14 +211,14 @@ public class MainCommon {
 			
 			_appcommon = new AppCommon();	
 			_appcommon.set_configureurl(dir1.getCanonicalPath()+rb.getString("congifureUrl"));			
-			_appcommon.getAppCom(_appcommon.get_configureurl()+"app.xml",rb.getString("app_configure_common")); //Common1
+			_appcommon.getAppCom(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"app.xml",rb.getString("app_configure_common")); //Common1
 			_appcommon.set_logUrl(dir1.getCanonicalPath()+rb.getString("logtUrl"));
 			_appcommon.set_scriptUrl(dir1.getCanonicalPath()+rb.getString("scriptUrl"));
 			
-			QueryServer qurserver= new QueryServer(_appcommon.get_configureurl()+"database.xml","Database");			
-			Query qur = new Query(_appcommon.get_configureurl()+"script.xml","Query");
+			QueryServer qurserver= new QueryServer(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml","Database");			
+			Query qur = new Query(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml","Query");
 			//qur.logQuery();			
-			QueryCron qurcron = new QueryCron(_appcommon.get_configureurl()+"cron.xml","Cron");
+			QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");
 			//qurcron.logQueryCron();
 						
 			
@@ -233,14 +233,14 @@ public class MainCommon {
 			//_queryser.logQueryServer();
 			//_queryser.connectDatabase();//Tien hanh connect
 			
-			qurserver.getXMLToScript(_appcommon.get_configureurl()+"database.xml", "Database", _queryser);
+			qurserver.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"database.xml", "Database", _queryser);
 			for (int i=0; i< _queryser.length; i++){
 				//System.out.println("["+i+"]");
 				//_queryser[i].logQueryServer();									
 			}			
 			
 			
-			qur.getXMLToScript(_appcommon.get_configureurl()+"script.xml", "Query", _query);			
+			qur.getXMLToScript(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"script.xml", "Query", _query);			
 			for (int i=0; i< _query.length; i++){
 				//System.out.println("["+i+"]");
 				//_query[i].logQuery();
@@ -249,7 +249,7 @@ public class MainCommon {
 			}
 
 			
-			qurcron.getXMLToCron(_appcommon.get_configureurl()+"cron.xml","Cron",_querycron);
+			qurcron.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron",_querycron);
 			for (int j=0; j< _querycron.length; j++){
 				//System.out.println("["+j+"]");
 				//_querycron[j].logQueryCron();

@@ -36,7 +36,7 @@ public class QueryServer {
     private boolean showMetaData = false;
     private boolean showSummary = false;
     private Query _script[];
-    private Connection _conn = null; 
+    private Connection _conn = null ; 
     private int _countdatabase;
     private String _id;
     
@@ -341,11 +341,10 @@ public class QueryServer {
 	 */
 	public void connectDatabase(){
 		this.setUrl(JDBCURLHelper.generateURL(this.getDriver(), this.getHost(), this.getPort(), this.getDatabase()));
-		try {
+		try {						
 			Class.forName(this.getDriver()).newInstance();
-			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());
-			
-			logger.info("Connect "+this.getDatabase()+" Database Successful");
+			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());			
+			logger.info("Connect "+this.get_id()+" Database Successful");
         } catch (Exception e2) {
 			logger.error("Connect Database Fail. Unable to load driver " + this.getDriver());   
         }
