@@ -87,7 +87,7 @@ public class QueryJobTest implements Job{
 		
 		QueryServer _qurser = new QueryServer();
         Query _qur = new Query();
-		_qurser = main.getQueryServerFromID("MySQL-test"); //Oralce-AReport , Oralce-ALONE29                
+		_qurser = main.getQueryServerFromID("Oralce-ALONE29"); //Oralce-AReport , Oralce-ALONE29       MySQL-test          
         _qurser.connectDatabase();
         
         /*
