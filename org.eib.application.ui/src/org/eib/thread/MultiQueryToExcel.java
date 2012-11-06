@@ -31,7 +31,11 @@ public class MultiQueryToExcel {
 		//Lay define tu he thong
 		QueryServer _qurser = new QueryServer();
         Query _qur = new Query();
-		_qurser = a.getQueryServerFromID("MySQL-test"); //Oralce-AReport , Oralce-ALONE29                
+
+		_qurser = a.getQueryServerFromID("Oralce-ALONE29"); //Oralce-AReport    //            
+
+		//_qurser = a.getQueryServerFromID("MySQL-test"); //Oralce-AReport , Oralce-ALONE29                
+
         _qurser.connectDatabase();
         
         _qur = a.getQueryFromID("DEF001");
