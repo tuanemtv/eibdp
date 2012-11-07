@@ -48,15 +48,17 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     configurer.setShowStatusLine(false);
     configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
     
+  
   //Doc log 4 j
 	Properties props = new Properties();
 	try {
-		props.load(getClass().getResourceAsStream("/Resource/log4j.properties"));
+		props.load(getClass().getResourceAsStream("/resource/log4j.properties"));
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	PropertyConfigurator.configure(props);
+	
   }
   
   

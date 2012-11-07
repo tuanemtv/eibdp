@@ -1,5 +1,7 @@
 package org.eib.cron.application;
 
+import org.eclipse.core.runtime.ILogListener;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,6 +11,8 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
+	//private ILogListener listener;  
+	
 	// The plug-in ID
 	public static final String PLUGIN_ID = "Query_To_Excel_Cron"; //$NON-NLS-1$
 
@@ -28,6 +32,10 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		//
+		//listener = new Listener();  
+	     //Platform.addLogListener(listener);  
+	      
 	}
 
 	/*
