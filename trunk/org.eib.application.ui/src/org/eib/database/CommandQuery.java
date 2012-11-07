@@ -125,9 +125,9 @@ public class CommandQuery {
                 ResultSetMetaData rsmd = rs.getMetaData();
                 if (showHeaders) {
                     for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                        System.out.print(rsmd.getColumnName(i) + separator);
+                        //System.out.print(rsmd.getColumnName(i) + separator);
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
                 if (showMetaData) {
                     for (int i = 1; i <= rsmd.getColumnCount(); i++) {
@@ -135,17 +135,17 @@ public class CommandQuery {
                         if (rsmd.getScale(i) != 0) {
                             scale = "," + rsmd.getScale(i);
                         }
-                        System.out.print(rsmd.getColumnTypeName(i) + "("
-                                + rsmd.getPrecision(i) + "" + scale + ")"
-                                + separator);
+                        //System.out.print(rsmd.getColumnTypeName(i) + "("
+                        //        + rsmd.getPrecision(i) + "" + scale + ")"
+                        //        + separator);
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
                 while (rs.next()) {
                     for (int i = 1; i <= rsmd.getColumnCount(); i++) {
-                        System.out.print(rs.getString(i) + separator);
+                        //System.out.print(rs.getString(i) + separator);
                     }
-                    System.out.println();
+                    //System.out.println();
                 }
             } else {
                 stmt.getUpdateCount();

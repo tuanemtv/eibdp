@@ -376,7 +376,7 @@ public class  FTPdownload
 	     			 // logger.info(strDate+" "+dateFormat.format(date)+" filename: "+filename +" "+outputFile);
 	     			  if (dateFormat.format(date).equals(strDate)){
 	     				  logger.info(" download: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
-	     				  System.out.println(" download: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
+	     				  //System.out.println(" download: "+_app.get_srcFTPSerUrl()+"/"+ftpfile.getName());
 	     				 if (filename.indexOf(_app.get_srcFTPExtFile())>0){//La file .pc	                	 
 		                	  logger.info(" -->Copy: "+filename+"   ==> "+outputFile + "\\"+ filename+"  -->OK");
 		                	  ftp.changeWorkingDirectory(inputFile);
@@ -407,10 +407,10 @@ public class  FTPdownload
     public  void filecopy(String inFile, String outFile){
         int n;
         int reply;
-        System.out.println("\n\n\n 2. Goi filecopy ......<------");
-        System.out.println("inFile-> "+inFile);
-        System.out.println("outFile-> "+outFile);
-        System.out.println("\n");
+        //System.out.println("\n\n\n 2. Goi filecopy ......<------");
+        //System.out.println("inFile-> "+inFile);
+        //System.out.println("outFile-> "+outFile);
+        //System.out.println("\n");
 
         ArrayList arsecond = new ArrayList();
         try{
@@ -424,10 +424,10 @@ public class  FTPdownload
 
            String temp="";
            if (children == null){
-        	   System.out.println("the children is null");
+        	   //System.out.println("the children is null");
            }else{
                for (int i=0; i<children.length; i++){                  
-            	   System.out.println("2.==>"+inFile+"/"+children[i].getName());
+            	   //System.out.println("2.==>"+inFile+"/"+children[i].getName());
 
             	   /*
             	   String childfile = (String) children[i].getName();
@@ -504,27 +504,27 @@ public class  FTPdownload
                  */
 
                  tempfile = outputFile+"/";
-                 System.out.println("If  => " +temp +" - "+tempfile);
+                 //System.out.println("If  => " +temp +" - "+tempfile);
                 //
               }else{                
                  temp = children[p].getName();
                  tempfile = outputFile+"/" +temp ;
                  //tempfile = outputFile+"/";
-                System.out.println("Else  => " +temp );
+                //System.out.println("Else  => " +temp );
              }
 
               //File f = new File(outputFile+"/"+temp);
               //System.out.println("\n out file ="+f);
 
               File f = new File(tempfile);
-              System.out.println("inside file copy verfy  f ->>  " + f);
-              System.out.println("inside file copy verfy  temp->>  " + temp) ;
+              //System.out.println("inside file copy verfy  f ->>  " + f);
+             // System.out.println("inside file copy verfy  temp->>  " + temp) ;
             // copyFile(f,temp+"");
               copyFile(f,inFile+"/"+temp+"");
 
           }
         }catch(Exception smbe){
-        	System.out.println("The smbFile fileCopy function=> "+smbe);
+        	//System.out.println("The smbFile fileCopy function=> "+smbe);
         }
       }
 

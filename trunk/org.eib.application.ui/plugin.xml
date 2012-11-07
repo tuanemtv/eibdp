@@ -3,7 +3,7 @@
 <plugin>
 
    <extension
-         id="product1"
+         id="product2"
          point="org.eclipse.core.runtime.applications">
       <application
             icon="icons/alt_window_16.gif">
@@ -12,28 +12,27 @@
          </run>
       </application>
    </extension>
-   
    <extension
          point="org.eclipse.ui.perspectives">
-        <!--
-       <perspective
+      <!--
+      <perspective
             class="org.eib.application.ui.WorkPerspective"
             id="org.eib.application.ui.perspectivework"
             name="Work">
       </perspective>
+      
       <perspective
             class="org.eib.application.ui.SourcePerspective"
             id="org.eib.application.ui.perspectivesource"
             name="Source">
-      </perspective> -->
-    
+      </perspective>-->
+      
       <perspective
             name="Query"
             class="org.eib.application.ui.Perspective"
             id="org.eib.application.ui.perspective">
       </perspective>
    </extension>
-   
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -82,18 +81,12 @@
          name="Test View"
          restorable="true">
    </view>
-   <view
-         class="org.eib.application.ui.views.SourceView"
-         id="org.eib.application.ui.views.SourceView"
-         name="Source Mangager">
-   </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="*">
          <!-- Run 1 script View -->
-         <!--
          <view
                standalone="true"
                minimized="false"
@@ -101,7 +94,6 @@
                relationship="top"
                id="org.eib.application.ui.view">
          </view>
-         -->
          
          
          <!-- Multi Script View      
@@ -113,34 +105,22 @@
                id="org.eib.application.ui.views.MultiScriptView">
          </view>-->  
          
-         <!-- Teller View  
+         <!-- Teller View
 		 <view
          	   standalone="true"
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="left"
                id="org.eib.application.ui.views.TellerView">
-         </view>   -->  
-         
-         <!---->
-        
-         <view
-         	   standalone="true"
-               minimized="false"
-               relative="org.eclipse.ui.editorss"
-               relationship="left"
-               id=" org.eib.application.ui.views.SourceView">
-         </view>  
-         
-         
+         </view>   -->    
                                    
-         <!-- Consolde View bottom    -->    
+         <!-- Consolde View bottom        
          <view
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="right"
                id="org.eib.application.ui.views.LightweightConsoleView">
-         </view>       
+         </view>      --> 
          
          <!-- Test View  
          <view
@@ -168,14 +148,18 @@
       </menuContribution>
    </extension>
    <extension
-         id="product1"
+         id="product2"
          point="org.eclipse.core.runtime.products">
       <product
-            application="org.eib.application.ui.product1"
+            application="GG__Report_to_Excel.product2"
             name="Query to excel">
          <property
                name="appName"
                value="Query to excel">
+         </property>
+         <property
+               name="aboutImage"
+               value="/org.eib.application.ui/icons/alt_window_16.gif">
          </property>
          <property
                name="windowImages"
@@ -183,13 +167,10 @@
          </property>
       </product>
    </extension>
-   <!--<extension
-         point="org.eclipse.ui.perspectives">
-   </extension>
-   
    <extension
          point="org.eclipse.ui.perspectives">
-   </extension>-->
+   </extension>
+   <!--
    <extension
          point="org.eclipse.ui.editors">
       <editor
@@ -198,5 +179,5 @@
             name="test">
       </editor>
    </extension>
-
+	-->
 </plugin>

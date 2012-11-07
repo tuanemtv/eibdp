@@ -18,8 +18,6 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.xml.sax.SAXException;
 
-import test.org.eib.ArrayQuartz.Job1;
-
 public class RunQueryJob {
 	
 	private static Logger logger =Logger.getLogger("RunQueryJob");
@@ -46,6 +44,7 @@ public class RunQueryJob {
 			qur = new QueryCron[qurcron.get_countcron()];
 			
 			qur1.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml", "Cron", qur); //_app.get_configureurl()+
+
 
 			//qur1.getXMLToCron("D:\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\cron\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 			
@@ -75,6 +74,7 @@ public class RunQueryJob {
 		    	//schedule it
 		    	Scheduler scheduler = new StdSchedulerFactory().getScheduler();
 		    	scheduler.start();
+		    	//scheduler.shutdown();
 		    	scheduler.scheduleJob(job, trigger);					
 			}
 			//System.out.println("> Load script Done. With= "+_query.length+" scripts");

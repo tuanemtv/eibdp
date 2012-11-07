@@ -39,10 +39,9 @@ public class RunMulConScript {
 				if ((checkStatus0(_query) == 0) && (checkStatus1(_query) == 0)){//Ko con trang thai 0
 					//ko con trang thai 0 va 1
 					bcheck = true;					
-					logger.info("\n>>> Run all script succesfull");
+					logger.info("\n>>> Run all script succesfull\n");
 										
 					//Show tat ca gia tri chay
-					logger.info("\n\n");
 					for (int k=0; k<_query.length;k++){						
 						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name="+_query[k].get_querynm());
 					}
@@ -134,7 +133,7 @@ public class RunMulConScript {
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
 					            //System.out.println("ERROR " + e2.getMessage());
-					            logger.error("Unable to load driver "+ queryser.getDriver() +"ERROR " + e2.getMessage());
+					            logger.error(e2.getMessage());
 					            //return;				        
 					        }													
 							//DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss][dd/MM/yyyy]");
