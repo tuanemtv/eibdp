@@ -18,7 +18,7 @@ public class MultiQueryToExcel {
 			a.get_query()[i].logQuery();
 		}*/
 		
-		System.out.println("\n");
+		//System.out.println("\n");
 		
 		//Sap xep lai query
 		a.sortQueryWithPriority();

@@ -165,7 +165,7 @@ public class FTPUtil {
 	      }
 	      else
 	      {
-	         System.out.println( "Input not available." );
+	         //System.out.println( "Input not available." );
 	         logger.info("Input not available.");
 	      }
 	   }
@@ -249,7 +249,7 @@ public class FTPUtil {
 	      }
 	      else
 	      {
-	         System.out.println( "Input not available" );
+	         //System.out.println( "Input not available" );
 	         logger.info("Input not available");
 	      }
 	   }

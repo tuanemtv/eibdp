@@ -39,7 +39,7 @@ public class RunMulScript {
 			//Kiem tra trang thai bang 0 cua tat ca cac script
 			if (checkStatus8(_query) == _query.length){//Ko con trang thai 0
 				bcheck = true;
-				System.out.println("\n  >>> Run all script succesfull");
+				//System.out.println("\n  >>> Run all script succesfull");
 				//logger.info("\n  >>> Run all script succesfull");
 			}			
 						
@@ -54,7 +54,7 @@ public class RunMulScript {
 						
 						DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss][dd/MM/yyyy]");
 						Date date = new Date();						
-						System.out.println(dateFormat.format(date)+">>Run script= "+_query[l].get_queryid()+", name="+_query[l].get_querynm());
+						//System.out.println(dateFormat.format(date)+">>Run script= "+_query[l].get_queryid()+", name="+_query[l].get_querynm());
 						//logger.info(dateFormat.format(date)+">>Run script= "+_query[l].get_queryid()+", name="+_query[l].get_querynm());
 						/*
 						try {
@@ -76,7 +76,7 @@ public class RunMulScript {
 						cq3.start();
 						DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss][dd/MM/yyyy]");
 						Date date = new Date();																
-						System.out.println(dateFormat.format(date)+">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
+						//System.out.println(dateFormat.format(date)+">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
 						//logger.info(dateFormat.format(date)+">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
 						//System.out.println("Chay script "+i+", status="+ _query[i].get_status());
 						/*
@@ -105,7 +105,7 @@ public class RunMulScript {
 			}
 			else{//Da qua chieu dai mang
 				bcheck = true;
-				System.out.println(" >>> Run script succesfull");
+				//System.out.println(" >>> Run script succesfull");
 				//logger.info(" >>> Run all script succesfull");
 			}			
 		}		
