@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -19,7 +20,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eib.common.DateTimeUtil;
 import org.eib.common.MainCommon;
 import org.eib.common.QueryCron;
+import org.eib.cron.application.Activator;
 import org.eib.cron.run.QueryJob;
+import org.osgi.framework.Bundle;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -67,8 +70,8 @@ public class CronView extends ViewPart {
 				btnStart.setEnabled(false);
 				btnStop.setEnabled(true);
 				
+				//ConsoleDisplayMgr.getDefault().println("Some errodfdfr msg", ConsoleDisplayMgr.MSG_ERROR);
 				
-				System.out.println("Date = "+DateTimeUtil.getDateYYYYMMDD());
 				/*
 				MainCommon a =new MainCommon("/resource/app","1");
 				a.get_appcommon().logAppCommon();
@@ -88,9 +91,20 @@ public class CronView extends ViewPart {
 				//QueryCron[] qur;//luc khoi dau lay duoc gia tri ko?
 				//QueryCron qur1 = new QueryCron();
 				
-	
-				MainCommon main1 = new MainCommon("/resource/app","1");
-				main1.logQueryCron();
+				//System.out.println("aaaa = ");
+				//Bundle bundle = Activator.getDefault().getBundle();
+				//Path path = new Path("path/to/your/file.extension");
+				System.out.println("Run----------------------");
+				logger.info("Run---------------------");
+				ResourceBundle rb = ResourceBundle.getBundle("/resource/app");	
+				
+				//System.out.println("app_kind = "+ rb.getString("app_kind"));
+				//logger.info("app_kind = "+ rb.getString("app_kind"));
+				//System.out.println("app_configure_url = "+ rb.getString("app_configure_url"));
+				
+				//System.out.println("bbb = ");
+				MainCommon main1 = new MainCommon("/resource/app",rb.getString("app_kind"));
+				//main1.logQueryCron();
 				
 				//File dir1 = new File(".");
 		        //ResourceBundle rb = ResourceBundle.getBundle("/resource/app");        			
@@ -104,6 +118,7 @@ public class CronView extends ViewPart {
 					//qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 					//qur1.getXMLToCron("D:\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\cron\\cron.xml", "Cron", qur); //_app.get_configureurl()+
 					
+					
 					for (int i=0; i< main1.get_querycron().length; i++){
 						
 						//JobDetail job = JobBuilder.newJob(QueryJob.class)
@@ -111,6 +126,13 @@ public class CronView extends ViewPart {
 								.withIdentity(main1.get_querycron()[i].get_jobNM(), main1.get_querycron()[i].get_jobGroup()).build();
 				 
 						job.getJobDataMap().put("_cronNM", main1.get_querycron()[i].get_cronNM());
+						job.getJobDataMap().put("_defineScript", main1.get_querycron()[i].get_defineScript());
+						job.getJobDataMap().put("_databaseID", main1.get_querycron()[i].get_databaseID());
+						
+						System.out.println("\n["+(i+1)+"]");								
+						System.out.println("_cronNM= "+main1.get_querycron()[i].get_cronNM() );
+						System.out.println("_defineScript= "+main1.get_querycron()[i].get_defineScript());
+						System.out.println("_databaseID "+ main1.get_querycron()[i].get_databaseID());
 						
 					//Quartz 1.6.3
 				    	//CronTrigger trigger = new CronTrigger();
@@ -202,8 +224,7 @@ public class CronView extends ViewPart {
 					
 		btnStop.setEnabled(false);
 		btnStop.setBounds(91, 10, 75, 25);
-		btnStop.setText("Shutdown");
-		
+		btnStop.setText("Shutdown");		
 
 		createActions();
 		initializeToolBar();
