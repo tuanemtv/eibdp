@@ -1,9 +1,11 @@
+--define h_trdt='20121107'
+
 SELECT	G.BRCD CHINHANH,G.CODE , G.NAME,
 		DECODE(G.CODE,'A03100',SUM(DUCUOI_VND)  -
 		NVL((SELECT
-			SUM(GL1.PERIODEXCHANGE_F('1', '1000', 'VND', A.CCY, '20121103', '20121103', A.TDBAL + A.TDACRBAL))	DUCUOI_VND
+			SUM(GL1.PERIODEXCHANGE_F('1', '1000', 'VND', A.CCY, &h_trdt, &h_trdt, A.TDBAL + A.TDACRBAL))	DUCUOI_VND
 	FROM   	GL1.TBGL_MAST A, CM1.TBCM_GENERAL B,GL1.TBGL_SBVCD C
-	WHERE	A.TRDT  = '20121103'
+	WHERE	A.TRDT  = &h_trdt
 			AND	B.BRCD= '1000'
 			AND 	A.CUSTSEQ = B.CUSTSEQ
 		   	AND 	B.CUSTTPCD = '600'
@@ -19,10 +21,10 @@ SELECT	G.BRCD CHINHANH,G.CODE , G.NAME,
 															     ,'GD4','###'
 															     ,'%' ),'%')),0),SUM(DUCUOI_VND)) DUCUOI_QDVND,
 		DECODE(G.CODE,'A03100',SUM(DUCUOI_USD)  -
-		NVL((SELECT	SUM(DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  '20121103', CCY, A.TDBAL + A.TDACRBAL, '01', 'USD', '01')))) ADBAL_USD
+		NVL((SELECT	SUM(DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  &h_trdt, CCY, A.TDBAL + A.TDACRBAL, '01', 'USD', '01')))) ADBAL_USD
 			--SUM(DECODE(SUBSTR(CCY,1,2),'GD',A.TDBAL + A.TDACRBAL,0)) ADBAL_GD
 	FROM   	GL1.TBGL_MAST A, CM1.TBCM_GENERAL B,GL1.TBGL_SBVCD C
-	WHERE	A.TRDT  = '20121103'
+	WHERE	A.TRDT  = &h_trdt
 			AND	B.BRCD= '1000'
 			AND 	A.CUSTSEQ = B.CUSTSEQ
 		   	AND 	B.CUSTTPCD = '600'
@@ -40,7 +42,7 @@ SELECT	G.BRCD CHINHANH,G.CODE , G.NAME,
 		DECODE(G.CODE,'A03100',SUM(DUCUOI_GD)  -
 		NVL((SELECT	SUM(DECODE(SUBSTR(CCY,1,2),'GD',A.TDBAL + A.TDACRBAL,0)) ADBAL_GD
 	FROM   	GL1.TBGL_MAST A, CM1.TBCM_GENERAL B,GL1.TBGL_SBVCD C
-	WHERE	A.TRDT  = '20121103'
+	WHERE	A.TRDT  = &h_trdt
 			AND	B.BRCD= '1000'
 			AND 	A.CUSTSEQ = B.CUSTSEQ
 		   	AND 	B.CUSTTPCD = '600'
@@ -133,8 +135,8 @@ FROM
 											   FROM
 											   (
 											   		SELECT	BRCD,ACCODE, CCY,
-															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, '20121103', '20121103', ADBAL) ADBAL_VND,
-															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  '20121103', CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
+															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, &h_trdt, &h_trdt, ADBAL) ADBAL_VND,
+															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  &h_trdt, CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
 															DECODE(SUBSTR(CCY,1,2),'GD',ADBAL,0) ADBAL_GD
 
 													FROM
@@ -146,7 +148,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL)ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND  ACCTCD > '000000'
@@ -164,7 +166,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD > '000000'
@@ -278,8 +280,8 @@ FROM
 											   FROM
 											   (
 											   		SELECT	BRCD,ACCODE, CCY,
-															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, '20121103', '20121103', ADBAL) ADBAL_VND,
-															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  '20121103', CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
+															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, &h_trdt, &h_trdt, ADBAL) ADBAL_VND,
+															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  &h_trdt, CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
 															DECODE(SUBSTR(CCY,1,2),'GD',ADBAL,0) ADBAL_GD
 													FROM
 													(
@@ -290,7 +292,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL) ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND  ACCTCD > '000000'
@@ -311,7 +313,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD   IN ( SELECT DISTINCT ACCTCD
@@ -429,8 +431,8 @@ FROM
 											   FROM
 											   (
 											   		SELECT	BRCD,ACCODE, CCY,
-															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, '20121103', '20121103', ADBAL) ADBAL_VND,
-															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  '20121103', CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
+															GL1.PERIODEXCHANGE_F('1', '1000', 'VND', CCY, &h_trdt, &h_trdt, ADBAL) ADBAL_VND,
+															DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  &h_trdt, CCY, ADBAL, '01', 'USD', '01'))) ADBAL_USD,
 															DECODE(SUBSTR(CCY,1,2),'GD',ADBAL,0) ADBAL_GD
 
 													FROM
@@ -442,7 +444,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL) ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND    (ACCTCD <> '691000'
@@ -461,7 +463,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD   IN ( SELECT DISTINCT ACCTCD
@@ -510,14 +512,14 @@ FROM
 			AND (DECODE(NVL(B.LEVEL3,'0'),'0',B.LEVEL2,B.LEVEL3) = C.CODE OR B.LEVEL4 = C.CODE)
 	UNION ALL
 	SELECT 	A.BRCD,'A03200','1.5 Vµng gi÷ hé' NAME,
-			SUM(GL1.PERIODEXCHANGE_F('1', '1000', 'VND', A.CCY, '20121103', '20121103', A.TDBAL + A.TDACRBAL)) DUCUOI,
-			SUM(DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  '20121103', CCY, A.TDBAL + A.TDACRBAL, '01', 'USD', '01')))) ADBAL_USD,
+			SUM(GL1.PERIODEXCHANGE_F('1', '1000', 'VND', A.CCY, &h_trdt, &h_trdt, A.TDBAL + A.TDACRBAL)) DUCUOI,
+			SUM(DECODE(CCY, 'VND',0,DECODE(SUBSTR(CCY,1,2),'GD',0,CS1.excrosscal('1000', 'VND',  &h_trdt, CCY, A.TDBAL + A.TDACRBAL, '01', 'USD', '01')))) ADBAL_USD,
 			SUM(DECODE(SUBSTR(CCY,1,2),'GD',A.TDBAL + A.TDACRBAL,0)) ADBAL_GD
 	FROM	GL1.TBGL_MAST A, CM1.TBCM_GENERAL B
 	WHERE	B.BRCD = '1000'
 			AND A.CUSTSEQ =B.CUSTSEQ
 			AND B.CUSTTPCD= '100'
-			AND A.TRDT  = '20121103'
+			AND A.TRDT  = &h_trdt
 			AND	A.ACCTCD IN ('462102')
 			AND  A.CCY LIKE 'GD%'
 	GROUP BY A.BRCD

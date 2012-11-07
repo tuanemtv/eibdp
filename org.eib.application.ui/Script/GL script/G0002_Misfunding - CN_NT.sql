@@ -1,8 +1,11 @@
+--define h_trdt='20121107'
+
+
 SELECT	G.BRCD CHINHANH,G.CCY,G.CODE , G.NAME,
 		DECODE(G.CODE,'A03100',SUM(G.DUCUOI)-
 		NVL((SELECT	SUM(A.TDBAL + A.TDACRBAL) DUCUOI
 		FROM   	GL1.TBGL_MAST A, CM1.TBCM_GENERAL B,GL1.TBGL_SBVCD C
-		WHERE	A.TRDT  = '20121103'
+		WHERE	A.TRDT  = &h_trdt
 				AND	B.BRCD= '1000'
 				AND A.CUSTSEQ = B.CUSTSEQ
 			   	AND B.CUSTTPCD = '600'
@@ -76,7 +79,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL)ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND  ACCTCD > '000000'
@@ -94,7 +97,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD > '000000'
@@ -185,7 +188,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL) ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND  ACCTCD > '000000'
@@ -206,7 +209,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD   IN ( SELECT DISTINCT ACCTCD
@@ -300,7 +303,7 @@ FROM
 																	SELECT	BRCD,ACCTCD ACCODE, CCY,
 																			SUM(TDBAL + TDACRBAL) ADBAL
 																	FROM  TBGL_MAST
-																	WHERE TRDT  = '20121103'
+																	WHERE TRDT  = &h_trdt
 																	AND   ONOFFTP = '1'
 																	AND   CUSTSEQ     LIKE '%'
 																	AND    (ACCTCD <> '691000'
@@ -319,7 +322,7 @@ FROM
 															SELECT	BRCD,ACCTCD ACCODE, CCY,
 																	(TDBAL + TDACRBAL) ADBAL
 															FROM  TBGL_MAST
-															WHERE TRDT  = '20121103'
+															WHERE TRDT  = &h_trdt
 															AND   ONOFFTP = '1'
 															AND   CUSTSEQ     LIKE '%'
 															AND   ACCTCD   IN ( SELECT DISTINCT ACCTCD
@@ -373,7 +376,7 @@ FROM
 	WHERE	B.BRCD = '1000'
 			AND A.CUSTSEQ =B.CUSTSEQ
 			AND B.CUSTTPCD= '100'
-			AND A.TRDT  = '20121103'
+			AND A.TRDT  = &h_trdt
 			AND	A.ACCTCD IN ('462102')
 			AND  A.CCY LIKE 'GD%'
 	GROUP BY A.BRCD,CCY

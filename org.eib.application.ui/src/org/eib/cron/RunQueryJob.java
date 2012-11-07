@@ -51,11 +51,13 @@ public class RunQueryJob {
 			
 			for (int i=0; i< qur.length; i++){
 				
-				JobDetail job = JobBuilder.newJob(QueryJob.class)
-				//JobDetail job = JobBuilder.newJob(QueryJobTest.class)
+				//JobDetail job = JobBuilder.newJob(QueryJob.class)
+				JobDetail job = JobBuilder.newJob(QueryJobTest.class)
 						.withIdentity(qur[i].get_jobNM(), qur[i].get_jobGroup()).build();
 		 
 				job.getJobDataMap().put("_cronNM", qur[i].get_cronNM());
+				job.getJobDataMap().put("_defineScript", qur[i].get_defineScript());
+				job.getJobDataMap().put("_databaseID", qur[i].get_databaseID());
 				
 			//Quartz 1.6.3
 		    	//CronTrigger trigger = new CronTrigger();

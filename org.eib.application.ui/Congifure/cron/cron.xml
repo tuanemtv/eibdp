@@ -8,7 +8,8 @@
 		<triggerNM>dummyTriggerName</triggerNM>
 		<triggerSchedule>0 25 11 * * ?</triggerSchedule> <!-- 30 11 -->
 		<triggerGroup>group1</triggerGroup>
-		<databaseID>Oralce-ALONE29</databaseID> 
+		<databaseID>Oralce-ALONE29</databaseID>
+		<defineScript>DEF003</defineScript> 
 		<Query id='Cron01.G001'>Cron01.G001</Query>
 		<Query id='Cron01.G002'>Cron01.G002</Query>    
 		<Query id='Cron01.S001'>Cron01.S001</Query>		
@@ -26,9 +27,10 @@
 		<jobClass>Job2</jobClass>
 		<jobGroup>group2</jobGroup>
 		<triggerNM>dummyTriggerName2</triggerNM>
-		<triggerSchedule>0 0 9,10,11,14,15,17 * * ?</triggerSchedule>
+		<triggerSchedule>0 0 9,10,11,14,15,16,17 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>
-		<databaseID>Oralce-ALONE29</databaseID>   	
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<defineScript>DEF003</defineScript>  	
 		<Query id='Cron02.G002'>Cron02.G002</Query>		
 		<Query id='Cron02.G001'>Cron02.G001</Query>				
 		<Query id='Cron02.S001'>Cron02.S001</Query>
@@ -49,7 +51,8 @@
 		<triggerNM>dummyTriggerName4</triggerNM>
 		<triggerSchedule>0 0 7 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>			
-		<databaseID>Oralce-ALONE29</databaseID>   	
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<defineScript>DEF002</defineScript>  	
 		<Query id='Cron04.P001'>Cron04.P001</Query>
 		<Query id='Cron04.P002'>Cron04.P002</Query>
 		<Query id='Cron04.P003'>Cron04.P003</Query>
@@ -70,28 +73,25 @@
 		<triggerNM>dummyTriggerName5</triggerNM>
 		<triggerSchedule>0 55 14,16 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>			
-		<databaseID>Oralce-ALONE29</databaseID>   
+		<databaseID>Oralce-ALONE29</databaseID>  
+		<defineScript>DEF003</defineScript> 
 		<Query id='Cron05.G002'>Cron05.G002</Query>		
 		<Query id='Cron05.G001'>Cron05.G001</Query>						
-	</Cron>-->	
+	</Cron>-->
+	<!--  test 
 	<Cron id='06'> 
 		<cronNM>Cron06</cronNM>
 		<jobNM>dummyJobName6</jobNM>
 		<jobClass>Job6</jobClass>
 		<jobGroup>group6</jobGroup>
 		<triggerNM>dummyTriggerName6</triggerNM>
-		<triggerSchedule>40 43 9 * * ?</triggerSchedule> 
+		<triggerSchedule>10 57 10 * * ?</triggerSchedule> 
 		<triggerGroup>group6</triggerGroup>			
-		<databaseID>Oralce-ALONE29</databaseID>		
-		<Query id='Cron06.S001'>Cron06.S001</Query>
-		<Query id='Cron06.S002'>Cron06.S002</Query>
-		<Query id='Cron06.S003'>Cron06.S003</Query>
-		<Query id='Cron06.S004'>Cron06.S004</Query>
-		<Query id='Cron06.S006'>Cron06.S006</Query>
-		<Query id='Cron06.S007'>Cron06.S007</Query>
-		<Query id='Cron06.S008'>Cron06.S008</Query>
-		<Query id='Cron06.S009'>Cron06.S009</Query>								
-	</Cron> 
+		<databaseID>Oralce-ALONE29</databaseID>	
+		<defineScript>DEF003</defineScript>	
+		<Query id='Cron06.G002'>Cron06.G002</Query>		
+		<Query id='Cron06.G001'>Cron06.G001</Query>								
+	</Cron> -->
 	<!--
 	<Cron id='07'> 
 		<cronNM>Cron07</cronNM>
@@ -101,22 +101,21 @@
 		<triggerNM>dummyTriggerName7</triggerNM>
 		<triggerSchedule>0 59 18 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>			
-		<databaseID>Oralce-ALONE29</databaseID>   
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<defineScript>DEF003</defineScript>  
 		<Query id='Cron07.G002'>Cron07.G002</Query>		
 		<Query id='Cron07.G001'>Cron07.G001</Query>						
-	</Cron> GL -->
-	<!-- Test
+	</Cron> GL -->	
 	<Cron id='07'> 
 		<cronNM>Cron07</cronNM>
 		<jobNM>dummyJobName7</jobNM>
 		<jobClass>Job7</jobClass>
 		<jobGroup>group7</jobGroup>
 		<triggerNM>dummyTriggerName7</triggerNM>
-		<triggerSchedule>40 15 14 * * ?</triggerSchedule>
+		<triggerSchedule>0 0 7 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>			
-		<databaseID>Oralce-ALONE29</databaseID>   	
-		<Query id='Cron07.S007'>Cron07.S007</Query>
-		<Query id='Cron07.S008'>Cron07.S008</Query>
-		<Query id='Cron07.S009'>Cron07.S009</Query>			
-	</Cron> -->
+		<databaseID>Oralce-AReport</databaseID>   
+		<defineScript>DEF002</defineScript>	
+		<Query id='Cron07.M001'>Cron07.M001</Query>			
+	</Cron> 
 </CronManager>
