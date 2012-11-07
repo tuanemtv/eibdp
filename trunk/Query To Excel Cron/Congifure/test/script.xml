@@ -54,5 +54,14 @@
 		<description>Script6</description> 
 		<note>Note6</note>	
 		<priority>10</priority>	
+	</Query>
+	<Query id='DEF003'>
+		<queryid>DEF003</queryid>
+		<querynm>Get define</querynm>
+		<module>DP</module>
+		<fileurl>Define script\DEF003_Mysql.sql</fileurl>
+		<description>Script6</description> 
+		<note>Get define</note>	
+		<priority>10</priority>	
 	</Query>	
 </ScriptCommon>

@@ -9,6 +9,7 @@
 		<triggerSchedule>0 53 10 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>	
 		<databaseID>MySQL-test</databaseID>	
+		<defineScript>DEF003</defineScript> 
 		<Query id='Cron01.S2'>Cron01.S2</Query>
 		<Query id='Cron01.S1'>Cron01.S1</Query>
 	</Cron>
@@ -18,9 +19,10 @@
 		<jobClass>Job2</jobClass>
 		<jobGroup>group2</jobGroup>
 		<triggerNM>dummyTriggerName2</triggerNM>
-		<triggerSchedule>0 43 00 * * ?</triggerSchedule>
+		<triggerSchedule>40 24 21 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>	
-		<databaseID>MySQL-test</databaseID>			
+		<databaseID>MySQL-test</databaseID>	
+		<defineScript>DEF003</defineScript> 		
 		<Query id='Cron02.S3'>Cron02.S3</Query>
 		<Query id='Cron02.S1'>Cron02.S1</Query>
 	</Cron>
