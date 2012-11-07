@@ -168,7 +168,7 @@
 		<querynm>GL - Misfunding - CN</querynm>
 		<module>GL</module>		
 		<fileurl>GL script\G0001_Misfunding - CN.sql</fileurl>		
-		<description>Script 10</description> <!--Mieu ta cau script-->
+		<description>GL - Misfunding - CN</description> <!--Mieu ta cau script-->
 		<note>Note 10</note>
 		<priority>1</priority>
 	</Query>
@@ -177,7 +177,7 @@
 		<querynm>GL - Misfunding - CN_NT</querynm>
 		<module>GL</module>		
 		<fileurl>GL script\G0002_Misfunding - CN_NT.sql</fileurl>		
-		<description>Script 10</description> <!--Mieu ta cau script-->
+		<description>GL - Misfunding - CN_NT</description> <!--Mieu ta cau script-->
 		<note>Note 10</note>
 		<priority>1</priority>
 	</Query>
@@ -186,8 +186,35 @@
 		<querynm>CHKOPEN2</querynm>
 		<module>DP</module>		
 		<fileurl>Functions script\FUN001_CHKOPEN2.sql</fileurl>		
-		<description>CHKOPEN2</description> <!--Mieu ta cau script-->
+		<description>Check ngay so</description> <!--Mieu ta cau script-->
 		<note>CHKOPEN2</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DEF002'>
+		<queryid>DEF002</queryid>
+		<querynm>DEF002_prebusday</querynm>
+		<module>DP</module>		
+		<fileurl>Define script\DEF002_prebusday.sql</fileurl>		
+		<description>Ngay lam viec truoc do cua he thong - 1000</description> <!--Mieu ta cau script-->
+		<note>DEF002</note>
+		<priority>1</priority>
+	</Query>
+	<Query id='DEF003'>
+		<queryid>DEF003</queryid>
+		<querynm>DEF003_curbusday</querynm>
+		<module>DP</module>		
+		<fileurl>Define script\DEF003_curbusday.sql</fileurl>		
+		<description>Ngay hien tai cua he thong - 1000</description> <!--Mieu ta cau script-->
+		<note>DEF003</note>
+		<priority>1</priority>
+	</Query>
+	<Query id='M001'>
+		<queryid>M001</queryid>
+		<querynm>M001_CCV</querynm>
+		<module>DP</module>		
+		<fileurl>Morning script\M001_CCV.sql</fileurl>		
+		<description>Lay chung chi vang theo ngay mo</description> <!--Mieu ta cau script-->
+		<note>M001</note>
 		<priority>10</priority>
 	</Query>
 </ScriptCommon>

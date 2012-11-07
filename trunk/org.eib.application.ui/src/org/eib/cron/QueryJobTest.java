@@ -29,12 +29,11 @@ public class QueryJobTest implements Job{
 			throws JobExecutionException {
 		
 		JobDataMap data = context.getJobDetail().getJobDataMap();		
-		logger.info("_cronNM= " + data.getString("_cronNM"));
-		
+		logger.info("_cronNM= " + data.getString("_cronNM"));	
+		logger.info("_defineScript= " + data.getString("_defineScript"));
+		logger.info("_databaseID= " + data.getString("_databaseID"));
 		
 		MainCommon main = new MainCommon("app");
-		//main.get_querycron()[0].logQueryCron();
-		//main.get_querycron()[1].logQueryCron();
 		
 		Date date1 ;
 		DateFormat dateFormat1;
@@ -50,67 +49,51 @@ public class QueryJobTest implements Job{
 		date1= new Date();
 		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat2.format(date1)+"\\");				
 		//Tao folder
-		FolderUtil.createFolder(main.get_appcommon().get_outurl());
-				
-		
-		//Tim cron dung
-		//QueryCron _quecron = new QueryCron();
-		//_quecron = main.getQueryCronFromName(data.getString("_cronNM"));
-		//_quecron.logQueryCron();
-		
-		
-		String [] a= null;
-		a = main.getQueryIDFromName(data.getString("_cronNM"));
-		
-
-		Query[] _arrQueryTemp = new Query[a.length];
-		
-		_arrQueryTemp = main.getQueryFromQueryID(a);
-		
-		for(int l=0; l<_arrQueryTemp.length; l++){
-			_arrQueryTemp[l].logQuery();
-		}
-		
-		//main.logQuery();
-		main.set_query(_arrQueryTemp);
-		
-		//logger.info("\n\n Sau");
-		//main.logQuery();
-		
-		//Chay multi
-		
-		main.sortQueryWithPriority();
-		
-		//logger.info("\n\n Sort lai");
-		//main.logQuery();
-		
+		FolderUtil.createFolder(main.get_appcommon().get_outurl());				
+							
 		
 		QueryServer _qurser = new QueryServer();
         Query _qur = new Query();
-		_qurser = main.getQueryServerFromID("Oralce-ALONE29"); //Oralce-AReport , Oralce-ALONE29       MySQL-test          
+		_qurser = main.getQueryServerFromID(data.getString("_databaseID")); //Oralce-AReport , Oralce-ALONE29       MySQL-test          
         _qurser.connectDatabase();
         
-        /*
-        _qur = main.getQueryFromID("DEF001");
-        _qur.queryToAppDefine(main.get_appcommon(), _qurser);
-        */
-        //a.get_appcommon().logAppCommon();
+        //Lay define cho he thong
+        _qur = main.getQueryFromID(data.getString("_defineScript"));
+        _qur.queryToAppDefine(main.get_appcommon(), _qurser);        
+        //main.get_appcommon().logAppCommon();
         
-        //Tien hanh chay query
+		//Tim cron dung        
+        String [] a= null;
+		a = main.getQueryIDFromName(data.getString("_cronNM"));		
+		Query[] _arrQueryTemp = new Query[a.length];		
+		_arrQueryTemp = main.getQueryFromQueryID(a);
+		
+		/*
+		for(int l=0; l<_arrQueryTemp.length; l++){
+			_arrQueryTemp[l].logQuery();
+		}*/
+		
+		//main.logQuery();
+		main.set_query(_arrQueryTemp);
+						
+		//Sort lai query theo thu tu uu tien
+		main.sortQueryWithPriority();				
+
         //set cac thong tin cua Query
-        for (int j=0; j<main.get_query().length;j++){
+        for (int j=0; j<main.get_query().length;j++)
+        {        	
+        	main.get_query()[j].set_querynm(main.get_appcommon().get_define().get("01h_trdt")+"_"+main.get_query()[j].get_querynm());
         	main.get_query()[j].set_fileurl(main.get_appcommon().get_scriptUrl()+main.get_query()[j].get_fileurl());
     		//doc file
         	main.get_query()[j].readScript();    	
     		//this.logQuery();
         	main.get_query()[j].set_define(main.get_appcommon().get_define());
         	main.get_query()[j].setquery();        	
-        	//a.get_query()[j].logQuery();
-        }
+        	//main.get_query()[j].logQuery();
+        }        
         
-        
+        //Tien hanh chay multi query        
         RunMulConScript.commandMulQueryExcel(_qurser, main.get_query(), main.get_appcommon());
-      
-		
+      		
 	}
 }

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Ui
-Bundle-SymbolicName: org.eib.application.ui; singleton:=true
+Bundle-SymbolicName: GG__Report_to_Excel;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eib.application.ui.Activator
 Require-Bundle: org.eclipse.ui,
@@ -19,7 +19,9 @@ Bundle-ClassPath: .,
  lib/libs/org.eclipse.wb.swt_1.3.0.r37x201202010030.jar,
  lib/libs/org.eclipse.wb.swt.layout.grouplayout_1.3.0.r37x201202010125.jar,
  lib/libs/org.eclipse.wb.swt.widgets.baseline_1.3.0.r37x201202010053.jar
-Export-Package: org.eib.application.ui.views,
+Export-Package: org.eib.application.dialog,
+ org.eib.application.ui,
+ org.eib.application.ui.views,
  org.eib.common,
  org.eib.database,
  org.eib.thread

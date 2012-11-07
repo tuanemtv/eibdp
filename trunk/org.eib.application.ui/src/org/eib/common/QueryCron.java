@@ -27,11 +27,13 @@ public class QueryCron {
 	private String _cronNM;
 	private String _jobNM;
 	private String _jobClass;
-	private String _jobGroup;
+	private String _jobGroup;	
 	private String _triggerNM;
 	private String _triggerSchedule;
 	private String _triggerGroup;
 	private String _databaseID;
+	private String _defineScript;
+	private int _countcron;
 	private String[] _queryid;
 	
 	
@@ -41,17 +43,12 @@ public class QueryCron {
 	public void set_databaseID(String _databaseID) {
 		this._databaseID = _databaseID;
 	}
-
 	public String[] get_queryid() {
 		return _queryid;
 	}
 	public void set_queryid(String[] _queryid) {
 		this._queryid = _queryid;
-	}
-
-	private int _countcron;
-	
-	
+	}			
 	public int get_countcron() {
 		return _countcron;
 	}
@@ -99,6 +96,12 @@ public class QueryCron {
 	}
 	public void set_triggerGroup(String _triggerGroup) {
 		this._triggerGroup = _triggerGroup;
+	}	
+	public String get_defineScript() {
+		return _defineScript;
+	}
+	public void set_defineScript(String _defineScript) {
+		this._defineScript = _defineScript;
 	}
 	
 	
@@ -202,6 +205,11 @@ public class QueryCron {
 				 fstNm = element1.getChildNodes();
 				 _querycron[i].set_databaseID((fstNm.item(0)).getNodeValue());
 				 				 
+				 nodelist = element.getElementsByTagName("defineScript");
+				 element1 = (Element) nodelist.item(0);
+				 fstNm = element1.getChildNodes();
+				 _querycron[i].set_defineScript((fstNm.item(0)).getNodeValue());				 
+				 				 
 				 NodeList qlist = doc.getElementsByTagName("Query");
 				 _querycron[i]._queryid = new String[qlist.getLength()];
 				 for (int j = 0; j < qlist.getLength(); j++) {	
@@ -239,6 +247,8 @@ public class QueryCron {
 			logger.info("_triggerGroup: "+this.get_triggerGroup());
 		if (this.get_databaseID() != null)
 			logger.info("_databaseID: "+this.get_databaseID());
+		if (this.get_defineScript() != null)
+			logger.info("_defineScript: "+this.get_defineScript());
 		
 		/*
 		if (_queryid.length != null){

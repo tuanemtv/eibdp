@@ -52,7 +52,10 @@ public class RunMulConScript {
 					//Kiem tra lan chay dau tien bang cach diem TT = 0 bang so luong mang
 					//Chay so luong
 					if (checkStatus0(_query) == _query.length){//Moi bang dau chay	
-						//System.out.println("App scriptnums: "+_app.get_scriptnums());
+						//System.out.println("App scriptnums: "+_app.get_scriptnums());						
+						if (_app.get_scriptnums()>_query.length){
+							_app.set_scriptnums(_query.length);
+						}
 						logger.info("App scriptnums: "+_app.get_scriptnums());
 						
 						for (int l=0; l <_app.get_scriptnums();l++){//so script dang ky chay							
@@ -97,6 +100,9 @@ public class RunMulConScript {
 						}																
 					}
 					else{//Ko phai lan dau chay
+						if (_app.get_scriptnums()>_query.length){
+							_app.set_scriptnums(_query.length);
+						}
 						if (checkStatus1(_query) < _app.get_scriptnums()){
 							//System.out.println("NEXT > ");
 							//logger.info("NEXT > ");
