@@ -72,30 +72,8 @@ public class CronView extends ViewPart {
 				
 				//ConsoleDisplayMgr.getDefault().println("Some errodfdfr msg", ConsoleDisplayMgr.MSG_ERROR);
 				
-				/*
-				MainCommon a =new MainCommon("/resource/app","1");
-				a.get_appcommon().logAppCommon();
-				
-				for (int i=0; i<a.get_query().length; i++){
-					//System.out.println("["+i+"]-----------------");
-					a.get_query()[i].logQuery();
-				}
-				
-				System.out.println("\n");
-				
-				a.sortQueryWithPriority();
-				for (int i=0; i<a.get_query().length; i++){
-					//System.out.println("["+i+"]-----------------");
-					a.get_query()[i].logQuery();
-				}*/
-				//QueryCron[] qur;//luc khoi dau lay duoc gia tri ko?
-				//QueryCron qur1 = new QueryCron();
-				
-				//System.out.println("aaaa = ");
-				//Bundle bundle = Activator.getDefault().getBundle();
-				//Path path = new Path("path/to/your/file.extension");
-				System.out.println("Run----------------------");
-				logger.info("Run---------------------");
+				logger.info("");
+				logger.info("Load---------------------------------");
 				ResourceBundle rb = ResourceBundle.getBundle("/resource/app");	
 				
 				//System.out.println("app_kind = "+ rb.getString("app_kind"));
@@ -109,16 +87,7 @@ public class CronView extends ViewPart {
 				//File dir1 = new File(".");
 		        //ResourceBundle rb = ResourceBundle.getBundle("/resource/app");        			
 				
-				try {
-					//QueryCron qurcron = new QueryCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml","Cron");			
-					//QueryCron qurcron = new QueryCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml","Cron");
-					//qur = new QueryCron[main.get_querycron().length];
-					
-					//qur1.getXMLToCron(dir1.getCanonicalPath()+rb.getString("congifureUrl")+"cron.xml", "Cron", qur); 
-					//qur1.getXMLToCron("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\test\\cron.xml", "Cron", qur); //_app.get_configureurl()+
-					//qur1.getXMLToCron("D:\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Congifure\\cron\\cron.xml", "Cron", qur); //_app.get_configureurl()+
-					
-					
+				try {					
 					for (int i=0; i< main1.get_querycron().length; i++){
 						
 						//JobDetail job = JobBuilder.newJob(QueryJob.class)
@@ -129,10 +98,11 @@ public class CronView extends ViewPart {
 						job.getJobDataMap().put("_defineScript", main1.get_querycron()[i].get_defineScript());
 						job.getJobDataMap().put("_databaseID", main1.get_querycron()[i].get_databaseID());
 						
-						System.out.println("\n["+(i+1)+"]");								
-						System.out.println("_cronNM= "+main1.get_querycron()[i].get_cronNM() );
-						System.out.println("_defineScript= "+main1.get_querycron()[i].get_defineScript());
-						System.out.println("_databaseID "+ main1.get_querycron()[i].get_databaseID());
+						logger.info("["+(i+1)+"]");								
+						logger.info("_cronNM= "+main1.get_querycron()[i].get_cronNM() );
+						logger.info("_defineScript= "+main1.get_querycron()[i].get_defineScript());
+						logger.info("_databaseID= "+ main1.get_querycron()[i].get_databaseID());
+						logger.info("_triggerSchedule= "+main1.get_querycron()[i].get_triggerSchedule());
 						
 					//Quartz 1.6.3
 				    	//CronTrigger trigger = new CronTrigger();
@@ -151,7 +121,7 @@ public class CronView extends ViewPart {
 				    	scheduler = new StdSchedulerFactory().getScheduler();
 				    	scheduler.start();
 				    	//scheduler.shutdown();
-				    	scheduler.scheduleJob(job, trigger);					
+				    	scheduler.scheduleJob(job, trigger);					  
 					}
 					//System.out.println("> Load script Done. With= "+_query.length+" scripts");
 				} catch (SchedulerException e2) {
@@ -225,6 +195,20 @@ public class CronView extends ViewPart {
 		btnStop.setEnabled(false);
 		btnStop.setBounds(91, 10, 75, 25);
 		btnStop.setText("Shutdown");		
+		
+		Button btnTest = new Button(container, SWT.NONE);
+		btnTest.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ResourceBundle rbTest = ResourceBundle.getBundle("/resource/app");	
+				MainCommon maintest = new MainCommon("/resource/app",rbTest.getString("app_kind"));
+				maintest.logQueryCron();				
+				maintest.logQueryServer();
+				maintest.logQuery();
+			}
+		});
+		btnTest.setBounds(271, 10, 75, 25);
+		btnTest.setText("Test");
 
 		createActions();
 		initializeToolBar();

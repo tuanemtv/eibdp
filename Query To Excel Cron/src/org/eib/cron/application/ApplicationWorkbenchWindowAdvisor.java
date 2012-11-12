@@ -43,7 +43,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
   public void preWindowOpen() {
     IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-    configurer.setInitialSize(new Point(600, 500)); //dai, cao
+    configurer.setInitialSize(new Point(800, 500)); //dai, cao
     configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
     configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
