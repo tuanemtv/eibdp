@@ -10,6 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
 
 public class FTPUtil {
@@ -22,8 +24,14 @@ public class FTPUtil {
 	private String _filename;
 	private String _ftpurl;
 	private String _inturl;
+	private int _port = 21;
 	
-	
+	public int get_port() {
+		return _port;
+	}
+	public void set_port(int _port) {
+		this._port = _port;
+	}
 	public String get_ftpServer() {
 		return _ftpServer;
 	}
@@ -162,6 +170,8 @@ public class FTPUtil {
 	                  logger.error(ioe.getMessage());
 	               }
 	         }
+	         
+	         logger.info("Upload =" +fileName+" is successfull");
 	      }
 	      else
 	      {
@@ -253,4 +263,54 @@ public class FTPUtil {
 	         logger.info("Input not available");
 	      }
 	   }
+	   
+	   
+	   public void createFolder (String _folderUrl){		   
+	        FTPClient ftpClient = new FTPClient();
+	        try {
+	        	
+	            ftpClient.connect(this._ftpServer, this._port);
+	            //showServerReply(ftpClient);
+	            
+	            int replyCode = ftpClient.getReplyCode();
+	            if (!FTPReply.isPositiveCompletion(replyCode)) {
+	            	logger.error("Operation failed. Server reply code: " + replyCode);
+	                return;
+	            }
+	            
+	            boolean success = ftpClient.login(this._user, this._password);
+	            //showServerReply(ftpClient);
+	            if (!success) {
+	            	logger.info("Could not login to the server");
+	                return;
+	            }
+	            
+	            // Creates a directory
+	            String dirToCreate = _folderUrl;//   "/upload123";
+	            success = ftpClient.makeDirectory(dirToCreate);
+	            //showServerReply(ftpClient);
+	            if (success) {
+	            	logger.info("Successfully created directory: " + dirToCreate);
+	            } else {
+	            	logger.info("Failed to create directory. See server's reply.");
+	            }
+	            
+	            // logs out
+	            ftpClient.logout();
+	            ftpClient.disconnect();
+	            
+	        } catch (IOException ex) {
+	        	logger.error("Oops! Something wrong happened");
+	            ex.printStackTrace();
+	        }
+	   }
+	   
+	   private static void showServerReply(FTPClient ftpClient) {
+	        String[] replies = ftpClient.getReplyStrings();
+	        if (replies != null && replies.length > 0) {
+	            for (String aReply : replies) {
+	            	logger.info("SERVER: " + aReply);
+	            }
+	        }
+	    }
 }

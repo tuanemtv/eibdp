@@ -292,7 +292,6 @@ public class View extends ViewPart {
 						else{
 							cboServer.setEnabled(false);
 							btnConnect.setText("No Connect");
-							try {
 							queryser =new QueryServer();
 							if (cboServer.getText().equals("1. Oracle - A Report")){
 								queryser.getServer(_app.get_configureurl()+"database.xml","Oralce-AReport");
@@ -328,18 +327,6 @@ public class View extends ViewPart {
 					        	_conn.close();
 					        } catch (SQLException ex) {
 					        }*/	
-						
-							
-						} catch (ParserConfigurationException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (SAXException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}	
 					}
 						
 					lblconnect.setText("DisConnect");
@@ -364,138 +351,127 @@ public class View extends ViewPart {
 		
 		//Load app
 		_app = new AppCommon();
-		try {
-			_app.getAppCom("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\app.xml", "Common2");
-			txtConfigureUrl.setText(_app.get_configureurl());
-			txtScriptNum.setText(String.valueOf(_app.get_scriptnums()));
-			txtOutUrl.setText(_app.get_outurl());
-			
-			Label lblExcelRownum = new Label(composite, SWT.NONE);
-			lblExcelRownum.setText("Excel Rownum");
-			
-			txtExelRownum = new Text(composite, SWT.BORDER);
-			txtExelRownum.setEditable(false);
-			txtExelRownum.setText("0");
-			
-			Button btnMultiServer = new Button(composite, SWT.CHECK);
-			btnMultiServer.setText("Multi Server");
-			GroupLayout gl_composite = new GroupLayout(composite);
-			gl_composite.setHorizontalGroup(
-				gl_composite.createParallelGroup(GroupLayout.LEADING)
-					.add(gl_composite.createSequentialGroup()
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(lblServer)
-								.add(6)
-								.add(cboServer, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.UNRELATED)
-								.add(btnConnect, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.RELATED)
-								.add(lblconnect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(lblConfigureUrl)
-								.add(8)
-								.add(txtConfigureUrl, GroupLayout.PREFERRED_SIZE, 335, GroupLayout.PREFERRED_SIZE))
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(lblScriptNum)
-								.add(19)
-								.add(txtScriptNum, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(LayoutStyle.RELATED)
-								.add(lblExcelRownum)
-								.add(18)
-								.add(txtExelRownum, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
-							.add(gl_composite.createSequentialGroup()
-								.add(12)
-								.add(lblScript)
-								.add(6)
-								.add(cboScript, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
-								.add(6)
-								.add(btnload))
-							.add(gl_composite.createSequentialGroup()
-								.add(124)
-								.add(btnRunOne)
-								.add(16)
-								.add(btnRunAll)
-								.add(18)
-								.add(btnMultiServer))
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(lblOutFileUrl)
-								.add(20)
-								.add(txtOutUrl, GroupLayout.PREFERRED_SIZE, 335, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(147, Short.MAX_VALUE))
-			);
-			gl_composite.setVerticalGroup(
-				gl_composite.createParallelGroup(GroupLayout.LEADING)
-					.add(gl_composite.createSequentialGroup()
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-									.add(gl_composite.createSequentialGroup()
-										.add(5)
-										.add(lblServer))
-									.add(gl_composite.createSequentialGroup()
-										.add(2)
-										.add(lblconnect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-							.add(gl_composite.createSequentialGroup()
-								.add(11)
-								.add(cboServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.add(gl_composite.createSequentialGroup()
-								.add(10)
-								.add(btnConnect)))
-						.addPreferredGap(LayoutStyle.RELATED)
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-							.add(gl_composite.createSequentialGroup()
-								.add(3)
-								.add(lblConfigureUrl))
-							.add(txtConfigureUrl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.add(6)
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-							.add(gl_composite.createSequentialGroup()
-								.add(3)
-								.add(lblScriptNum))
-							.add(gl_composite.createParallelGroup(GroupLayout.BASELINE)
-								.add(txtScriptNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.add(lblExcelRownum)
-								.add(txtExelRownum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.add(7)
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
-							.add(gl_composite.createSequentialGroup()
-								.add(5)
-								.add(lblScript))
-							.add(gl_composite.createSequentialGroup()
-								.add(1)
-								.add(cboScript, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+		_app.getAppCom("E:\\BACKUP\\DROPBOX\\Dropbox\\WORK\\Project\\app.xml", "Common2");
+		txtConfigureUrl.setText(_app.get_configureurl());
+		txtScriptNum.setText(String.valueOf(_app.get_scriptnums()));
+		txtOutUrl.setText(_app.get_outurl());
+		
+		Label lblExcelRownum = new Label(composite, SWT.NONE);
+		lblExcelRownum.setText("Excel Rownum");
+		
+		txtExelRownum = new Text(composite, SWT.BORDER);
+		txtExelRownum.setEditable(false);
+		txtExelRownum.setText("0");
+		
+		Button btnMultiServer = new Button(composite, SWT.CHECK);
+		btnMultiServer.setText("Multi Server");
+		GroupLayout gl_composite = new GroupLayout(composite);
+		gl_composite.setHorizontalGroup(
+			gl_composite.createParallelGroup(GroupLayout.LEADING)
+				.add(gl_composite.createSequentialGroup()
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
+							.add(lblServer)
+							.add(6)
+							.add(cboServer, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.UNRELATED)
+							.add(btnConnect, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.RELATED)
+							.add(lblconnect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
+							.add(lblConfigureUrl)
+							.add(8)
+							.add(txtConfigureUrl, GroupLayout.PREFERRED_SIZE, 335, GroupLayout.PREFERRED_SIZE))
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
+							.add(lblScriptNum)
+							.add(19)
+							.add(txtScriptNum, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(LayoutStyle.RELATED)
+							.add(lblExcelRownum)
+							.add(18)
+							.add(txtExelRownum, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE))
+						.add(gl_composite.createSequentialGroup()
+							.add(12)
+							.add(lblScript)
+							.add(6)
+							.add(cboScript, GroupLayout.PREFERRED_SIZE, 355, GroupLayout.PREFERRED_SIZE)
+							.add(6)
 							.add(btnload))
-						.add(5)
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(124)
 							.add(btnRunOne)
-							.add(gl_composite.createParallelGroup(GroupLayout.BASELINE)
-								.add(btnRunAll)
-								.add(btnMultiServer)))
-						.add(6)
-						.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+							.add(16)
+							.add(btnRunAll)
+							.add(18)
+							.add(btnMultiServer))
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
 							.add(lblOutFileUrl)
-							.add(txtOutUrl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(289, Short.MAX_VALUE))
-			);
-			composite.setLayout(gl_composite);
-			
-			txtExelRownum.setText(String.valueOf(_app.get_excelrows()));
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+							.add(20)
+							.add(txtOutUrl, GroupLayout.PREFERRED_SIZE, 335, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(147, Short.MAX_VALUE))
+		);
+		gl_composite.setVerticalGroup(
+			gl_composite.createParallelGroup(GroupLayout.LEADING)
+				.add(gl_composite.createSequentialGroup()
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
+							.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+								.add(gl_composite.createSequentialGroup()
+									.add(5)
+									.add(lblServer))
+								.add(gl_composite.createSequentialGroup()
+									.add(2)
+									.add(lblconnect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+						.add(gl_composite.createSequentialGroup()
+							.add(11)
+							.add(cboServer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.add(gl_composite.createSequentialGroup()
+							.add(10)
+							.add(btnConnect)))
+					.addPreferredGap(LayoutStyle.RELATED)
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(3)
+							.add(lblConfigureUrl))
+						.add(txtConfigureUrl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.add(6)
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(3)
+							.add(lblScriptNum))
+						.add(gl_composite.createParallelGroup(GroupLayout.BASELINE)
+							.add(txtScriptNum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.add(lblExcelRownum)
+							.add(txtExelRownum, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.add(7)
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(gl_composite.createSequentialGroup()
+							.add(5)
+							.add(lblScript))
+						.add(gl_composite.createSequentialGroup()
+							.add(1)
+							.add(cboScript, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.add(btnload))
+					.add(5)
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(btnRunOne)
+						.add(gl_composite.createParallelGroup(GroupLayout.BASELINE)
+							.add(btnRunAll)
+							.add(btnMultiServer)))
+					.add(6)
+					.add(gl_composite.createParallelGroup(GroupLayout.LEADING)
+						.add(lblOutFileUrl)
+						.add(txtOutUrl, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(289, Short.MAX_VALUE))
+		);
+		composite.setLayout(gl_composite);
+		
+		txtExelRownum.setText(String.valueOf(_app.get_excelrows()));
 		
 		//Ghi thong tin tren Status
 		IStatusLineManager manager = getViewSite().getActionBars().getStatusLineManager();

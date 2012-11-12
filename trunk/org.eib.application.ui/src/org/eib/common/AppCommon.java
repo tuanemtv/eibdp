@@ -246,6 +246,11 @@ public class AppCommon {
 		return this._outurl + _filename +".xls";
 	}
 	
+	public String get_outurl_excel(String _folder, String _filename){
+		//Tao thu muc va set duong dan moi				
+		return this._outurl + _folder+"\\"+_filename +".xls";
+	}
+	
 	public String get_defscripturl() {
 		return _defscripturl;
 	}
@@ -311,295 +316,312 @@ public class AppCommon {
 		this._ftpInurl = _ftpInurl;
 	}
 
-	public void getAppCom(String fileurl, String servernm) throws ParserConfigurationException, SAXException, IOException{
-		 File f = new File(fileurl);
-		 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
-		 DocumentBuilder db = dbf.newDocumentBuilder();
-		 Document doc = db.parse(f);
-	  
-		  NodeList list = doc.getElementsByTagName(servernm);
-		  for (int i = 0; i < list.getLength(); i++) {
-			  Node node = list.item(i);			  
-			  if (node.getNodeType() == Node.ELEMENT_NODE) {
-				  
-				 //Duong dan lay file
-				 Element element = (Element) node;
-				 NodeList nodelist = element.getElementsByTagName("inurl");
-				 Element element1 = (Element) nodelist.item(0);
-				 NodeList fstNm = element1.getChildNodes();
-				 this._inurl = (fstNm.item(0)).getNodeValue();
-				 
-				 //Duong dan out file
-				 nodelist = element.getElementsByTagName("outurl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._outurl = (fstNm.item(0)).getNodeValue();
-				 
-				 //so dong trong sheet excel
-				 nodelist = element.getElementsByTagName("excelrows");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._excelrows = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 
-				 //so luong script chay
-				 nodelist = element.getElementsByTagName("scriptnums");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._scriptnums = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 //logger.info("scriptnums: "+this.get_scriptnums());
+	public void getAppCom(String fileurl, String servernm) {
+		File f = new File(fileurl);
+		DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
+		DocumentBuilder db;
+		
+		try {
+			db = dbf.newDocumentBuilder();
+			Document doc = db.parse(f);
+			  
+			  NodeList list = doc.getElementsByTagName(servernm);
+			  for (int i = 0; i < list.getLength(); i++) {
+				  Node node = list.item(i);			  
+				  if (node.getNodeType() == Node.ELEMENT_NODE) {
+					  
+					 //Duong dan lay file
+					 Element element = (Element) node;
+					 NodeList nodelist = element.getElementsByTagName("inurl");
+					 Element element1 = (Element) nodelist.item(0);
+					 NodeList fstNm = element1.getChildNodes();
+					 this._inurl = (fstNm.item(0)).getNodeValue();
+					 
+					 //Duong dan out file
+					 nodelist = element.getElementsByTagName("outurl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._outurl = (fstNm.item(0)).getNodeValue();
+					 
+					 //so dong trong sheet excel
+					 nodelist = element.getElementsByTagName("excelrows");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._excelrows = Integer.parseInt((fstNm.item(0)).getNodeValue());
+					 
+					 //so luong script chay
+					 nodelist = element.getElementsByTagName("scriptnums");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._scriptnums = Integer.parseInt((fstNm.item(0)).getNodeValue());
+					 //logger.info("scriptnums: "+this.get_scriptnums());
+						
+					 //Duong dan luu file cau hinh
+					 /*
+					 nodelist = element.getElementsByTagName("configureurl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._configureUrl = (fstNm.item(0)).getNodeValue();
+					 */
+					 
+					 //tong so script chay
+					 nodelist = element.getElementsByTagName("scriptcount");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._scriptcount = Integer.parseInt((fstNm.item(0)).getNodeValue());
+					 
+					 //Add define
+					 TreeMap<String, String> hm_temp = new TreeMap<String, String>();				 
+					 TreeMap<String, String> hm_tempnm = new TreeMap<String, String>();
+					 nodelist = element.getElementsByTagName("define1");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+						 this._h_trdt = (fstNm.item(0)).getNodeValue();//Ngay
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define2");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define3");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define4");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define5");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define6");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define7");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define8");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define9");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 
+					 nodelist = element.getElementsByTagName("define10");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
+						 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
+					 }
+					 //Dua vao define
+					 this.set_define(hm_temp);
+					 this.set_definenm(hm_tempnm);
+					 
+					 //show hashmap
+					 //JavaUtil.showHashMap(hm_temp);
+					 //JavaUtil.showHashMap(hm_tempnm); 
 					
-				 //Duong dan luu file cau hinh
-				 /*
-				 nodelist = element.getElementsByTagName("configureurl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._configureUrl = (fstNm.item(0)).getNodeValue();
-				 */
-				 
-				 //tong so script chay
-				 nodelist = element.getElementsByTagName("scriptcount");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._scriptcount = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 
-				 //Add define
-				 TreeMap<String, String> hm_temp = new TreeMap<String, String>();				 
-				 TreeMap<String, String> hm_tempnm = new TreeMap<String, String>();
-				 nodelist = element.getElementsByTagName("define1");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-					 this._h_trdt = (fstNm.item(0)).getNodeValue();//Ngay
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define2");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define3");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define4");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define5");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define6");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define7");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define8");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define9");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 
-				 nodelist = element.getElementsByTagName("define10");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 hm_temp.put(element1.getAttribute("id"), (fstNm.item(0)).getNodeValue());
-					 hm_tempnm.put(element1.getAttribute("id"),"["+element1.getAttribute("name")+"]");
-				 }
-				 //Dua vao define
-				 this.set_define(hm_temp);
-				 this.set_definenm(hm_tempnm);
-				 
-				 //show hashmap
-				 //JavaUtil.showHashMap(hm_temp);
-				 //JavaUtil.showHashMap(hm_tempnm); 
-				
-				//Set lai duong dan xuat file
-				//this._outurl  = this._outurl + this._h_trdt;
-				
-				//Tao folder
-				//FolderUtil.createFolder(this._outurl);
-				
-				//Lay thong tin FTP
-				//ftpserver
-				 nodelist = element.getElementsByTagName("ftpserver");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpServer = (fstNm.item(0)).getNodeValue();
-				 //logger.info("_ftpServer: "+this.get_ftpServer());
-				 
-				 //ftpuser
-				 nodelist = element.getElementsByTagName("ftpuser");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpUsr = (fstNm.item(0)).getNodeValue();
-				 
-				 //ftppass
-				 nodelist = element.getElementsByTagName("ftppass");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpPass = (fstNm.item(0)).getNodeValue();
-				 
-				//ftpfilename
-				 nodelist = element.getElementsByTagName("ftpfilename");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpFilename = (fstNm.item(0)).getNodeValue();
-				 
-				//ftpurl
-				 nodelist = element.getElementsByTagName("ftpurl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpUrl = (fstNm.item(0)).getNodeValue();
-				 
-				//ftpinturl
-				 nodelist = element.getElementsByTagName("ftpinturl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._ftpInurl = (fstNm.item(0)).getNodeValue();
-				 
-				 
-				 //Doc duong dan file
-				 /*
-				 nodelist = element.getElementsByTagName("defscripturl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
-					 // Get the object of DataInputStream
-					 DataInputStream in = new DataInputStream(fstream);
-					 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-					 String strLine;
-					 while ((strLine = br.readLine()) != null)   {	
-						 //Neu bat dau bang select thi moi them vao.
-						 //_query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung
-						 //this._defscript = this._defscript + strLine+'\n';
-						 this.set_defscript(this.get_defscript()+ strLine+'\n');
-						 //System.out.println (strLine);
+					//Set lai duong dan xuat file
+					//this._outurl  = this._outurl + this._h_trdt;
+					
+					//Tao folder
+					//FolderUtil.createFolder(this._outurl);
+					
+					//Lay thong tin FTP
+					//ftpserver
+					 nodelist = element.getElementsByTagName("ftpserver");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpServer = (fstNm.item(0)).getNodeValue();
+					 //logger.info("_ftpServer: "+this.get_ftpServer());
+					 
+					 //ftpuser
+					 nodelist = element.getElementsByTagName("ftpuser");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpUsr = (fstNm.item(0)).getNodeValue();
+					 
+					 //ftppass
+					 nodelist = element.getElementsByTagName("ftppass");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpPass = (fstNm.item(0)).getNodeValue();
+					 
+					//ftpfilename
+					 nodelist = element.getElementsByTagName("ftpfilename");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpFilename = (fstNm.item(0)).getNodeValue();
+					 
+					//ftpurl
+					 nodelist = element.getElementsByTagName("ftpurl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpUrl = (fstNm.item(0)).getNodeValue();
+					 
+					//ftpinturl
+					 nodelist = element.getElementsByTagName("ftpinturl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._ftpInurl = (fstNm.item(0)).getNodeValue();
+					 
+					 
+					 //Doc duong dan file
+					 /*
+					 nodelist = element.getElementsByTagName("defscripturl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
+						 // Get the object of DataInputStream
+						 DataInputStream in = new DataInputStream(fstream);
+						 BufferedReader br = new BufferedReader(new InputStreamReader(in));
+						 String strLine;
+						 while ((strLine = br.readLine()) != null)   {	
+							 //Neu bat dau bang select thi moi them vao.
+							 //_query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung
+							 //this._defscript = this._defscript + strLine+'\n';
+							 this.set_defscript(this.get_defscript()+ strLine+'\n');
+							 //System.out.println (strLine);
+						 }
+						 //System.out.println (this._defscript);
 					 }
-					 //System.out.println (this._defscript);
-				 }
-				 
-				 //Doc duong dan file di bien truyen vao
-				 nodelist = element.getElementsByTagName("defscripturl2");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes(); 
-				 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
-				 {
-					 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
-					 // Get the object of DataInputStream
-					 DataInputStream in = new DataInputStream(fstream);
-					 BufferedReader br = new BufferedReader(new InputStreamReader(in));
-					 String strLine;
-					 while ((strLine = br.readLine()) != null)   {	
-						 //Neu bat dau bang select thi moi them vao.
-						 //_query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung
-						 //this._defscript = this._defscript + strLine+'\n';
-						 this.set_defscript2(this.get_defscript2()+ strLine+'\n');
-						 //System.out.println (strLine);
-					 }
-					 //System.out.println (this._defscript);
-				 }*/
-				 
-				//servernm
-				 nodelist = element.getElementsByTagName("servernm");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._servernm = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPServer
-				 nodelist = element.getElementsByTagName("srcFTPServer");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPServer = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPUser
-				 nodelist = element.getElementsByTagName("srcFTPUser");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPUser = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPPass
-				 nodelist = element.getElementsByTagName("srcFTPPass");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPPass = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPSerUrl
-				 nodelist = element.getElementsByTagName("srcFTPSerUrl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPSerUrl = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPCliUrl
-				 nodelist = element.getElementsByTagName("srcFTPCliUrl");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPCliUrl = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcFTPExtFile
-				 nodelist = element.getElementsByTagName("srcFTPExtFile");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcFTPExtFile = (fstNm.item(0)).getNodeValue();
-				 
-				 //_srcDate
-				 nodelist = element.getElementsByTagName("srcDate");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this._srcDate = (fstNm.item(0)).getNodeValue();
+					 
+					 //Doc duong dan file di bien truyen vao
+					 nodelist = element.getElementsByTagName("defscripturl2");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes(); 
+					 if ((fstNm.item(0)).getNodeValue().trim().length()!=0)
+					 {
+						 FileInputStream fstream = new FileInputStream((fstNm.item(0)).getNodeValue());
+						 // Get the object of DataInputStream
+						 DataInputStream in = new DataInputStream(fstream);
+						 BufferedReader br = new BufferedReader(new InputStreamReader(in));
+						 String strLine;
+						 while ((strLine = br.readLine()) != null)   {	
+							 //Neu bat dau bang select thi moi them vao.
+							 //_query[i].set_getquery(_query[i].get_getquery() + strLine+'\n');//Cong them 1 khoang trang de cau script dung
+							 //this._defscript = this._defscript + strLine+'\n';
+							 this.set_defscript2(this.get_defscript2()+ strLine+'\n');
+							 //System.out.println (strLine);
+						 }
+						 //System.out.println (this._defscript);
+					 }*/
+					 
+					//servernm
+					 nodelist = element.getElementsByTagName("servernm");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._servernm = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPServer
+					 nodelist = element.getElementsByTagName("srcFTPServer");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPServer = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPUser
+					 nodelist = element.getElementsByTagName("srcFTPUser");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPUser = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPPass
+					 nodelist = element.getElementsByTagName("srcFTPPass");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPPass = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPSerUrl
+					 nodelist = element.getElementsByTagName("srcFTPSerUrl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPSerUrl = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPCliUrl
+					 nodelist = element.getElementsByTagName("srcFTPCliUrl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPCliUrl = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcFTPExtFile
+					 nodelist = element.getElementsByTagName("srcFTPExtFile");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcFTPExtFile = (fstNm.item(0)).getNodeValue();
+					 
+					 //_srcDate
+					 nodelist = element.getElementsByTagName("srcDate");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this._srcDate = (fstNm.item(0)).getNodeValue();
+				  }
 			  }
-		  }
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());			
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());			
+		}
+		 
    }
 	
 	
@@ -669,8 +691,7 @@ public class AppCommon {
 			logger.info("_srcDate: "+this.get_srcDate());	
 		
 		JavaUtil.showHashMap(this.get_define());
-		JavaUtil.showHashMap(this.get_definenm());	
-			
+		JavaUtil.showHashMap(this.get_definenm());				
 	}	
 	
 }

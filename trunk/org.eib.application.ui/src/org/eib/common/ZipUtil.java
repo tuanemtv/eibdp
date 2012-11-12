@@ -43,6 +43,26 @@ public class ZipUtil {
 	}
 	
 	
+	public static void creatZipFoler(String _folderurl, String _outUrl, String _fileName){
+		File directoryToZip = new File(_folderurl);
+
+		List<File> fileList = new ArrayList<File>();
+		//System.out.println("> Getting references to all files in: " + _folderurl);
+		logger.info("> Getting references to all files in: " + _folderurl);
+		getAllFiles(directoryToZip, fileList);
+		
+		//System.out.println("> Reating zip file");
+		logger.info("> Reating zip file");
+		//System.out.println(">> directoryToZip= "+directoryToZip);
+		logger.info(">> directoryToZip= "+directoryToZip);		
+		
+		File directoryOut = new File(_outUrl);
+		
+		writeZipFile(directoryOut, _fileName, fileList);
+		logger.info("> Zip Done.");
+		//System.out.println("> Zip Done.");
+	}
+	
 	/**
 	 * 
 	 * @param dir
@@ -63,6 +83,7 @@ public class ZipUtil {
 				}
 			}
 		} catch (IOException e) {
+			logger.error(e.getMessage());	
 			e.printStackTrace();
 		}
 	}
@@ -88,8 +109,40 @@ public class ZipUtil {
 			zos.close();
 			fos.close();
 		} catch (FileNotFoundException e) {
+			logger.error(e.getMessage());	
 			e.printStackTrace();
 		} catch (IOException e) {
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Ghi Zip voi filename 
+	 * @param directoryToZip
+	 * @param fileName
+	 * @param fileList
+	 */
+	public static void writeZipFile(File directoryToZip, String fileName, List<File> fileList) {
+		try {
+			//FileOutputStream fos = new FileOutputStream(directoryToZip.getName() + ".zip");
+			FileOutputStream fos = new FileOutputStream(directoryToZip +"\\"+ fileName+".zip");
+			ZipOutputStream zos = new ZipOutputStream(fos);
+
+			for (File file : fileList) {
+				if (!file.isDirectory()) { // we only zip files, not directories
+					addToZip(directoryToZip, file, zos);
+				}
+			}
+
+			zos.close();
+			fos.close();
+		} catch (FileNotFoundException e) {
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		} catch (IOException e) {
+			logger.error(e.getMessage());	
 			e.printStackTrace();
 		}
 	}
@@ -111,8 +164,10 @@ public class ZipUtil {
 			zos.close();
 			fos.close();
 		} catch (FileNotFoundException e) {
+			logger.error(e.getMessage());	
 			e.printStackTrace();
 		} catch (IOException e) {
+			logger.error(e.getMessage());	
 			e.printStackTrace();
 		}
 	}

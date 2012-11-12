@@ -54,24 +54,9 @@ public class SourceView extends ViewPart {
 	    	public void widgetSelected(SelectionEvent e) {
 	    		AppCommon _app;
 	    		_app = new AppCommon();
-	    		try {
-	    			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
-	    			_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
-	    			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml","Common2");
-	    			
-	    		} catch (ParserConfigurationException e1) {
-	    			// TODO Auto-generated catch block
-	    			e1.printStackTrace();
-	    			return;	
-	    		} catch (SAXException e1) {
-	    			// TODO Auto-generated catch block
-	    			e1.printStackTrace();
-	    			return;	
-	    		} catch (IOException e1) {
-	    			// TODO Auto-generated catch block
-	    			e1.printStackTrace();
-	    			return;	
-	    		}
+	    		ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
+				_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
+				//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml","Common2");
 	    		
 	    		
 	    		//ResourceBundle rb = ResourceBundle.getBundle("configure");

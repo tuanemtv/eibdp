@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.*;
 import org.eib.common.AppCommon;
 import org.eib.common.DateTimeUtil;
+import org.eib.common.FolderUtil;
 
 public class CommandMultiQuery extends Thread{
 	
@@ -276,7 +277,12 @@ public class CommandMultiQuery extends Thread{
         		
         		//book.write(new FileOutputStream(_app.get_outurl_excel(" ["+query.get_startDate()+"]["+query.get_endDate()+"]- "+query.get_querynm()+" ["+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s]")));
         		
-        		book.write(new FileOutputStream(_app.get_outurl_excel(query.get_startDate()+ " - "+query.get_querynm()+" ["+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s]")));
+        		//Tao folder modual
+        		//_app.set_outurl(_app.get_outurl() + query.get_module());
+        		FolderUtil.createFolder(_app.get_outurl() + query.get_module());
+        		
+        		//Tao file		
+        		book.write(new FileOutputStream(_app.get_outurl_excel(query.get_module(), query.get_startDate()+ " - "+query.get_querynm()+" ["+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s]")));
             } else {
                 stmt.getUpdateCount();
             }  

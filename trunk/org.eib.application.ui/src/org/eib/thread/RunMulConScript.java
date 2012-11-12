@@ -43,7 +43,7 @@ public class RunMulConScript {
 										
 					//Show tat ca gia tri chay
 					for (int k=0; k<_query.length;k++){						
-						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name="+_query[k].get_querynm());
+						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name= "+_query[k].get_querynm());
 					}
 				}			
 							
@@ -81,11 +81,11 @@ public class RunMulConScript {
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
 					            //System.out.println("ERROR " + e2.getMessage());
-					            logger.error("Unable to load driver "+ queryser.getDriver() +"ERROR " + e2.getMessage());
+					            logger.error( e2.getMessage());
 					            //return;				        
 					        }																										
 							//System.out.println(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
-							logger.info(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
+							logger.info(">>Run ="+_query[l].get_queryid()+", name= "+_query[l].get_querynm());
 							/*
 							try {
 								//delay for one second
@@ -140,7 +140,7 @@ public class RunMulConScript {
 							//Date date = new Date();
 							//dateFormat.format(date)+
 							//System.out.println(">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
-							logger.info("NEXT >>Run ="+_query[i].get_queryid()+", name="+_query[i].get_querynm());							
+							logger.info("NEXT >>Run ="+_query[i].get_queryid()+", name= "+_query[i].get_querynm());							
 							/*
 							try {
 								//delay for one second
