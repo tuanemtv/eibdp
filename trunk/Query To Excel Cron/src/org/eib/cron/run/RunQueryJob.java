@@ -64,23 +64,6 @@ public class RunQueryJob {
 		    	scheduler.scheduleJob(job, trigger);					
 			}
 			//System.out.println("> Load script Done. With= "+_query.length+" scripts");
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-			return;	
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-			return;	
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			
-			logger.error(e1.getMessage());
-			e1.printStackTrace();
-			return;	
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage());

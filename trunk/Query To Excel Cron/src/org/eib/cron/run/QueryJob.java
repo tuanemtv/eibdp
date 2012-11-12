@@ -1,14 +1,19 @@
 package org.eib.cron.run;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
+import org.eib.common.FTPUtil;
 import org.eib.common.FolderUtil;
 import org.eib.common.MainCommon;
 import org.eib.common.QueryServer;
+import org.eib.common.ZipUtil;
 import org.eib.database.Query;
 import org.eib.thread.RunMulConScript;
 import org.quartz.Job;
@@ -24,6 +29,9 @@ public class QueryJob implements Job{
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 		
+		logger.info("");
+		logger.info("");
+		logger.info("Running---------------------------------");
 		JobDataMap data = context.getJobDetail().getJobDataMap();		
 		logger.info("_cronNM= " + data.getString("_cronNM"));	
 		logger.info("_defineScript= " + data.getString("_defineScript"));
@@ -33,7 +41,9 @@ public class QueryJob implements Job{
 		//System.out.println("_cronNM= " + data.getString("_cronNM"));
 		//System.out.println("_defineScript= " + data.getString("_defineScript"));
 		//System.out.println("_databaseID= " + data.getString("_databaseID"));
-				
+		String _outZipUrl;
+		String _fileNameZip;
+		
 		ResourceBundle rb = ResourceBundle.getBundle("/resource/app");				
 		MainCommon main = new MainCommon("/resource/app",rb.getString("app_kind"));
 		
@@ -47,9 +57,18 @@ public class QueryJob implements Job{
 		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat1.format(date1)+"\\");		
 		FolderUtil.createFolder(main.get_appcommon().get_outurl());
 		
+		//set FTP out
+		main.get_appcommon().set_ftpUrl(main.get_appcommon().get_ftpUrl()+ dateFormat1.format(date1)+"\\");
+		
+		_outZipUrl = main.get_appcommon().get_outurl();
+		_fileNameZip = dateFormat1.format(date1);
+		
 		dateFormat2 = new SimpleDateFormat("HHmm");	
 		date1= new Date();
-		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat2.format(date1)+"\\");				
+		main.get_appcommon().set_outurl(main.get_appcommon().get_outurl()+dateFormat2.format(date1)+"\\");	
+		
+		_fileNameZip = _fileNameZip +" - " + dateFormat2.format(date1);
+		
 		//Tao folder
 		FolderUtil.createFolder(main.get_appcommon().get_outurl());				
 							
@@ -97,5 +116,46 @@ public class QueryJob implements Job{
         //Tien hanh chay multi query        
         RunMulConScript.commandMulQueryExcel(_qurser, main.get_query(), main.get_appcommon());
       		
+        //logger.error("main.get_appcommon().get_outurl()= "+main.get_appcommon().get_outurl());
+        //logger.info("_outZipUrl= "+_outZipUrl);
+       // logger.info("_fileNameZip= "+_fileNameZip);
+        //Tien hanh Zip file
+        
+        //ZipUtil.creatZipFoler("D:\\20121109\\2233\\","D:\\20121109\\","20121109 - 2233");
+        ZipUtil.creatZipFoler(main.get_appcommon().get_outurl(),_outZipUrl,_fileNameZip);
+        
+        //Tao foler tren FTP
+        FTPUtil ftp = new FTPUtil();
+        ftp.set_ftpServer(main.get_appcommon().get_ftpServer());
+        ftp.set_user(main.get_appcommon().get_ftpUsr());
+        ftp.set_password(main.get_appcommon().get_ftpPass());
+        ftp.set_port(21);
+               
+        ftp.createFolder(main.get_appcommon().get_ftpUrl());
+                
+        //Dua len FTP
+        //main.get_appcommon().set_ftpFilename(main.get_appcommon().get_ftpFilename()+_fileNameZip+".zip");
+        main.get_appcommon().set_ftpFilename(_fileNameZip+".zip");
+        main.get_appcommon().set_ftpInurl(_outZipUrl+_fileNameZip+".zip");
+        File source = new File(main.get_appcommon().get_ftpInurl());
+        
+        //main.get_appcommon().logAppCommon();
+        
+        try {
+			//upload(ftpServer,user,password,fileName,source);
+			FTPUtil.upload(ftp.get_ftpServer(),
+					ftp.get_user(),
+					ftp.get_password(),
+					main.get_appcommon().get_ftpUrl()+main.get_appcommon().get_ftpFilename(),
+					source);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());		
+		}                                
 	}   
 }
