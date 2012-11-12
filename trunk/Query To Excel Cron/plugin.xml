@@ -35,6 +35,12 @@
          id="org.eib.cron.application.views.LightweightConsoleView"
          name="Log">
 	  </view>
+	  <view
+            category="Log4jViewerEclipseProject.Logging"
+            class="com.log4jviewer.ui.views.LogView"
+            id="log4jviewer.ui.views.LogView"
+            name="Log4j-Viewer">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -47,12 +53,31 @@
                relationship="top"
                id="org.eib.cron.application.views.CronView">
          </view>
-         <!--  -->
+         <!--  
          <view
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="bottom"
                id="org.eib.cron.application.views.LightweightConsoleView">
+         </view>
+         <view
+               id="log4jviewer.ui.views.LogView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.TaskList"
+               visible="true">
+         </view>-->
+          <view
+               closeable="true"
+               id="log4jviewer.ui.views.LogView"
+               minimized="false"
+               moveable="true"
+               ratio="1.0f"
+               relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               showTitle="true"
+               standalone="false"
+               visible="true">
          </view>
       </perspectiveExtension>      
    </extension>            
