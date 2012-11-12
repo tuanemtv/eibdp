@@ -19,7 +19,7 @@
 		<jobClass>Job2</jobClass>
 		<jobGroup>group2</jobGroup>
 		<triggerNM>dummyTriggerName2</triggerNM>
-		<triggerSchedule>40 24 21 * * ?</triggerSchedule>
+		<triggerSchedule>0 43 22 * * ?</triggerSchedule>
 		<triggerGroup>group1</triggerGroup>	
 		<databaseID>MySQL-test</databaseID>	
 		<defineScript>DEF003</defineScript> 		
