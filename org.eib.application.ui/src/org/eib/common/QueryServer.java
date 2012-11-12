@@ -173,62 +173,78 @@ public class QueryServer {
 	 * fileurl = D:\\database.xml. duong dan file XML
 	 * servernm = Oralce-ALive
 	 */
-	public void getServer(String fileurl, String servernm) throws ParserConfigurationException, SAXException, IOException{
+	public void getServer(String fileurl, String servernm) {
 		 File f = new File(fileurl);
 		 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
-		 DocumentBuilder db = dbf.newDocumentBuilder();
-		 Document doc = db.parse(f);
+		 DocumentBuilder db;
+		 
+		try {
+			db = dbf.newDocumentBuilder();
+			Document doc = db.parse(f);
 
-		  //Element root = doc.getDocumentElement();		  
-		  NodeList list = doc.getElementsByTagName(servernm);
-		  for (int i = 0; i < list.getLength(); i++) {
-			  Node node = list.item(i);			  
-			  if (node.getNodeType() == Node.ELEMENT_NODE) {
-				 Element element = (Element) node;
-				 
-				 NodeList nodelist = element.getElementsByTagName("id");
-				 Element element1 = (Element) nodelist.item(0);
-				 NodeList fstNm = element1.getChildNodes();
-				 this._id = (fstNm.item(0)).getNodeValue();
-				 
-				 
-				 nodelist = element.getElementsByTagName("driver");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.driver = (fstNm.item(0)).getNodeValue();
-				 //System.out.println("driver : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("host");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.host = (fstNm.item(0)).getNodeValue();
-				 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());
-				 				 
-				 nodelist = element.getElementsByTagName("port");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.port = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("database");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.database = (fstNm.item(0)).getNodeValue();
-				//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("user");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.user = (fstNm.item(0)).getNodeValue();
-				 //System.out.println("user : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("password");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 this.password = (fstNm.item(0)).getNodeValue().trim();
-				 //System.out.println("password : " + (fstNm.item(0)).getNodeValue());				 
+			  //Element root = doc.getDocumentElement();		  
+			  NodeList list = doc.getElementsByTagName(servernm);
+			  for (int i = 0; i < list.getLength(); i++) {
+				  Node node = list.item(i);			  
+				  if (node.getNodeType() == Node.ELEMENT_NODE) {
+					 Element element = (Element) node;
+					 
+					 NodeList nodelist = element.getElementsByTagName("id");
+					 Element element1 = (Element) nodelist.item(0);
+					 NodeList fstNm = element1.getChildNodes();
+					 this._id = (fstNm.item(0)).getNodeValue();
+					 
+					 
+					 nodelist = element.getElementsByTagName("driver");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.driver = (fstNm.item(0)).getNodeValue();
+					 //System.out.println("driver : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("host");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.host = (fstNm.item(0)).getNodeValue();
+					 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());
+					 				 
+					 nodelist = element.getElementsByTagName("port");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.port = Integer.parseInt((fstNm.item(0)).getNodeValue());
+					 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("database");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.database = (fstNm.item(0)).getNodeValue();
+					//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("user");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.user = (fstNm.item(0)).getNodeValue();
+					 //System.out.println("user : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("password");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 this.password = (fstNm.item(0)).getNodeValue().trim();
+					 //System.out.println("password : " + (fstNm.item(0)).getNodeValue());				 
+				  }
 			  }
-		  }
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();			
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		}		 
     }
 	
 	/**
@@ -271,68 +287,84 @@ public class QueryServer {
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public void getXMLToScript(String fileurl, String servernm, QueryServer _queryser[]) throws ParserConfigurationException, SAXException, IOException{
+	public void getXMLToScript(String fileurl, String servernm, QueryServer _queryser[]) {
 		File f = new File(fileurl);
 		 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
-		 DocumentBuilder db = dbf.newDocumentBuilder();
-		 Document doc = db.parse(f);
+		 DocumentBuilder db;
+		try {
+			db = dbf.newDocumentBuilder();
+			 Document doc = db.parse(f);
 
-		  //Element root = doc.getDocumentElement();		  
-		  NodeList list = doc.getElementsByTagName(servernm);
-		  for (int i = 0; i < list.getLength(); i++) {
-			  _queryser[i] = new QueryServer();	
-			  Node node = list.item(i);			  
-			  if (node.getNodeType() == Node.ELEMENT_NODE) {
-				 Element element = (Element) node;
-				 
-				 NodeList nodelist = element.getElementsByTagName("id");
-				 Element element1 = (Element) nodelist.item(0);
-				 NodeList fstNm = element1.getChildNodes();
-				 _queryser[i].set_id((fstNm.item(0)).getNodeValue());
-								 
-				 nodelist = element.getElementsByTagName("driver");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.driver = (fstNm.item(0)).getNodeValue();
-				 _queryser[i].setDriver((fstNm.item(0)).getNodeValue());
-				 //System.out.println("driver : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("host");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.host = (fstNm.item(0)).getNodeValue();
-				 _queryser[i].setHost((fstNm.item(0)).getNodeValue());
-				 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());
-				 				 
-				 nodelist = element.getElementsByTagName("port");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.port = Integer.parseInt((fstNm.item(0)).getNodeValue());
-				 _queryser[i].setPort(Integer.parseInt((fstNm.item(0)).getNodeValue()));
-				 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("database");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.database = (fstNm.item(0)).getNodeValue();
-				 _queryser[i].setDatabase((fstNm.item(0)).getNodeValue());
-				//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("user");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.user = (fstNm.item(0)).getNodeValue();
-				 _queryser[i].setUser((fstNm.item(0)).getNodeValue());
-				 //System.out.println("user : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("password");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 //this.password = (fstNm.item(0)).getNodeValue().trim();
-				 _queryser[i].setPassword((fstNm.item(0)).getNodeValue().trim());
-				 //System.out.println("password : " + (fstNm.item(0)).getNodeValue());				 
-			  }
-		  }		
+			  //Element root = doc.getDocumentElement();		  
+			  NodeList list = doc.getElementsByTagName(servernm);
+			  for (int i = 0; i < list.getLength(); i++) {
+				  _queryser[i] = new QueryServer();	
+				  Node node = list.item(i);			  
+				  if (node.getNodeType() == Node.ELEMENT_NODE) {
+					 Element element = (Element) node;
+					 
+					 NodeList nodelist = element.getElementsByTagName("id");
+					 Element element1 = (Element) nodelist.item(0);
+					 NodeList fstNm = element1.getChildNodes();
+					 _queryser[i].set_id((fstNm.item(0)).getNodeValue());
+									 
+					 nodelist = element.getElementsByTagName("driver");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.driver = (fstNm.item(0)).getNodeValue();
+					 _queryser[i].setDriver((fstNm.item(0)).getNodeValue());
+					 //System.out.println("driver : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("host");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.host = (fstNm.item(0)).getNodeValue();
+					 _queryser[i].setHost((fstNm.item(0)).getNodeValue());
+					 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());
+					 				 
+					 nodelist = element.getElementsByTagName("port");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.port = Integer.parseInt((fstNm.item(0)).getNodeValue());
+					 _queryser[i].setPort(Integer.parseInt((fstNm.item(0)).getNodeValue()));
+					 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("database");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.database = (fstNm.item(0)).getNodeValue();
+					 _queryser[i].setDatabase((fstNm.item(0)).getNodeValue());
+					//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("user");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.user = (fstNm.item(0)).getNodeValue();
+					 _queryser[i].setUser((fstNm.item(0)).getNodeValue());
+					 //System.out.println("user : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("password");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 //this.password = (fstNm.item(0)).getNodeValue().trim();
+					 _queryser[i].setPassword((fstNm.item(0)).getNodeValue().trim());
+					 //System.out.println("password : " + (fstNm.item(0)).getNodeValue());				 
+				  }
+			  }	
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());	
+			e.printStackTrace();
+		}
+			
 	}
 	
 	
@@ -343,7 +375,8 @@ public class QueryServer {
 		this.setUrl(JDBCURLHelper.generateURL(this.getDriver(), this.getHost(), this.getPort(), this.getDatabase()));
 		try {						
 			Class.forName(this.getDriver()).newInstance();
-			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());			
+			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());	
+			
 			logger.info("Connect "+this.get_id()+" Database Successful");
         } catch (Exception e2) {
 			logger.error("Connect Database Fail. Unable to load driver " + this.getDriver());   

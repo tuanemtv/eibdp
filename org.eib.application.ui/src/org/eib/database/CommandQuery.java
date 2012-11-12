@@ -99,6 +99,7 @@ public class CommandQuery {
                 //JavaUtil.showHashMap(tMap);
                 stmt.close();              
             } catch (SQLException ex) {
+            	logger.error(ex.getMessage());			
             }
         }
         //System.out.println("A = ");
@@ -157,6 +158,7 @@ public class CommandQuery {
             try {
                 stmt.close();
             } catch (SQLException ex) {
+            	logger.error(ex.getMessage());			
             }
         }
     }
@@ -185,6 +187,7 @@ public class CommandQuery {
             try {
                 stmt.close();
             } catch (SQLException ex) {
+            	logger.error(ex.getMessage());			
             }
         }
     }

@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import org.eib.common.AppCommon;
+import org.eib.common.FTPUtil;
  
 /**
  * This class is used to upload a file to a FTP server.
@@ -21,13 +24,24 @@ public class FileUpload
 		String ftpServer="127.0.0.1";
 		String user="tuanemtv";
 		String password="123456";
-		String fileName="GG Tran\\CS - 01. Danh sach phong giao dich.xls";
+		String fileName="a\\TuTruyenCuaSteveJobs.pdf";
 		
-		File source = new File("D:\\Query to Excel\\Result\\20120608\\CS - 01. Danh sach phong giao dich.xls");
+		File source = new File("D:\\Study\\Books\\TuTruyenCuaSteveJobs.pdf");
+		
+		AppCommon app = new AppCommon();
+		app.set_ftpServer("127.0.0.1");
+		app.set_ftpUsr("tuanemtv");
+		app.set_ftpPass("123456");
+		app.set_ftpFilename("a\\TuTruyenCuaSteveJobs.pdf");
+		app.set_ftpUrl("D:\\Study\\Books\\TuTruyenCuaSteveJobs.pdf");
+		
+		File source2 = new File(app.get_ftpUrl());
+		
 		
 		
 		try {
-			upload(ftpServer,user,password,fileName,source);
+			//upload(ftpServer,user,password,fileName,source);
+			FTPUtil.upload(app.get_ftpServer(),app.get_ftpUsr(),app.get_ftpPass(),app.get_ftpFilename(),source2);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,6 +131,7 @@ public class FileUpload
       }
       else
       {
+    	  
          System.out.println( "Input not available." );
       }
    }

@@ -140,94 +140,110 @@ public class QueryCron {
 		}								
 	}
 
-	public void getXMLToCron(String fileurl, String servernm, QueryCron _querycron[]) throws ParserConfigurationException, SAXException, IOException{
+	public void getXMLToCron(String fileurl, String servernm, QueryCron _querycron[]) {
 		File f = new File(fileurl);
 		 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
-		 DocumentBuilder db = dbf.newDocumentBuilder();
-		 Document doc = db.parse(f);
+		 DocumentBuilder db;
+		try {
+			db = dbf.newDocumentBuilder();
+			Document doc = db.parse(f);
 
-		  //Element root = doc.getDocumentElement();		
-		  //System.out.println("getAttributes : " +root.getAttribute("id"));
-		  NodeList list = doc.getElementsByTagName(servernm);
-		  
-		  for (int i = 0; i < list.getLength(); i++) {
-			  _querycron[i] = new QueryCron();			  
-			  Node node = list.item(i);
+			  //Element root = doc.getDocumentElement();		
+			  //System.out.println("getAttributes : " +root.getAttribute("id"));
+			  NodeList list = doc.getElementsByTagName(servernm);
 			  
-			  if (node.getNodeType() == Node.ELEMENT_NODE) {
-				 Element element = (Element) node;
-				 NodeList nodelist = element.getElementsByTagName("cronNM");
-				 Element element1 = (Element) nodelist.item(0);
-				 NodeList fstNm = element1.getChildNodes();
-				 _querycron[i].set_cronNM((fstNm.item(0)).getNodeValue());
-				 //System.out.println("\ncronNM : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("jobNM");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_jobNM((fstNm.item(0)).getNodeValue());
-				// System.out.println("jobNM : " + (fstNm.item(0)).getNodeValue());
-				 				
-				 
-				 nodelist = element.getElementsByTagName("jobClass");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_jobClass((fstNm.item(0)).getNodeValue());
-				 //System.out.println("jobClass : " + (fstNm.item(0)).getNodeValue());
-				 
-				 
-				 nodelist = element.getElementsByTagName("jobGroup");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_jobGroup((fstNm.item(0)).getNodeValue());
-				 //System.out.println("jobGroup : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("triggerNM");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_triggerNM((fstNm.item(0)).getNodeValue());
-				 //System.out.println("triggerNM : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("triggerSchedule");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_triggerSchedule((fstNm.item(0)).getNodeValue());
-				 //System.out.println("triggerSchedule : " + (fstNm.item(0)).getNodeValue());
-				 
-				 nodelist = element.getElementsByTagName("triggerGroup");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_triggerGroup((fstNm.item(0)).getNodeValue());
-				 //System.out.println("triggerGroup : " + (fstNm.item(0)).getNodeValue());	
-				 
-				 nodelist = element.getElementsByTagName("databaseID");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_databaseID((fstNm.item(0)).getNodeValue());
-				 				 
-				 nodelist = element.getElementsByTagName("defineScript");
-				 element1 = (Element) nodelist.item(0);
-				 fstNm = element1.getChildNodes();
-				 _querycron[i].set_defineScript((fstNm.item(0)).getNodeValue());				 
-				 				 
-				 NodeList qlist = doc.getElementsByTagName("Query");
-				 _querycron[i]._queryid = new String[qlist.getLength()];
-				 for (int j = 0; j < qlist.getLength(); j++) {	
-					 //_queryid[j] = new String();
-					 if (node.getNodeType() == Node.ELEMENT_NODE) {
-						Element qelement1 = (Element) qlist.item(j);
-						NodeList qfstNm = qelement1.getChildNodes();							
-						//System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
-						_querycron[i]._queryid[j] = (qelement1.getAttribute("id"));
+			  for (int i = 0; i < list.getLength(); i++) {
+				  _querycron[i] = new QueryCron();			  
+				  Node node = list.item(i);
+				  
+				  if (node.getNodeType() == Node.ELEMENT_NODE) {
+					 Element element = (Element) node;
+					 NodeList nodelist = element.getElementsByTagName("cronNM");
+					 Element element1 = (Element) nodelist.item(0);
+					 NodeList fstNm = element1.getChildNodes();
+					 _querycron[i].set_cronNM((fstNm.item(0)).getNodeValue());
+					 //System.out.println("\ncronNM : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("jobNM");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_jobNM((fstNm.item(0)).getNodeValue());
+					// System.out.println("jobNM : " + (fstNm.item(0)).getNodeValue());
+					 				
+					 
+					 nodelist = element.getElementsByTagName("jobClass");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_jobClass((fstNm.item(0)).getNodeValue());
+					 //System.out.println("jobClass : " + (fstNm.item(0)).getNodeValue());
+					 
+					 
+					 nodelist = element.getElementsByTagName("jobGroup");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_jobGroup((fstNm.item(0)).getNodeValue());
+					 //System.out.println("jobGroup : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("triggerNM");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_triggerNM((fstNm.item(0)).getNodeValue());
+					 //System.out.println("triggerNM : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("triggerSchedule");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_triggerSchedule((fstNm.item(0)).getNodeValue());
+					 //System.out.println("triggerSchedule : " + (fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("triggerGroup");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_triggerGroup((fstNm.item(0)).getNodeValue());
+					 //System.out.println("triggerGroup : " + (fstNm.item(0)).getNodeValue());	
+					 
+					 nodelist = element.getElementsByTagName("databaseID");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_databaseID((fstNm.item(0)).getNodeValue());
+					 				 
+					 nodelist = element.getElementsByTagName("defineScript");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_defineScript((fstNm.item(0)).getNodeValue());				 
+					 				 
+					 NodeList qlist = doc.getElementsByTagName("Query");
+					 _querycron[i]._queryid = new String[qlist.getLength()];
+					 for (int j = 0; j < qlist.getLength(); j++) {	
+						 //_queryid[j] = new String();
+						 if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element qelement1 = (Element) qlist.item(j);
+							NodeList qfstNm = qelement1.getChildNodes();							
+							//System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
+							_querycron[i]._queryid[j] = (qelement1.getAttribute("id"));
+						 }
 					 }
-				 }
-				 
-				 /*
-				 for (int k = 0; k < _querycron[i]._queryid.length; k++) {						
-					 logger.info("k["+k+"]= "+_querycron[i]._queryid[k]);
-				 }*/
+					 
+					 /*
+					 for (int k = 0; k < _querycron[i]._queryid.length; k++) {						
+						 logger.info("k["+k+"]= "+_querycron[i]._queryid[k]);
+					 }*/
+				  }
 			  }
-		  }
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());	
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.getMessage());	
+		}
+		 
 	}
 	
 	public void logQueryCron(){					

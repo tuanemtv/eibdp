@@ -536,34 +536,10 @@ public class TellerView extends ViewPart {
 		//lay thong tin
 		_app = new AppCommon();
 		_appMes.set_title("Get congifure");		
-		try {
-			ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
-			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
-			_app.getAppCom(rb.getString("app_configure_url")+"app.xml",rb.getString("app_configure_common"));
-			txtOutUrl.setText(_app.get_outurl());
-			
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();	
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;	
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;	
-		}
+		ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
+		//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
+		_app.getAppCom(rb.getString("app_configure_url")+"app.xml",rb.getString("app_configure_common"));
+		txtOutUrl.setText(_app.get_outurl());
 	}
 	
 	/**
@@ -572,30 +548,7 @@ public class TellerView extends ViewPart {
 	public void getConnectDatabase(){
 		queryser =new QueryServer();
 		_appMes.set_title("Connect database");
-		try {
-			queryser.getServer(_app.get_configureurl()+"database.xml",_app.get_servernm());
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			_appMes.set_message(e.getMessage());
-			_appMes.getErrorMessageBox();
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			return;
-		}
+		queryser.getServer(_app.get_configureurl()+"database.xml",_app.get_servernm());
 		queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
 		logger.info("url = "+queryser.getUrl());
         	

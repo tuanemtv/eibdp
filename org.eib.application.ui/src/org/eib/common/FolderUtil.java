@@ -16,7 +16,7 @@ public class FolderUtil {
 		File f = new File(_folderurl);
 		try{
 			if(f.mkdir()){
-				logger.info("Directory Created: " + _folderurl);						
+				logger.info("Directory Created: " + _folderurl);					
 			}
 			else{
 				logger.info("Directory is not created: " + _folderurl);				

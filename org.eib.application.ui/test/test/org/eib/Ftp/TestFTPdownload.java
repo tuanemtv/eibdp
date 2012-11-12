@@ -19,24 +19,9 @@ public class TestFTPdownload {
 		// TODO Auto-generated method stub
 		AppCommon _app;
 		_app = new AppCommon();
-		try {
-			//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
-			//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
-			_app.getAppCom("\\\\10.1.97.14\\2012\\06\\20120601\\Report to Excel Congifure\\Congifure\\app.xml","Common2");
-			
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;	
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;	
-		}
+		//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
+		//_app.getAppCom("D:\\Query to Excel\\Congifure\\app.xml", "Common2");
+		_app.getAppCom("\\\\10.1.97.14\\2012\\06\\20120601\\Report to Excel Congifure\\Congifure\\app.xml","Common2");
 		
 		
 		//ResourceBundle rb = ResourceBundle.getBundle("configure");
