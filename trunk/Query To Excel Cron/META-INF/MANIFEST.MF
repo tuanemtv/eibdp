@@ -20,4 +20,7 @@ Bundle-ClassPath: .,
  Lib/ojdbc14.jar,
  Lib/poi-3.8-beta4-20110826.jar,
  Lib/ftp4j-1.7.1.jar,
- Lib/mysql-connector-java-5.1.13-bin.jar
+ Lib/mysql-connector-java-5.1.13-bin.jar,
+ Lib/log4jviewer.jar,
+ Lib/jaxb-xercesImpl-1.5.jar,
+ Lib/commons-net-ftp-2.0.jar
