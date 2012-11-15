@@ -43,7 +43,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
   public void preWindowOpen() {
     IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
-    configurer.setInitialSize(new Point(800, 500)); //dai, cao
+    configurer.setInitialSize(new Point(800, 600)); //dai, cao
     configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
     configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
@@ -70,7 +70,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
    final Image image = Activator.getImageDescriptor("icons/Main history.png")  
      .createImage();  
    item.setImage(image);  
-   item.setToolTipText("RCPMail - Tray Icon");  
+   item.setToolTipText("Query To Excel Cron [em.tvt@eximbank.com.vn]");  
    getWindowConfigurer().getWindow().getShell().setVisible(false);  
    item.addSelectionListener(new SelectionAdapter() {  
     public void widgetDefaultSelected(SelectionEvent e) {  
