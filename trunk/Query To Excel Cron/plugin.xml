@@ -41,17 +41,48 @@
             id="log4jviewer.ui.views.LogView"
             name="Log4j-Viewer">
       </view>
+   <view
+         class="org.eib.cron.application.views.ReportView"
+         icon="icons/script_go.png"
+         id="org.eib.cron.application.views.ReportView"
+         name="Report To Excel">
+   </view>
+   <view
+         class="org.eib.cron.application.views.SourceView"
+         icon="icons/page_refresh.png"
+         id="org.eib.cron.application.views.SourceView"
+         name="Manage PC Source">
+   </view>
+   <view
+         allowMultiple="true"
+         class="org.eib.cron.application.views.AllScriptView"
+         icon="icons/folder_database.png"
+         id="org.eib.cron.application.views.AllScriptView"
+         name="Run All Script">
+   </view>
+   <view
+         class="org.eib.cron.application.views.FileToExcelView"
+         icon="icons/page_lightning.png"
+         id="org.eib.cron.application.views.FileToExcelView"
+         name="File To Excel">
+   </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="*">
-         <view
-               standalone="true"
+            <!-- standalone="true"-->
+         <view               
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="top"
                id="org.eib.cron.application.views.CronView">
+         </view>
+         <view 
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="top"
+               id="org.eib.cron.application.views.AllScriptView">
          </view>
          <!--  
          <view
