@@ -44,8 +44,17 @@ public class Query {
 	private int _countquery; //Tong so script
 	private TreeMap<String, String> _define;
 	private int _priority;
+	private String _times;
 	
 	
+	public String get_times() {
+		return _times;
+	}
+
+	public void set_times(String _times) {
+		this._times = _times;
+	}
+
 	public int get_priority() {
 		return _priority;
 	}

@@ -227,6 +227,11 @@ public class TellerView extends ViewPart {
 		combo.setBounds(418, 7, 166, 23);
 		
 		Button btnRun = new Button(container, SWT.NONE);
+		btnRun.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+			}
+		});
 		
 		btnRun.addMouseListener(new MouseAdapter() {
 			@Override

@@ -27,7 +27,6 @@ public class CommandMultiQuery extends Thread{
 			commandMulQueryExcel(_conn,_query,_app,true,false);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			//System.out.println(" Loi o script: "+_query.get_querynm());
 			logger.error(_query.get_querynm());
 			e.printStackTrace();
 		}
@@ -52,18 +51,16 @@ public class CommandMultiQuery extends Thread{
         	query.set_status("1");
         	//System.out.println(" >>Run script= "+query.get_queryid()+", name="+query.get_querynm()+", status= "+query.get_status());
         	
-        	Date date1 ;
-        	Date date2 ;
-    		DateFormat dateFormat;
+        	Date date1, date2;
+    		DateFormat dateFormat, dateFormat2;
     		
-    		//int i1, i2;
-    		
-    		Calendar ca1 = Calendar.getInstance();
+    		//int i1, i2;    		
+    		//Calendar ca1 = Calendar.getInstance();
     		
         	dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");	        	
     		date1= new Date();
     		query.set_startDate(dateFormat.format(date1));    		
-    		ca1.setTime(date1);
+    		//ca1.setTime(date1);
     		//i1= ca1.get(Calendar.DATE);
     		//logger.info("i1="+i1);
     		
@@ -186,9 +183,7 @@ public class CommandMultiQuery extends Thread{
 	                    }
                 	}
                 	else
-                	{
-                		//if (_rowbu<6)
-                			//System.out.println("_rownguyen= "+_rownguyen+" _rowbu= "+ _rowbu+" rowPos= "+rowPos);                                	
+                	{                              	
                 		HSSFRow	 row = sheet.createRow((int) _rowbu);	                   	                   
 	                   
 	                    for (int i = 1; i <= rsmd.getColumnCount(); i++) {
@@ -264,11 +259,14 @@ public class CommandMultiQuery extends Thread{
                 	}
                     rowPos++;
                 }
+	
                 //book.write(new FileOutputStream(query.get_queryouturl()));
+        		dateFormat2 = new SimpleDateFormat("yyyyMMdd_HHmmss");	
                 date2= new Date();        		
-        		//Calendar ca2 = Calendar.getInstance();
-        		query.set_endDate(dateFormat.format(date2));
-        		ca1.setTime(date2);
+                query.set_endDate(dateFormat2.format(date2));
+                
+        		//Calendar ca2 = Calendar.getInstance();                 
+        		//ca1.setTime(date2);
         		//i2= ca1.get(Calendar.DATE);
         		//logger.info("i2="+i2);
         		
@@ -280,6 +278,7 @@ public class CommandMultiQuery extends Thread{
         		//Tao folder modual
         		//_app.set_outurl(_app.get_outurl() + query.get_module());
         		FolderUtil.createFolder(_app.get_outurl() + query.get_module());
+        		query.set_times(String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s");
         		
         		//Tao file		
         		book.write(new FileOutputStream(_app.get_outurl_excel(query.get_module(), query.get_startDate()+ " - "+query.get_querynm()+" _"+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s")));
@@ -290,7 +289,7 @@ public class CommandMultiQuery extends Thread{
             query.set_status("8");//OK            
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
             conn.close();//dong connect lai
             //System.out.println(" >>script= "+query.get_queryid()+": OK ");
         } catch (Exception e) {
@@ -300,7 +299,7 @@ public class CommandMultiQuery extends Thread{
             //Set thoi gian ket thuc           
     		query.set_endDate(DateTimeUtil.getDateTime());
     		
-            logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+            logger.info(">Fail. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
             logger.error(e.getMessage());                                    
         }finally {
             try {
@@ -315,7 +314,7 @@ public class CommandMultiQuery extends Thread{
             	 //Set thoi gian ket thuc                 
         		query.set_endDate(DateTimeUtil.getDateTime());
         		
-                logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"] script= "+query.get_queryid()+", name="+query.get_querynm());
+                logger.info(">Fail. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
                 logger.error(ex.getMessage());
             }
         }
