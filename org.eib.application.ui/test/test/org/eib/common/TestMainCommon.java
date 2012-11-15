@@ -9,7 +9,15 @@ public class TestMainCommon {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		MainCommon a =new MainCommon("app","1");
+		
+		MainCommon a =new MainCommon("app","1","all");
+		
+		a.get_appcommon().logAppCommon();
+		a.logQuery();
+		a.logQueryCron();
+		a.logQueryServer();
+		
+		/*
 		for (int i=0; i<a.get_query().length; i++){
 			System.out.println("["+i+"]-----------------");
 			a.get_query()[i].logQuery();
@@ -21,7 +29,7 @@ public class TestMainCommon {
 		for (int i=0; i<a.get_query().length; i++){
 			System.out.println("["+i+"]-----------------");
 			a.get_query()[i].logQuery();
-		}
+		}*/
 		
 	}
 
