@@ -13,7 +13,7 @@ public class GetFileList {
 	public static void main(String args[]){
 		 //File file = new File("D:\\20090610_SVN Client\\Local Project\\Script\\DP\\");  
 
-		 File file = new File("D:\\Project\\Query to Excel\\libs\\"); //LN
+		 File file = new File("K:\\Temp\\1LN\\"); //LN
 		
 		 //File file = new File("D:\\FTP Server Url\\dp\\src\\dpsa\\");
 
