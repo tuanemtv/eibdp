@@ -270,6 +270,7 @@ public class FTPUtil {
 	        try {
 	        	
 	            ftpClient.connect(this._ftpServer, this._port);
+	        	//ftpClient.connect("10.1.71.51", 21);
 	            //showServerReply(ftpClient);
 	            
 	            int replyCode = ftpClient.getReplyCode();

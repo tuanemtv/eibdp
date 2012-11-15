@@ -1,12 +1,10 @@
 package org.eib.thread;
 
-import java.sql.DriverManager;
 import org.apache.log4j.Logger;
 import org.eib.common.AppCommon;
 import org.eib.common.DateTimeUtil;
 import org.eib.common.QueryServer;
 import org.eib.database.CommandMultiQuery;
-import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
 
 /*
@@ -38,12 +36,13 @@ public class RunMulConScript {
 				//if (checkStatus8(_query) == _query.length){//Ko con trang thai 0
 				if ((checkStatus0(_query) == 0) && (checkStatus1(_query) == 0)){//Ko con trang thai 0
 					//ko con trang thai 0 va 1
-					bcheck = true;					
-					logger.info("\n>>> Run all script succesfull\n");
+					bcheck = true;				
+					logger.info("");
+					logger.info(">>> Run all script succesfull");
 										
 					//Show tat ca gia tri chay
 					for (int k=0; k<_query.length;k++){						
-						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"] script= "+_query[k].get_queryid()+", name= "+_query[k].get_querynm());
+						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"]P["+_query[k].get_priority()+"]T["+_query[k].get_times()+"] script= "+_query[k].get_queryid()+", name= "+_query[k].get_querynm());
 					}
 				}			
 							
@@ -85,7 +84,7 @@ public class RunMulConScript {
 					            //return;				        
 					        }																										
 							//System.out.println(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
-							logger.info(">>Run ="+_query[l].get_queryid()+", name= "+_query[l].get_querynm());
+							logger.info("Run >>> ["+i+"] "+_query[l].get_queryid()+", name= "+_query[l].get_querynm());
 							/*
 							try {
 								//delay for one second
@@ -104,9 +103,7 @@ public class RunMulConScript {
 						}
 						if (checkStatus1(_query) < _app.get_scriptnums()){
 							//System.out.println("NEXT > ");
-							//logger.info("NEXT > ");
-							
-							
+							//logger.info("NEXT > ");							
 							//Tang 1 script len				
 							//Khoi tai conect							
 							//queryser.setUrl(JDBCURLHelper.generateURL(queryser.getDriver(), queryser.getHost(), queryser.getPort(), queryser.getDatabase()));
@@ -126,10 +123,7 @@ public class RunMulConScript {
 								//}else{
 									CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
 									cq3.start();				
-								//}
-								
-								
-												
+								//}																											
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
 					            //System.out.println("ERROR " + e2.getMessage());
@@ -140,7 +134,7 @@ public class RunMulConScript {
 							//Date date = new Date();
 							//dateFormat.format(date)+
 							//System.out.println(">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
-							logger.info("NEXT >>Run ="+_query[i].get_queryid()+", name= "+_query[i].get_querynm());							
+							logger.info("NEXT Run==> ["+i+"] "+_query[i].get_queryid()+", name= "+_query[i].get_querynm());							
 							/*
 							try {
 								//delay for one second
@@ -152,16 +146,7 @@ public class RunMulConScript {
 							}
 							*/
 							i=i+1;						
-							//Truong hop 2 script ket thuc cung luc thi lam sao???
-							
-							//Chua dung
-							/*
-							for (int k=0; k<_query.length;k++){
-								//System.out.println("["+k+"]"+" "+_query[k].get_queryid()+", status: "+_query[k].get_status());
-								if (_query[k].get_status().equals("8")){
-									System.out.println(" >>>script= "+_query[k].get_queryid()+": OK ");
-								}
-							}*/												
+							//Truong hop 2 script ket thuc cung luc thi lam sao???																								
 						}
 					}
 				}
