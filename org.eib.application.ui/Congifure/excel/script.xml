@@ -415,4 +415,814 @@
 		<note>DP060</note>
 		<priority>1</priority>
 	</Query>
+	<Query id='CS001'>
+		<queryid>CS001</queryid>
+		<querynm>CS - 01. Danh sach phong giao dich</querynm>
+		<module>CS</module>		
+		<fileurl>Query to Excel\CS\CS - 01. Danh sach phong giao dich.sql</fileurl>		
+		<description>CS001</description>
+		<note>CS001</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='CS002'>
+		<queryid>CS002</queryid>
+		<querynm>CS - 02. Ma CIC cua chi nhanh</querynm>
+		<module>CS</module>		
+		<fileurl>Query to Excel\CS\CS - 02. Ma CIC cua chi nhanh.sql</fileurl>		
+		<description>CS002</description>
+		<note>CS002</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DL001'>
+		<queryid>DL001</queryid>
+		<querynm>DL - 01. Outstanding Deal List</querynm>
+		<module>DL</module>		
+		<fileurl>Query to Excel\DL\DL - 01. Outstanding Deal List.sql</fileurl>		
+		<description>DL001</description>
+		<note>DL001</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DL002'>
+		<queryid>DL002</queryid>
+		<querynm>DL- 02 giao dich voi khach hang</querynm>
+		<module>DL</module>		
+		<fileurl>Query to Excel\DL\DL- 02 giao dich voi khach hang.sql</fileurl>		
+		<description>DL002</description>
+		<note>DL002</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DL003'>
+		<queryid>DL003</queryid>
+		<querynm>DL - 03. Danh muc tien goi tien vay theo ngay.sql</querynm>
+		<module>DL</module>		
+		<fileurl>Query to Excel\DL\DL - 03. Danh muc tien goi tien vay theo ngay.sql</fileurl>		
+		<description>DL003</description>
+		<note>DL003</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DL004'>
+		<queryid>DL004</queryid>
+		<querynm>DL - 04. Danh muc tien goi tien vay dao han ngay hom sau _ PQLRR</querynm>
+		<module>DL</module>		
+		<fileurl>Query to Excel\DL\DL - 04. Danh muc tien goi tien vay dao han ngay hom sau _ PQLRR.sql</fileurl>		
+		<description>DL004</description>
+		<note>DL004</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='DL005'>
+		<queryid>DL005</queryid>
+		<querynm>DL-  05. Bao cao phat sinh goi rut TCTD trong ngay</querynm>
+		<module>DL</module>		
+		<fileurl>Query to Excel\DL\DL-  05. Bao cao phat sinh goi rut TCTD trong ngay.sql</fileurl>		
+		<description>DL005</description>
+		<note>DL005</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='EI001'>
+		<queryid>EI001</queryid>
+		<querynm>EI - 01. CHUONG TRINH TIET KIEM DU HOC</querynm>
+		<module>EI</module>		
+		<fileurl>Query to Excel\EI\EI - 01. CHUONG TRINH TIET KIEM DU HOC.sql</fileurl>		
+		<description>EI001</description>
+		<note>EI001</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='EI003'>
+		<queryid>EI003</queryid>
+		<querynm>EI - 03. DU NO THE TIN DUNG THEO PGD</querynm>
+		<module>EI</module>		
+		<fileurl>Query to Excel\EI\EI - 03. DU NO THE TIN DUNG THEO PGD.sql</fileurl>		
+		<description>EI003</description>
+		<note>EI003</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='EI004'>
+		<queryid>EI004</queryid>
+		<querynm>EI - 04. Kinh Doanh Ngoai Te Tai Chi Nhanh</querynm>
+		<module>EI</module>		
+		<fileurl>Query to Excel\EI\EI - 04. Kinh Doanh Ngoai Te Tai Chi Nhanh.sql</fileurl>		
+		<description>EI004</description>
+		<note>EI004</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF001'>
+		<queryid>TF001</queryid>
+		<querynm>TF - 01. Du no chiet khau.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 01. Du no chiet khau.sql</fileurl>		
+		<description>TF001</description>
+		<note>TF001</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF002'>
+		<queryid>TF002</queryid>
+		<querynm>TF - 02. So du bao lanh (P.TDDN).sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 02. So du bao lanh (P.TDDN).sql</fileurl>		
+		<description>TF002</description>
+		<note>TF002</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF005'>
+		<queryid>TF005</queryid>
+		<querynm>TF - 05. Doanh so chiet khau.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 05. Doanh so chiet khau.sql</fileurl>		
+		<description>TF005</description>
+		<note>TF005</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF006'>
+		<queryid>TF006</queryid>
+		<querynm>TF - 06. Doanh so thu no chiet khau.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 06. Doanh so thu no chiet khau.sql</fileurl>		
+		<description>TF006</description>
+		<note>TF006</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF007'>
+		<queryid>TF007</queryid>
+		<querynm>TF - 07. Bao cao tinh hinh hoat dong xuat khau.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 07. Bao cao tinh hinh hoat dong xuat khau.sql</fileurl>		
+		<description>TF007</description>
+		<note>TF007</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF008'>
+		<queryid>TF008</queryid>
+		<querynm>TF - 08. Bao cao tinh hinh hoat dong nhap khau.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 08. Bao cao tinh hinh hoat dong nhap khau.sql</fileurl>		
+		<description>TF008</description>
+		<note>TF008</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF009'>
+		<queryid>TF009</queryid>
+		<querynm>TF - 09. Tinh hinh chiet khau chung tu hang xuat.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 09. Tinh hinh chiet khau chung tu hang xuat.sql</fileurl>		
+		<description>TF009</description>
+		<note>TF009</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF010'>
+		<queryid>TF010</queryid>
+		<querynm>TF - 10. So du LC - tien ky quy.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 10. So du LC - tien ky quy.sql</fileurl>		
+		<description>TF010</description>
+		<note>TF010</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF011'>
+		<queryid>TF011</queryid>
+		<querynm>TF - 11. Cac khoan vay chiet khau (P.QLRR).sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 11. Cac khoan vay chiet khau (P.QLRR).sql</fileurl>		
+		<description>TF011</description>
+		<note>TF011</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF016'>
+		<queryid>TF016</queryid>
+		<querynm>TF - 16. FTP chiet khau trong han.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 16. FTP chiet khau trong han.sql</fileurl>		
+		<description>TF016</description>
+		<note>TF016</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF017'>
+		<queryid>TF017</queryid>
+		<querynm>TF - 17. FTP chiet khau qua han.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 17. FTP chiet khau qua han.sql</fileurl>		
+		<description>TF017</description>
+		<note>TF017</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF018'>
+		<queryid>TF018</queryid>
+		<querynm>TF - 18. FTP_ Doanh so thu no chiet khau (P.KDTT).sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 18. FTP_ Doanh so thu no chiet khau (P.KDTT).sql</fileurl>		
+		<description>TF018</description>
+		<note>TF018</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF019'>
+		<queryid>TF019</queryid>
+		<querynm>TF - 19. SBV493_Cam ket ngoai bang (Chi tiet).sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 19. SBV493_Cam ket ngoai bang (Chi tiet).sql</fileurl>		
+		<description>TF019</description>
+		<note>TF019</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='TF020'>
+		<queryid>TF020</queryid>
+		<querynm>TF - 20. So lieu FTP cua TF.sql</querynm>
+		<module>TF</module>		
+		<fileurl>Query to Excel\TF\TF - 20. So lieu FTP cua TF.sql</fileurl>		
+		<description>TF020</description>
+		<note>TF020</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL006'>
+		<queryid>GL006</queryid>
+		<querynm>GL - 06_Saving Structure_QDVND.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 06_Saving Structure_QDVND.sql</fileurl>		
+		<description>GL006</description>
+		<note>GL006</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL007'>
+		<queryid>GL007</queryid>
+		<querynm>GL - 07_Saving Structure_VND.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 07_Saving Structure_VND.sql</fileurl>		
+		<description>GL007</description>
+		<note>GL007</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL008'>
+		<queryid>GL008</queryid>
+		<querynm>GL - 08_Saving Structure_QDUSD.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 08_Saving Structure_QDUSD.sql</fileurl>		
+		<description>GL008</description>
+		<note>GL008</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL009'>
+		<queryid>GL009</queryid>
+		<querynm>GL - 09_Saving Structure_USD.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 09_Saving Structure_USD.sql</fileurl>		
+		<description>GL009</description>
+		<note>GL009</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL010'>
+		<queryid>GL010</queryid>
+		<querynm>GL - 10_Saving Structure_QDGOLD.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 10_Saving Structure_QDGOLD.sql</fileurl>		
+		<description>GL010</description>
+		<note>GL010</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL011'>
+		<queryid>GL011</queryid>
+		<querynm>GL - 11_Motsochitieuvon_sudungvon_QDVND_DoanhNghiep.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 11_Motsochitieuvon_sudungvon_QDVND_DoanhNghiep.sql</fileurl>		
+		<description>GL011</description>
+		<note>GL011</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL012'>
+		<queryid>GL012</queryid>
+		<querynm>GL - 12_Motsochitieuvon_sudungvon_VND_DoanhNghiep.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 12_Motsochitieuvon_sudungvon_VND_DoanhNghiep.sql</fileurl>		
+		<description>GL012</description>
+		<note>GL012</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL013'>
+		<queryid>GL013</queryid>
+		<querynm>GL - 13_Motsochitieuvon_sudungvon_QDUSD_DoanhNghiep.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 13_Motsochitieuvon_sudungvon_QDUSD_DoanhNghiep.sql</fileurl>		
+		<description>GL013</description>
+		<note>GL013</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL014'>
+		<queryid>GL014</queryid>
+		<querynm>GL - 14_Motsochitieuvon_sudungvon_USD_DoanhNghiep.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 14_Motsochitieuvon_sudungvon_USD_DoanhNghiep.sql</fileurl>		
+		<description>GL014</description>
+		<note>GL014</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL015'>
+		<queryid>GL015</queryid>
+		<querynm>GL - 15_Motsochitieuvon_sudungvon_QDGOLD_DoanhNghiep.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 15_Motsochitieuvon_sudungvon_QDGOLD_DoanhNghiep.sql</fileurl>		
+		<description>GL015</description>
+		<note>GL015</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL016'>
+		<queryid>GL016</queryid>
+		<querynm>GL - 16_Bao cao chi tiet tinh hinh NQH - ngay cuoi thang truoc.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 16_Bao cao chi tiet tinh hinh NQH - ngay cuoi thang truoc.sql</fileurl>		
+		<description>GL016</description>
+		<note>GL016</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL017'>
+		<queryid>GL017</queryid>
+		<querynm>GL - 17_Bao cao tinh hinh NQH - ngay bao cao.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 17_Bao cao tinh hinh NQH - ngay bao cao.sql</fileurl>		
+		<description>GL017</description>
+		<note>GL017</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL019'>
+		<queryid>GL019</queryid>
+		<querynm>GL - 19_Lai suat dau ra binh quan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 19_Lai suat dau ra binh quan.sql</fileurl>		
+		<description>GL019</description>
+		<note>GL019</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL020'>
+		<queryid>GL020</queryid>
+		<querynm>GL - 20_Bao cao chi tiet tinh hinh NQH - ngay truoc ngay bao cao.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 20_Bao cao chi tiet tinh hinh NQH - ngay truoc ngay bao cao.sql</fileurl>		
+		<description>GL020</description>
+		<note>GL020</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL022'>
+		<queryid>GL022</queryid>
+		<querynm>GL - 22_Motsochitieuvon_sudungvon_QDVND_CaNhan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 22_Motsochitieuvon_sudungvon_QDVND_CaNhan.sql</fileurl>		
+		<description>GL022</description>
+		<note>GL022</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL023'>
+		<queryid>GL023</queryid>
+		<querynm>GL - 23_Motsochitieuvon_sudungvon_VND_CaNhan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 23_Motsochitieuvon_sudungvon_VND_CaNhan.sql</fileurl>		
+		<description>GL023</description>
+		<note>GL023</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL024'>
+		<queryid>GL024</queryid>
+		<querynm>GL - 24_Motsochitieuvon_sudungvon_QDUSD_CaNhan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 24_Motsochitieuvon_sudungvon_QDUSD_CaNhan.sql</fileurl>		
+		<description>GL024</description>
+		<note>GL024</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL025'>
+		<queryid>GL025</queryid>
+		<querynm>GL - 25_Motsochitieuvon_sudungvon_USD_CaNhan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 25_Motsochitieuvon_sudungvon_USD_CaNhan.sql</fileurl>		
+		<description>GL025</description>
+		<note>GL025</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL026'>
+		<queryid>GL026</queryid>
+		<querynm>GL - 26_Motsochitieuvon_sudungvon_QDGOLD_CaNhan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 26_Motsochitieuvon_sudungvon_QDGOLD_CaNhan.sql</fileurl>		
+		<description>GL026</description>
+		<note>GL026</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL027'>
+		<queryid>GL027</queryid>
+		<querynm>GL - 27_BC CV615 - He thong.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 27_BC CV615 - He thong.sql</fileurl>		
+		<description>GL027</description>
+		<note>GL027</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL028'>
+		<queryid>GL028</queryid>
+		<querynm>GL - 28_BC CV615 - Khu vuc.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 28_BC CV615 - Khu vuc.sql</fileurl>		
+		<description>GL028</description>
+		<note>GL028</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL029'>
+		<queryid>GL029</queryid>
+		<querynm>GL - 29_BC_tinhhinhtrichlap_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 29_BC_tinhhinhtrichlap_allbranch.sql</fileurl>		
+		<description>GL029</description>
+		<note>GL029</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL030'>
+		<queryid>GL030</queryid>
+		<querynm>GL - 30_DS_chovay_thuno_TKthieu_VND_ngay_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 30_DS_chovay_thuno_TKthieu_VND_ngay_allbranch.sql</fileurl>		
+		<description>GL030</description>
+		<note>GL030</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL031'>
+		<queryid>GL031</queryid>
+		<querynm>GL - 31_DS_chovay_thuno_TKthieu_USD_ngay_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 31_DS_chovay_thuno_TKthieu_USD_ngay_allbranch.sql</fileurl>		
+		<description>GL031</description>
+		<note>GL031</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL032'>
+		<queryid>GL032</queryid>
+		<querynm>GL - 32_DS_chovay_thuno_TKthieu_QDUSD_ngay_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 32_DS_chovay_thuno_TKthieu_QDUSD_ngay_allbranch.sql</fileurl>		
+		<description>GL032</description>
+		<note>GL032</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL033'>
+		<queryid>GL033</queryid>
+		<querynm>GL - 33_DS_chovay_thuno_TKthieu_VND_thang_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 33_DS_chovay_thuno_TKthieu_VND_thang_allbranch.sql</fileurl>		
+		<description>GL033</description>
+		<note>GL033</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL034'>
+		<queryid>GL034</queryid>
+		<querynm>GL - 34_DS_chovay_thuno_TKthieu_USD_thang_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 34_DS_chovay_thuno_TKthieu_USD_thang_allbranch.sql</fileurl>		
+		<description>GL034</description>
+		<note>GL034</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL035'>
+		<queryid>GL035</queryid>
+		<querynm>GL - 35_DS_chovay_thuno_TKthieu_QDUSD_thang_allbranch.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 35_DS_chovay_thuno_TKthieu_QDUSD_thang_allbranch.sql</fileurl>		
+		<description>GL035</description>
+		<note>GL035</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL036'>
+		<queryid>GL036</queryid>
+		<querynm>GL - 36_BC FTP ngoai HD - CV - HS - tong hop.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 36_BC FTP ngoai HD - CV - HS - tong hop.sql</fileurl>		
+		<description>GL036</description>
+		<note>GL036</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL037'>
+		<queryid>GL037</queryid>
+		<querynm>GL - 37_BC FTP ngoai HD - CV - HS - chi tiet.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 37_BC FTP ngoai HD - CV - HS - chi tiet.sql</fileurl>		
+		<description>GL037</description>
+		<note>GL037</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='GL038'>
+		<queryid>GL038</queryid>
+		<querynm>GL - 38_Tien goi thanh toan.sql</querynm>
+		<module>GL</module>		
+		<fileurl>Query to Excel\GL\GL - 38_Tien goi thanh toan.sql</fileurl>		
+		<description>GL038</description>
+		<note>GL038</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN002'>
+		<queryid>LN002</queryid>
+		<querynm>LN - 02. Du no khach hang co quan he tin dung (so sanh).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 02. Du no khach hang co quan he tin dung (so sanh).sql</fileurl>		
+		<description>LN002</description>
+		<note>LN002</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN003'>
+		<queryid>LN003</queryid>
+		<querynm>LN - 03. Sao ke khe uoc (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 03. Sao ke khe uoc (ca nhan).sql</fileurl>		
+		<description>LN003</description>
+		<note>LN003</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN005'>
+		<queryid>LN005</queryid>
+		<querynm>LN - 05. Du no theo nhom no (doanh nghiep).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 05. Du no theo nhom no (doanh nghiep).sql</fileurl>		
+		<description>LN005</description>
+		<note>LN005</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN006'>
+		<queryid>LN006</queryid>
+		<querynm>LN - 06. Du no theo nhom no (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 06. Du no theo nhom no (ca nhan).sql</fileurl>		
+		<description>LN006</description>
+		<note>LN006</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN009'>
+		<queryid>LN009</queryid>
+		<querynm>LN - 09. Du no phan theo TSDB (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 09. Du no phan theo TSDB (ca nhan).sql</fileurl>		
+		<description>LN009</description>
+		<note>LN009</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN010'>
+		<queryid>LN010</queryid>
+		<querynm>LN - 10. Du no phan theo TSDB (doanh nghiep).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 10. Du no phan theo TSDB (doanh nghiep).sql</fileurl>		
+		<description>LN010</description>
+		<note>LN010</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN011'>
+		<queryid>LN011</queryid>
+		<querynm>LN - 11. Du no theo nguyen te (doanh nghiep).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 11. Du no theo nguyen te (doanh nghiep).sql</fileurl>		
+		<description>LN011</description>
+		<note>LN011</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN012'>
+		<queryid>LN012</queryid>
+		<querynm>LN - 12. Du no theo nguyen te (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 12. Du no theo nguyen te (ca nhan).sql</fileurl>		
+		<description>LN012</description>
+		<note>LN012</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN013'>
+		<queryid>LN013</queryid>
+		<querynm>LN - 13. Du no khach hang co quan he tin dung (so sanh moi ngay).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 13. Du no khach hang co quan he tin dung (so sanh moi ngay).sql</fileurl>		
+		<description>LN013</description>
+		<note>LN013</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN014'>
+		<queryid>LN014</queryid>
+		<querynm>LN - 14. Du no theo muc dich su dung von (so sanh moi ngay).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 14. Du no theo muc dich su dung von (so sanh moi ngay).sql</fileurl>		
+		<description>LN014</description>
+		<note>LN014</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN015'>
+		<queryid>LN015</queryid>
+		<querynm>LN - 15. Cho vay chung khoan.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 15. Cho vay chung khoan.sql</fileurl>		
+		<description>LN015</description>
+		<note>LN015</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN016'>
+		<queryid>LN016</queryid>
+		<querynm>LN - 16. Tinh hinh tang, giam no qua han.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 16. Tinh hinh tang, giam no qua han.sql</fileurl>		
+		<description>LN016</description>
+		<note>LN016</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN017'>
+		<queryid>LN017</queryid>
+		<querynm>LN - 17. Dong tien Xuat khau, Nhap khau USD.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 17. Dong tien Xuat khau, Nhap khau USD.sql</fileurl>		
+		<description>LN017</description>
+		<note>LN017</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN018'>
+		<queryid>LN018</queryid>
+		<querynm>LN - 18. Bao cao chung khoan QD03.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 18. Bao cao chung khoan QD03.sql</fileurl>		
+		<description>LN018</description>
+		<note>LN018</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN022'>
+		<queryid>LN022</queryid>
+		<querynm>LN - 22. Doanh so giai ngan trong nam (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 22. Doanh so giai ngan trong nam (ca nhan).sql</fileurl>		
+		<description>LN022</description>
+		<note>LN022</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN023'>
+		<queryid>LN023</queryid>
+		<querynm>LN - 23. Doanh so giai ngan trong nam (doanh nghiep).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 23. Doanh so giai ngan trong nam (doanh nghiep).sql</fileurl>		
+		<description>LN023</description>
+		<note>LN023</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN024'>
+		<queryid>LN024</queryid>
+		<querynm>LN - 24. Doanh so thu goc trong ngay (Tong hop, USD, VND).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 24. Doanh so thu goc trong ngay (Tong hop, USD, VND).sql</fileurl>		
+		<description>LN024</description>
+		<note>LN024</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN025'>
+		<queryid>LN025</queryid>
+		<querynm>LN - 25. Money Gap.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 25. Money Gap.sql</fileurl>		
+		<description>LN025</description>
+		<note>LN025</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN026'>
+		<queryid>LN026</queryid>
+		<querynm>LN - 26. Du no phan theo nhom no phong giao dich.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 26. Du no phan theo nhom no phong giao dich.sql</fileurl>		
+		<description>LN026</description>
+		<note>LN026</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN027'>
+		<queryid>LN027</queryid>
+		<querynm>LN - 27. Cac khoan thu no bang tien mat hoac CCA trong thang.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 27. Cac khoan thu no bang tien mat hoac CCA trong thang.sql</fileurl>		
+		<description>LN027</description>
+		<note>LN027</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN028'>
+		<queryid>LN028</queryid>
+		<querynm>LN - 28. Khach hang co doanh so phat sinh NQH lon (3 thang gan day).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 28. Khach hang co doanh so phat sinh NQH lon (3 thang gan day).sql</fileurl>		
+		<description>LN028</description>
+		<note>LN028</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN030'>
+		<queryid>LN030</queryid>
+		<querynm>LN - 30. Dong tien Xuat khau, Nhap khau VND.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 30. Dong tien Xuat khau, Nhap khau VND.sql</fileurl>		
+		<description>LN030</description>
+		<note>LN030</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN031'>
+		<queryid>LN031</queryid>
+		<querynm>LN - 31. Du no san xuat va phi san xuat.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 31. Du no san xuat va phi san xuat.sql</fileurl>		
+		<description>LN031</description>
+		<note>LN031</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN032'>
+		<queryid>LN032</queryid>
+		<querynm>LN - 32. So du cho vay FTP.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 32. So du cho vay FTP.sql</fileurl>		
+		<description>LN032</description>
+		<note>LN032</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN033'>
+		<queryid>LN033</queryid>
+		<querynm>LN - 33. Khach hang tang nhom no.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 33. Khach hang tang nhom no.sql</fileurl>		
+		<description>LN033</description>
+		<note>LN033</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN034'>
+		<queryid>LN034</queryid>
+		<querynm>LN - 34.Doanh so cho vay cam co, the chap bang vang trong nam (ca nhan).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 34.Doanh so cho vay cam co, the chap bang vang trong nam (ca nhan).sql</fileurl>		
+		<description>LN034</description>
+		<note>LN034</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN035'>
+		<queryid>LN035</queryid>
+		<querynm>LN - 35. Khach hang cho chuyen nhom no.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 35. Khach hang cho chuyen nhom no.sql</fileurl>		
+		<description>LN035</description>
+		<note>LN035</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN036'>
+		<queryid>LN036</queryid>
+		<querynm>LN - 36. Du thu Phong QLRRTD - Restructure .sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 36. Du thu Phong QLRRTD - Restructure .sql</fileurl>		
+		<description>LN036</description>
+		<note>LN036</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN037'>
+		<queryid>LN037</queryid>
+		<querynm>LN - 37. Du thu Phong QLRRTD - Qualitative Group.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 37. Du thu Phong QLRRTD - Qualitative Group.sql</fileurl>		
+		<description>LN037</description>
+		<note>LN037</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN038'>
+		<queryid>LN038</queryid>
+		<querynm>LN - 38. Du no linh vuc khuyen khich va khong khuyen khich.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 38. Du no linh vuc khuyen khich va khong khuyen khich.sql</fileurl>		
+		<description>LN038</description>
+		<note>LN038</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN039'>
+		<queryid>LN039</queryid>
+		<querynm>LN - 39. Du no theo han muc PGD.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 39. Du no theo han muc PGD.sql</fileurl>		
+		<description>LN039</description>
+		<note>LN039</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN040'>
+		<queryid>LN040</queryid>
+		<querynm>LN - 40. Giao dich mua ban ngoai te trong ngay.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 40. Giao dich mua ban ngoai te trong ngay.sql</fileurl>		
+		<description>LN040</description>
+		<note>LN040</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN041'>
+		<queryid>LN041</queryid>
+		<querynm>LN - 41. Du no theo nhom no (TCTD khac).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 41. Du no theo nhom no (TCTD khac).sql</fileurl>		
+		<description>LN041</description>
+		<note>LN041</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN042'>
+		<queryid>LN042</queryid>
+		<querynm>LN - 42. Hop dong sap het han giai ngan.sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 42. Hop dong sap het han giai ngan.sql</fileurl>		
+		<description>LN042</description>
+		<note>LN042</note>
+		<priority>10</priority>
+	</Query>
+	<Query id='LN046'>
+		<queryid>LN046</queryid>
+		<querynm>LN - 46. Thong tin qua han (CIF).sql</querynm>
+		<module>LN</module>		
+		<fileurl>Query to Excel\LN\LN - 46. Thong tin qua han (CIF).sql</fileurl>		
+		<description>LN046</description>
+		<note>LN046</note>
+		<priority>10</priority>
+	</Query>
 </ScriptCommon>
