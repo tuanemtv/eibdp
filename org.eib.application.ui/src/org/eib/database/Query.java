@@ -248,6 +248,9 @@ public class Query {
 			//_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(3), (String)me.getValue());
 			_exquery = _exquery.replaceAll("&"+(String)me.getKey().substring(2), "'"+(String)me.getValue()+"'"); //Tu ky tu thu 2
 		}
+		//Bo dau ;
+		_exquery = _exquery.replaceAll(";","");
+		
 	}
 	
 	public void getXMLToScript(String fileurl, String servernm, Query _query[]) throws ParserConfigurationException, SAXException, IOException{
