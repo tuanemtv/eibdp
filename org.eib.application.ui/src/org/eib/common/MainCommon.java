@@ -433,4 +433,81 @@ public class MainCommon {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 */
+	public void logQuerySumReport(){
+		//lay thong tin 
+		long _sumScript = 0;
+		long _sumSuccess = 0;
+		long _sumFail = 0;
+		long _sumOther = 0;
+		long _sumNo = 0;
+		
+		for (int i = 0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				//Script define. ko lam gi
+			}
+			else{
+				_sumScript++;
+				if (_query[i].get_status().equals("8")){
+					_sumSuccess++;
+				}
+				else if (_query[i].get_status().equals("3")){
+					_sumFail++;
+				}
+				else if (_query[i].get_status().equals("0")){
+					_sumNo++;
+				}
+				else{
+					_sumOther ++;
+				}					
+			}
+		}
+		
+		logger.info("|               |    Sum    | Thanh Cong |   Fail   | Chua chay |   Khac   |");
+		logger.info("| Tong script   "+_sumScript+"   "+_sumSuccess+"   "+_sumFail+"   "+_sumNo+"   "+_sumOther);
+	}
+	
+	/**
+	 * 
+	 * @param _module
+	 */
+	public void logQuerySumReport(String _module){
+		//lay thong tin 
+		long _sumScript = 0;
+		long _sumSuccess = 0;
+		long _sumFail = 0;
+		long _sumOther = 0;
+		long _sumNo = 0;
+		
+		for (int i = 0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				//Script define. ko lam gi
+			}
+			else{
+				if (_query[i].get_module().equals(_module)){
+					_sumScript++;
+					if (_query[i].get_status().equals("8")){
+						_sumSuccess++;
+					}
+					else if (_query[i].get_status().equals("3")){
+						_sumFail++;
+					}
+					else if (_query[i].get_status().equals("0")){
+						_sumNo++;
+					}
+					else{
+						_sumOther ++;
+					}
+				}
+								
+			}
+		}
+		
+		logger.info("|               |    Sum    | Thanh Cong |   Fail   | Chua chay |   Khac   |");
+		logger.info("|     "+_module+"        "+_sumScript+"   "+_sumSuccess+"   "+_sumFail+"   "+_sumNo+"   "+_sumOther);
+	}
+	
 }
