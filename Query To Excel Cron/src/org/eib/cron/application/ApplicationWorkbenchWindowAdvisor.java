@@ -46,7 +46,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     configurer.setInitialSize(new Point(800, 600)); //dai, cao
     configurer.setShowCoolBar(false);
     configurer.setShowStatusLine(false);
-    configurer.setTitle("Query To Excel Cron [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
+    configurer.setTitle("Query To Excel [em.tvt@eximbank.com.vn]"); //$NON-NLS-1$
     
   
   //Doc log 4 j
@@ -70,7 +70,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
    final Image image = Activator.getImageDescriptor("icons/Main history.png")  
      .createImage();  
    item.setImage(image);  
-   item.setToolTipText("Query To Excel Cron [em.tvt@eximbank.com.vn]");  
+   item.setToolTipText("Query To Excel [em.tvt@eximbank.com.vn]");  
    getWindowConfigurer().getWindow().getShell().setVisible(false);  
    item.addSelectionListener(new SelectionAdapter() {  
     public void widgetDefaultSelected(SelectionEvent e) {  

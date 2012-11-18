@@ -1,1 +1,2 @@
-select * from athena.daily_stocks_transaction
+select * from athena.daily_stocks_transaction1
+
