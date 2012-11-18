@@ -1,0 +1,43 @@
+22:15:35,076 ERROR [RunQueryJob:81] D:\Congifure\cron\cron.xml (The system cannot find the path specified)
+22:18:48,686 INFO  [StdSchedulerFactory:1157] Using default implementation for ThreadExecutor
+22:18:48,692 INFO  [SimpleThreadPool:271] Job execution threads will use class loader of thread: main
+22:18:48,711 INFO  [SchedulerSignalerImpl:61] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+22:18:48,712 INFO  [QuartzScheduler:243] Quartz Scheduler v.2.1.6 created.
+22:18:48,714 INFO  [RAMJobStore:154] RAMJobStore initialized.
+22:18:48,715 INFO  [QuartzScheduler:268] Scheduler meta-data: Quartz Scheduler (v2.1.6) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+22:18:48,716 INFO  [StdSchedulerFactory:1306] Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+22:18:48,717 INFO  [StdSchedulerFactory:1310] Quartz scheduler version: 2.1.6
+22:18:48,718 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:18:48,724 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:18:48,726 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:18:48,728 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:18:48,731 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:18:48,733 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,169 INFO  [StdSchedulerFactory:1157] Using default implementation for ThreadExecutor
+22:19:57,174 INFO  [SimpleThreadPool:271] Job execution threads will use class loader of thread: main
+22:19:57,194 INFO  [SchedulerSignalerImpl:61] Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+22:19:57,196 INFO  [QuartzScheduler:243] Quartz Scheduler v.2.1.6 created.
+22:19:57,198 INFO  [RAMJobStore:154] RAMJobStore initialized.
+22:19:57,199 INFO  [QuartzScheduler:268] Scheduler meta-data: Quartz Scheduler (v2.1.6) 'DefaultQuartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+22:19:57,199 INFO  [StdSchedulerFactory:1306] Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+22:19:57,200 INFO  [StdSchedulerFactory:1310] Quartz scheduler version: 2.1.6
+22:19:57,200 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,205 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,208 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,210 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,212 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.
+22:19:57,214 INFO  [QuartzScheduler:534] Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED started.

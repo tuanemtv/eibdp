@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ScriptCommon>
+	<Query id='T001'>
+		<queryid>T001</queryid>
+		<querynm>T001</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T002'>
+		<queryid>T002</queryid>
+		<querynm>T002</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T003'>
+		<queryid>T003</queryid>
+		<querynm>T003</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T004'>
+		<queryid>T004</queryid>
+		<querynm>T004</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T005'>
+		<queryid>T005</queryid>
+		<querynm>T005</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T006'>
+		<queryid>T006</queryid>
+		<querynm>T006</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T007'>
+		<queryid>T007</queryid>
+		<querynm>T007</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T008'>
+		<queryid>T008</queryid>
+		<querynm>T008</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T009'>
+		<queryid>T009</queryid>
+		<querynm>T009</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T010'>
+		<queryid>T010</queryid>
+		<querynm>T010</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T011'>
+		<queryid>T011</queryid>
+		<querynm>T011</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T012'>
+		<queryid>T012</queryid>
+		<querynm>T012</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T013'>
+		<queryid>T013</queryid>
+		<querynm>T013</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T014'>
+		<queryid>T014</queryid>
+		<querynm>T014</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T015'>
+		<queryid>T015</queryid>
+		<querynm>T015</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T016'>
+		<queryid>T016</queryid>
+		<querynm>T016</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T017'>
+		<queryid>T017</queryid>
+		<querynm>T017</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T018'>
+		<queryid>T018</queryid>
+		<querynm>T008</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T019'>
+		<queryid>T019</queryid>
+		<querynm>T009</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T020'>
+		<queryid>T020</queryid>
+		<querynm>T020</querynm>
+		<module>DP</module>		
+		<fileurl>MySQL\script1.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>5</priority>
+	</Query>
+	<Query id='T021'>
+		<queryid>T021</queryid>
+		<querynm>T021</querynm>
+		<module>CS</module>		
+		<fileurl>MySQL\script2.sql</fileurl>		
+		<description>T001</description>
+		<note>T001</note>
+		<priority>1</priority>
+	</Query>
+	<Query id='DEF003'>
+		<queryid>DEF003</queryid>
+		<querynm>Get define</querynm>
+		<module>AA</module>
+		<fileurl>Define script\DEF003_Mysql.sql</fileurl>
+		<description>Script6</description> 
+		<note>Get define</note>	
+		<priority>10</priority>	
+	</Query>
+</ScriptCommon>
