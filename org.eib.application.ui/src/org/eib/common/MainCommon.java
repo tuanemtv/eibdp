@@ -437,7 +437,7 @@ public class MainCommon {
 	/**
 	 * 
 	 */
-	public void logQuerySumReport(){
+	public void logQuerySumReport(Query[] _quer){
 		//lay thong tin 
 		long _sumScript = 0;
 		long _sumSuccess = 0;
@@ -445,19 +445,19 @@ public class MainCommon {
 		long _sumOther = 0;
 		long _sumNo = 0;
 		
-		for (int i = 0; i<_query.length;i++){
-			if (_query[i].get_module().equals("AA")){
+		for (int i = 0; i<_quer.length;i++){
+			if (_quer[i].get_module().equals("AA")){
 				//Script define. ko lam gi
 			}
 			else{
 				_sumScript++;
-				if (_query[i].get_status().equals("8")){
+				if (_quer[i].get_status().equals("8")){
 					_sumSuccess++;
 				}
-				else if (_query[i].get_status().equals("3")){
+				else if (_quer[i].get_status().equals("3")){
 					_sumFail++;
 				}
-				else if (_query[i].get_status().equals("0")){
+				else if (_quer[i].get_status().equals("0")){
 					_sumNo++;
 				}
 				else{
@@ -466,15 +466,15 @@ public class MainCommon {
 			}
 		}
 		
-		logger.info("|               |    Sum    | Thanh Cong |   Fail   | Chua chay |   Khac   |");
-		logger.info("| Tong script   "+_sumScript+"   "+_sumSuccess+"   "+_sumFail+"   "+_sumNo+"   "+_sumOther);
+		logger.info("|               |   Sum   |  Sccess |  Fail   | No Run  |  Other  ");
+		logger.info("| Tong script   "+JavaUtil.showLogScript(_sumScript)+JavaUtil.showLogScript(_sumSuccess)+JavaUtil.showLogScript(_sumFail)+ JavaUtil.showLogScript(_sumNo)+JavaUtil.showLogScript(_sumOther));
 	}
 	
 	/**
 	 * 
 	 * @param _module
 	 */
-	public void logQuerySumReport(String _module){
+	public void logQuerySumReport(Query[] _quer, String _module){
 		//lay thong tin 
 		long _sumScript = 0;
 		long _sumSuccess = 0;
@@ -482,20 +482,20 @@ public class MainCommon {
 		long _sumOther = 0;
 		long _sumNo = 0;
 		
-		for (int i = 0; i<_query.length;i++){
-			if (_query[i].get_module().equals("AA")){
+		for (int i = 0; i<_quer.length;i++){
+			if (_quer[i].get_module().equals("AA")){
 				//Script define. ko lam gi
 			}
 			else{
-				if (_query[i].get_module().equals(_module)){
+				if (_quer[i].get_module().equals(_module)){
 					_sumScript++;
-					if (_query[i].get_status().equals("8")){
+					if (_quer[i].get_status().equals("8")){
 						_sumSuccess++;
 					}
-					else if (_query[i].get_status().equals("3")){
+					else if (_quer[i].get_status().equals("3")){
 						_sumFail++;
 					}
-					else if (_query[i].get_status().equals("0")){
+					else if (_quer[i].get_status().equals("0")){
 						_sumNo++;
 					}
 					else{
@@ -506,8 +506,159 @@ public class MainCommon {
 			}
 		}
 		
-		logger.info("|               |    Sum    | Thanh Cong |   Fail   | Chua chay |   Khac   |");
-		logger.info("|     "+_module+"        "+_sumScript+"   "+_sumSuccess+"   "+_sumFail+"   "+_sumNo+"   "+_sumOther);
+		logger.info("|     "+_module+"        "+JavaUtil.showLogScript(_sumScript)+JavaUtil.showLogScript(_sumSuccess)+JavaUtil.showLogScript(_sumFail)+ JavaUtil.showLogScript(_sumNo)+JavaUtil.showLogScript(_sumOther));
 	}
 	
+	/**
+	 * 
+	 */
+	public void logShowScript(Query[] _quer){
+		for (int k = 0; k<_quer.length;k++){
+			if (_quer[k].get_status().equals("8"))
+				logger.info("S["+ _quer[k].get_startDate()+"] E[" + _quer[k].get_endDate() +"] status["+_quer[k].get_status()+"]P["+_quer[k].get_priority()+"]T["+_quer[k].get_times()+"] script= "+_quer[k].get_queryid()+", name= "+_quer[k].get_querynm());
+			else
+				logger.error("S["+ _quer[k].get_startDate()+"] E[" + _quer[k].get_endDate() +"] status["+_quer[k].get_status()+"]P["+_quer[k].get_priority()+"]T["+_quer[k].get_times()+"] script= "+_quer[k].get_queryid()+", name= "+_quer[k].get_querynm());
+		}
+	}
+	
+	/**
+	 * Lay query se chay
+	 * @param _query
+	 * @return
+	 */
+	public Query[] getRunQuery(Query [] _query){
+		Query[] _returnQuery = new Query[coutRunQuery(_query)];
+		
+		int count = 0;
+		for (int i=0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				
+			}else{
+				_returnQuery[count] = _query[i];
+				count ++;
+			}
+		}
+		
+		return _returnQuery;
+	}
+	
+	/**
+	 * Dem query chay
+	 * @param _query
+	 * @return
+	 */
+	public int coutRunQuery(Query [] _query){
+		int _count = 0;
+		for (int i=0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				
+			}else{
+				_count ++;
+			}
+		}
+		
+		return _count;
+	}
+	
+	/**
+	 * Get Query Fail
+	 * @param _query
+	 * @return
+	 */
+	public Query[] getRunFailQuery(Query [] _query){
+		Query[] _returnQuery = new Query[coutRunFailQuery(_query)];
+		
+		int count = 0;
+		for (int i=0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				
+			}else{
+				if (_query[i].get_status().equals("3")){
+					_returnQuery[count] = _query[i];
+					count ++;					
+				}
+			}
+		}
+		
+		return _returnQuery;
+	}
+	
+	/**
+	 * Dem query fail
+	 * @param _query
+	 * @return
+	 */
+	public int coutRunFailQuery(Query [] _query){
+		int _count = 0;
+		for (int i=0; i<_query.length;i++){
+			if (_query[i].get_module().equals("AA")){
+				
+			}else{
+				if (_query[i].get_status().equals("3"))
+					_count ++;
+			}
+		}
+		
+		return _count;
+	}
+	
+	/**
+	 * Check query finish het chua
+	 * @param _query
+	 * @return
+	 */
+	public int chekFinishQuery(Query[] _query){
+		//Co chay het chua
+		int _count = 0;
+		for (int i=0; i<_query.length;i++){		
+			if (_query[i].get_status().equals("0") || _query[i].get_status().equals("1")){
+				
+			}else{
+				_count ++;
+			}
+		}
+		
+		if (_count+1 == _query.length)
+			_count = 1;
+		else
+			_count = 0;
+		
+		return _count;
+	}
+	
+	
+	/**
+	 * 
+	 * @param _query
+	 * @return
+	 */
+	public String[] getStatusQuery(Query[] _query){
+		String [] _str = new String[countStatusQuery(_query)];
+		int count = 0;
+		
+		for (int i=0; i<_query.length;i++){		
+			if (_query[i].get_status().equals("1")){
+				_str[count] = _query[i].get_querynm();
+				count ++;			
+			}
+		}
+		return _str;
+	}
+	
+	/**
+	 * 
+	 * @param _query
+	 * @return
+	 */
+	public int countStatusQuery(Query[] _query){
+		//Co chay het chua
+		int _count = 0;
+		for (int i=0; i<_query.length;i++){		
+			if (_query[i].get_status().equals("1")){
+				_count ++;							
+			}
+		}				
+		
+		return _count;
+	} 
 }

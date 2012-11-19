@@ -19,7 +19,7 @@ public class FolderUtil {
 				logger.info("Directory Created: " + _folderurl);					
 			}
 			else{
-				logger.info("Directory is not created: " + _folderurl);				
+				//logger.info("Directory is not created: " + _folderurl);				
 			}
 		}catch(Exception e){
 			logger.error(e.getMessage());
@@ -40,7 +40,7 @@ public class FolderUtil {
 				logger.info("Directory Created: " + _folderurl + _folderName);						
 			}
 			else{
-				logger.info("Directory is not created: " + _folderurl + _folderName);				
+				//logger.info("Directory is not created: " + _folderurl + _folderName);				
 			}
 		}catch(Exception e){
 			logger.error(e.getMessage());

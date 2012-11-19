@@ -58,4 +58,27 @@ public class JavaUtil {
 			logger.info("Key["+me.getKey() + "] --> Value["+me.getValue()+"]");
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * @param k
+	 * @return
+	 */
+	public static String showLogScript(long k){
+		String _strDesign ="|         ";
+		String _strReturn="";
+		
+		if (k<10){
+			_strReturn = _strDesign.substring(0, 5)+String.valueOf(k)+_strDesign.substring(6, 10);
+		}else if (k<100){
+			_strReturn = _strDesign.substring(0, 4)+String.valueOf(k)+_strDesign.substring(6, 10);
+		}else if (k<1000){
+			_strReturn = _strDesign.substring(0, 4)+String.valueOf(k)+_strDesign.substring(7, 10);
+		}else if (k<10000){
+			_strReturn = _strDesign.substring(0, 3)+String.valueOf(k)+_strDesign.substring(7, 10);
+		}
+		
+		return _strReturn;
+	}
 }
