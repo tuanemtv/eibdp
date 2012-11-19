@@ -54,6 +54,13 @@
          name="Manage PC Source">
    </view>
    <view
+		name="Progress View"
+		icon="icons/pview.gif"
+		category="org.eclipse.ui"
+		class="org.eclipse.ui.ExtensionFactory:progressView"
+		id="org.eclipse.ui.views.ProgressView">
+   </view>
+   <view
          allowMultiple="true"
          class="org.eib.cron.application.views.AllScriptView"
          icon="icons/folder_database.png"
@@ -72,17 +79,26 @@
       <perspectiveExtension
             targetID="*">
             <!-- standalone="true"-->
+            <!--
          <view               
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="top"
                id="org.eib.cron.application.views.CronView">
+         </view>-->
+         <view 
+               minimized="false"
+               relative="org.eclipse.ui.editorss"
+               relationship="left"
+                ratio="1.0f"
+               id="org.eib.cron.application.views.AllScriptView">
          </view>
          <view 
                minimized="false"
                relative="org.eclipse.ui.editorss"
                relationship="top"
-               id="org.eib.cron.application.views.AllScriptView">
+               ratio="0.2f"
+               id="org.eclipse.ui.views.ProgressView">
          </view>
          <!--  
          <view
@@ -97,7 +113,7 @@
                relationship="right"
                relative="org.eclipse.ui.views.TaskList"
                visible="true">
-         </view>-->
+         </view>
           <view
                closeable="true"
                id="log4jviewer.ui.views.LogView"
@@ -105,6 +121,19 @@
                moveable="true"
                ratio="1.0f"
                relationship="stack"
+               relative="org.eclipse.ui.editorss"
+               showTitle="true"
+               standalone="false"
+               visible="true">
+         </view>-->
+         
+         <view
+               closeable="true"
+               id="log4jviewer.ui.views.LogView"
+               minimized="false"
+               moveable="true"
+               ratio="0.8f"
+               relationship="right"
                relative="org.eclipse.ui.editorss"
                showTitle="true"
                standalone="false"
