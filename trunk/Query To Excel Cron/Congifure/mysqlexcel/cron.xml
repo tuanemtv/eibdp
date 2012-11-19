@@ -6,19 +6,10 @@
 		<jobClass>Job1</jobClass>
 		<jobGroup>group1</jobGroup>
 		<triggerNM>dummyTriggerName</triggerNM>
-		<triggerSchedule>0 15 17 * * ?</triggerSchedule> <!-- 30 11 -->
+		<triggerSchedule>0 30 22 * * ?</triggerSchedule> <!-- 30 11 -->
 		<triggerGroup>group1</triggerGroup>
-		<databaseID>Oralce-ALONE29</databaseID>
+		<databaseID>MySQL-test</databaseID>
 		<defineScript>DEF003</defineScript>  
-		<Query id='Cron01.G001'>Cron01.G001</Query>
-		<Query id='Cron01.G002'>Cron01.G002</Query>    
-		<Query id='Cron01.S001'>Cron01.S001</Query>		
-		<Query id='Cron01.S002'>Cron01.S002</Query>
-		<Query id='Cron01.S003'>Cron01.S003</Query>
-		<Query id='Cron01.S004'>Cron01.S004</Query>
-		<Query id='Cron01.S006'>Cron01.S006</Query>
-		<Query id='Cron01.S007'>Cron01.S007</Query>
-		<Query id='Cron01.S008'>Cron01.S008</Query>
-		<Query id='Cron01.S009'>Cron01.S009</Query>					
+		<Query id='Cron01.G001'>Cron01.G001</Query>				
 	</Cron>	
 </CronManager>
