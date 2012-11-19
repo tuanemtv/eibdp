@@ -39,10 +39,21 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eib.common.FolderUtil;
 import org.eib.common.MainCommon;
 import org.eib.common.QueryServer;
+import org.eib.cron.run.QueryToExcelJob;
 import org.eib.database.CommandMultiQuery;
 import org.eib.database.Query;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.List;
 
 public class AllScriptView extends ViewPart {
 
@@ -50,9 +61,11 @@ public class AllScriptView extends ViewPart {
 	public static Combo cboDBA;
 	public static Combo cboDefine;
 	public static Button btnRun;
+	public static Button btnStart;
+	public static Button btnShutdown;
 	private static Logger logger =Logger.getLogger("AllScriptView");
 	private MainCommon main;
-	private String _serID = "MySQL-test";
+	private String _serID = "";
 	private QueryServer _qurser;
 	private Query _query;
 	private Text txtSum;
@@ -63,7 +76,11 @@ public class AllScriptView extends ViewPart {
 	private	DateFormat _dateFormat1, _dateFormat2;
 	private Text txtStatus;
 	private Query[] _runQuery;
-		
+	
+	private Scheduler scheduler;
+	private Button btnShow;
+	private List listShow;
+	
 	public AllScriptView() {
 	}
 
@@ -85,12 +102,12 @@ public class AllScriptView extends ViewPart {
 		cboDBA.setBounds(62, 7, 119, 23);
 		
 		Label lblDefine = new Label(container, SWT.NONE);
-		lblDefine.setBounds(10, 39, 34, 15);
+		lblDefine.setBounds(10, 35, 34, 15);
 		lblDefine.setText("Define");
 		
 		cboDefine = new Combo(container, SWT.NONE);
 		cboDefine.setItems(new String[] {"DEF002", "DEF001", "DEF003"});
-		cboDefine.setBounds(62, 36, 74, 23);
+		cboDefine.setBounds(62, 31, 74, 23);
 		
 		btnRun = new Button(container, SWT.NONE);
 		btnRun.addSelectionListener(new SelectionAdapter() {
@@ -141,7 +158,8 @@ public class AllScriptView extends ViewPart {
 					_qurser = main.getQueryServerFromID(cboDBA.getText()); //Oralce-AReport , Oralce-ALONE29       MySQL-test          
 			        _qurser.connectDatabase();
 			        
-					
+			        _serID = cboDBA.getText();
+			        
 			        //Lay define cho he thong
 			        _qur = main.getQueryFromID(cboDefine.getText()); //DEF002: Ngay he thong, DEF003 test
 			        _qur.queryToAppDefine(main.get_appcommon(), _qurser);        
@@ -199,7 +217,7 @@ public class AllScriptView extends ViewPart {
 							//while((numScript + 1) != main.get_query().length){
 							while (main.chekFinishQuery(_runQuery) != 1){
 								//logger.info("numScript = "+numScript);
-								monitor.subTask(" Run scriptID: " + numScript+ " with name= "+_runQuery[numScript].get_querynm());				     
+								monitor.subTask(" Run scriptID: " + (numScript+1)+ " with name= "+_runQuery[numScript].get_querynm());				     
 								// Report that 20 units are done
 								//if (numScript>2)
 									//monitor.worked(numScript);									
@@ -241,30 +259,116 @@ public class AllScriptView extends ViewPart {
 			}
 		});
 		
-		btnRun.setBounds(10, 66, 75, 25);
+		btnRun.setBounds(10, 103, 75, 25);
 		btnRun.setText("Run");
 		
 		txtSum = new Text(container, SWT.BORDER);
 		txtSum.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_BLUE));
 		txtSum.setEnabled(false);
-		txtSum.setBounds(88, 94, 57, 21);
+		txtSum.setBounds(79, 56, 57, 21);
 		
 		txtCnt = new Text(container, SWT.BORDER);
 		txtCnt.setEnabled(false);
 		txtCnt.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_BLUE));
-		txtCnt.setBounds(88, 121, 57, 21);
+		txtCnt.setBounds(206, 56, 57, 21);
 		
 		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setBounds(10, 97, 72, 15);
+		lblNewLabel.setBounds(10, 59, 72, 15);
 		lblNewLabel.setText("Total Scripts");
 		
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
-		lblNewLabel_1.setBounds(10, 124, 66, 15);
+		lblNewLabel_1.setBounds(138, 59, 66, 15);
 		lblNewLabel_1.setText("Run Scripts");
 		
 		txtStatus = new Text(container, SWT.BORDER);
 		txtStatus.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		txtStatus.setBounds(10, 148, 157, 21);
+		txtStatus.setBounds(10, 80, 253, 21);
+		
+		btnStart = new Button(container, SWT.NONE);
+		btnStart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btnStart.setEnabled(false);
+				btnShutdown.setEnabled(true);				
+				
+				logger.info("");
+				logger.info("Load---------------------------------");
+				ResourceBundle rb = ResourceBundle.getBundle("/resource/app");	
+				MainCommon main1 = new MainCommon("/resource/app",rb.getString("app_kind"),"all");
+				
+				try {					
+					for (int i=0; i< main1.get_querycron().length; i++){
+						
+						JobDetail job = JobBuilder.newJob(QueryToExcelJob.class)
+								.withIdentity(main1.get_querycron()[i].get_jobNM(), main1.get_querycron()[i].get_jobGroup()).build();
+				 
+						job.getJobDataMap().put("_cronNM", main1.get_querycron()[i].get_cronNM());
+						job.getJobDataMap().put("_defineScript", main1.get_querycron()[i].get_defineScript());
+						job.getJobDataMap().put("_databaseID", main1.get_querycron()[i].get_databaseID());
+						
+						logger.info("["+(i+1)+"]");								
+						logger.info("_cronNM= "+main1.get_querycron()[i].get_cronNM() );
+						logger.info("_defineScript= "+main1.get_querycron()[i].get_defineScript());
+						logger.info("_databaseID= "+ main1.get_querycron()[i].get_databaseID());
+						logger.info("_triggerSchedule= "+main1.get_querycron()[i].get_triggerSchedule());						
+				 
+				    	Trigger trigger = TriggerBuilder
+				    			.newTrigger()
+				    			.withIdentity(main1.get_querycron()[i].get_triggerNM(), main1.get_querycron()[i].get_triggerNM())
+				    			.withSchedule(						
+							CronScheduleBuilder.cronSchedule(main1.get_querycron()[i].get_triggerSchedule()))
+							.build();
+				 
+				    	//schedule it
+				    	scheduler = new StdSchedulerFactory().getScheduler();
+				    	scheduler.start();				    
+				    	scheduler.scheduleJob(job, trigger);					  
+					}					
+				} catch (SchedulerException e2) {
+					// TODO Auto-generated catch block
+					logger.error(e2.getMessage());
+					e2.printStackTrace();
+				}			
+			}
+		});
+		btnStart.setBounds(10, 377, 75, 25);
+		btnStart.setText("Start");
+		
+		btnShutdown = new Button(container, SWT.NONE);
+		btnShutdown.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btnStart.setEnabled(true);
+				btnShutdown.setEnabled(false);
+				
+				try {
+					scheduler.shutdown();
+				} catch (SchedulerException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnShutdown.setBounds(87, 377, 75, 25);
+		btnShutdown.setText("Shutdown");
+		
+		btnShow = new Button(container, SWT.NONE);
+		btnShow.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				listShow.removeAll();
+				String[] show = main.getStatusQuery(_runQuery);
+				for (int i=0; i <show.length; i++)
+					listShow.add(show[i]);
+			}
+		});
+		
+		
+		btnShow.setBounds(87, 103, 75, 25);
+		btnShow.setText("Show");
+		
+		listShow = new List(container, SWT.BORDER);
+		listShow.setBounds(10, 131, 253, 240);
 
 		createActions();
 		initializeToolBar();
