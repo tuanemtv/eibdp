@@ -263,7 +263,7 @@ public class CommandMultiQuery extends Thread{
                 //book.write(new FileOutputStream(query.get_queryouturl()));
         		dateFormat2 = new SimpleDateFormat("yyyyMMdd_HHmmss");	
                 date2= new Date();        		
-                query.set_endDate(dateFormat2.format(date2));
+                query.set_endDate(dateFormat2.format(date2));                                        		
                 
         		//Calendar ca2 = Calendar.getInstance();                 
         		//ca1.setTime(date2);
@@ -286,8 +286,7 @@ public class CommandMultiQuery extends Thread{
                 stmt.getUpdateCount();
             }  
             
-            query.set_status("8");//OK            
-    		query.set_endDate(DateTimeUtil.getDateTime());
+            query.set_status("8");//OK                		
     		
             logger.info(">Done. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
             conn.close();//dong connect lai
@@ -297,7 +296,7 @@ public class CommandMultiQuery extends Thread{
             query.set_status("3");//Fail 
             
             //Set thoi gian ket thuc           
-    		query.set_endDate(DateTimeUtil.getDateTime());
+    		query.set_endDate(DateTimeUtil.getDateYYYYMMDD());
     		
             logger.info(">Fail. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
             logger.error(e.getMessage());                                    
@@ -312,7 +311,7 @@ public class CommandMultiQuery extends Thread{
             	query.set_status("3");
             	
             	 //Set thoi gian ket thuc                 
-        		query.set_endDate(DateTimeUtil.getDateTime());
+        		query.set_endDate(DateTimeUtil.getDateYYYYMMDD());
         		
                 logger.info(">Fail. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
                 logger.error(ex.getMessage());

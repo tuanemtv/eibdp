@@ -21,7 +21,7 @@ import org.eib.common.JavaUtil;
 public class CommandQuery {
        
         private static Logger logger =Logger.getLogger("CommandQuery");
-        private static long  _Excelrow = 65636;
+        private static long  _Excelrow = 50000; //65636
         private static int _dperComplete; //Phan tram thuc hien script
         private static String _message;
        

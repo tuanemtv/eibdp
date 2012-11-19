@@ -41,9 +41,10 @@ public class RunMulConScript {
 					logger.info(">>> Run all script succesfull");
 										
 					//Show tat ca gia tri chay
+					/*
 					for (int k=0; k<_query.length;k++){						
 						logger.info("S["+ _query[k].get_startDate()+"] E[" + _query[k].get_endDate() +"] status["+_query[k].get_status()+"]P["+_query[k].get_priority()+"]T["+_query[k].get_times()+"] script= "+_query[k].get_queryid()+", name= "+_query[k].get_querynm());
-					}
+					}*/
 				}			
 							
 				if (i < _query.length){					
@@ -84,7 +85,7 @@ public class RunMulConScript {
 					            //return;				        
 					        }																										
 							//System.out.println(">>Run ="+_query[l].get_queryid()+", name="+_query[l].get_querynm());
-							logger.info("Run >>> ["+i+"] "+_query[l].get_queryid()+", name= "+_query[l].get_querynm());
+							logger.info("Run >>> ["+(i+1)+"] "+_query[l].get_queryid()+", name= "+_query[l].get_querynm());
 							/*
 							try {
 								//delay for one second
@@ -134,7 +135,7 @@ public class RunMulConScript {
 							//Date date = new Date();
 							//dateFormat.format(date)+
 							//System.out.println(">>Run script= "+_query[i].get_queryid()+", name="+_query[i].get_querynm());
-							logger.info("NEXT Run==> ["+i+"] "+_query[i].get_queryid()+", name= "+_query[i].get_querynm());							
+							logger.info("NEXT Run==> ["+(i+1)+"] "+_query[i].get_queryid()+", name= "+_query[i].get_querynm());							
 							/*
 							try {
 								//delay for one second
