@@ -12,23 +12,49 @@ import org.apache.poi.hssf.usermodel.*;
 import org.eib.common.AppCommon;
 import org.eib.common.DateTimeUtil;
 import org.eib.common.FolderUtil;
+import org.eib.common.QueryServer;
 
-public class CommandMultiQuery extends Thread{
+public class CommandMultiFailQuery extends Thread{
 	
-	Connection _conn;
+	QueryServer _server;
 	Query _query;  
 	AppCommon _app;
-	private static Logger logger =Logger.getLogger("CommandMultiQuery");
+	private static Logger logger =Logger.getLogger("CommandMultiFailQuery");
 	
 	
 	public void run()
     {
 		try {
-			commandMulQueryExcel(_conn,_query,_app,true,false);
+			_server.connectDatabase(); 
+			commandMulFailQueryExcel(_server.get_conn(),_query,_app,true,false);
+			if (_query.get_status().equals("7") || _query.get_status().equals("8")){
+				
+			}else{
+				//Lap lai
+				logger.info("Next Fail: "+_query.get_querynm()+" with S["+_query.get_status()+"]");
+				_server.connectDatabase(); 
+				commandMulFailQueryExcel(_server.get_conn(),_query,_app,true,false);
+				if (_query.get_status().equals("7") || _query.get_status().equals("8")){
+					
+				}else{
+					//Lap lai
+					logger.info("Next Fail: "+_query.get_querynm()+" with S["+_query.get_status()+"]");
+					_server.connectDatabase(); 
+					commandMulFailQueryExcel(_server.get_conn(),_query,_app,true,false);
+					if (_query.get_status().equals("7") || _query.get_status().equals("8")){
+						
+					}else{
+						//Lap lai
+						logger.info("Next Fail: "+_query.get_querynm()+" with S["+_query.get_status()+"]");
+						_server.connectDatabase(); 
+						commandMulFailQueryExcel(_server.get_conn(),_query,_app,true,false);
+					}
+				}
+			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			logger.error(_query.get_querynm());
-			_query.set_status("3");      
+			_query.set_status(String.valueOf(Integer.valueOf(_query.get_status())+1));      
 			e.printStackTrace();
 		}
     }
@@ -41,15 +67,15 @@ public class CommandMultiQuery extends Thread{
      * @param showMetaData
      * @param filename
      */
-    public static void commandMulQueryExcel(Connection conn, 
+    public static void commandMulFailQueryExcel(Connection conn, 
     										Query query,
     										AppCommon _app,
        boolean showHeaders, boolean showMetaData) throws InterruptedException {
         Statement stmt = null;        
         try {
-        	
+        	logger.info("Run Fail: "+query.get_querynm()+" with S["+query.get_status()+"]");
         	//Bat dau chay set status = 1
-        	query.set_status("1");
+        	//query.set_status(String.valueOf(Integer.valueOf(query.get_status())+1));
         	//System.out.println(" >>Run script= "+query.get_queryid()+", name="+query.get_querynm()+", status= "+query.get_status());
         	
         	Date date1, date2;
@@ -297,7 +323,7 @@ public class CommandMultiQuery extends Thread{
             //System.out.println(" >>script= "+query.get_queryid()+": OK ");
         } catch (Exception e) {
             
-            query.set_status("3");//Fail             
+        	query.set_status(String.valueOf(Integer.valueOf(query.get_status())+1));     
             //Set thoi gian ket thuc           
     		query.set_endDate(DateTimeUtil.getDateYYYYMMDD());
     		
@@ -312,7 +338,7 @@ public class CommandMultiQuery extends Thread{
                     conn.close();//dong connect lai                                                           
                 }
             } catch (SQLException ex) {
-            	query.set_status("3");            
+            	query.set_status(String.valueOf(Integer.valueOf(query.get_status())+1));
             	 //Set thoi gian ket thuc                 
         		query.set_endDate(DateTimeUtil.getDateYYYYMMDD());        		
                 logger.info(">Fail. S["+ query.get_startDate()+"] E[" + query.get_endDate() +"] status["+query.get_status()+"]P["+query.get_priority()+"]T["+query.get_times()+"] script= "+query.get_queryid()+", name= "+query.get_querynm());
@@ -330,19 +356,21 @@ public class CommandMultiQuery extends Thread{
         */
     }
 
-	public CommandMultiQuery(Connection _conn, Query _query, AppCommon _app) {
+	public CommandMultiFailQuery(QueryServer _ser, Query _query, AppCommon _app) {
 		super();
-		this._conn = _conn;
+		this._server = _ser;
 		this._query = _query;
 		this._app = _app;
 	}
 
-	public Connection get_conn() {
-		return _conn;
+	
+
+	public QueryServer get_server() {
+		return _server;
 	}
 
-	public void set_conn(Connection _conn) {
-		this._conn = _conn;
+	public void set_server(QueryServer _server) {
+		this._server = _server;
 	}
 
 	public Query get_query() {
