@@ -32,7 +32,7 @@ public class Query {
 	private String _querynm;
 	private String _queryouturl;
 	private String _queryinurl;
-	private String _status; //=0: chua lam gi, =1: bat dau xu ly, 2: dang xu ly, 7: fail, 8: 0k
+	private String _status; //=0: chua lam gi, =1: bat dau xu ly, 3: fail, 7: chay lai cua fail, 8: 0k
 	private String _module;
 	private String _fileurl;
 	private String _exquery;//Cau query thuc hien
@@ -43,8 +43,8 @@ public class Query {
 	private String _note;
 	private int _countquery; //Tong so script
 	private TreeMap<String, String> _define;
-	private int _priority;
-	private String _times;
+	private int _priority; //0->10. 0 la uu tien cao nhat
+	private String _times; //Thoi gian chay script
 	
 	
 	public String get_times() {
@@ -642,7 +642,9 @@ public class Query {
 		dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");		
 		date= new Date();
 		this.set_startDate(dateFormat.format(date));
+		
 		_app.set_define(CommandQuery.queryGetVar(_queryser.get_conn(), this.get_exquery()));
+		
 		date= new Date();
 		this.set_endDate(dateFormat.format(date));
 		

@@ -14,9 +14,11 @@ public class TestMainCommon {
 		
 		a.get_appcommon().logAppCommon();
 		a.logQuery();
-		a.logQueryCron();
-		a.logQueryServer();
+		//a.logQueryCron();
+		//a.logQueryServer();
+		a.sortQueryWithModule();
 		
+		a.logTimeQuery(a.get_query());
 		/*
 		for (int i=0; i<a.get_query().length; i++){
 			System.out.println("["+i+"]-----------------");

@@ -118,6 +118,44 @@ public class MainCommon {
 	    }	    	    	  	 	    
 	}
 	
+	
+	public void sortQueryWithModule() {
+	    int in, out;
+
+	    for (out = 1; out < _query.length; out++) {
+	      Query temp = _query[out]; // out is dividing line
+	      in = out; // start shifting at out
+
+	      while (in > 0 && // until smaller one found,
+	    		  _query[in - 1].get_module().compareTo(temp.get_module())>0) {
+	    	  _query[in] = _query[in - 1]; // shift item to the right
+	        --in; // go left one position
+	      }
+	      _query[in] = temp; // insert marked item
+	    }	    	    	  	 	    
+	}
+	
+	/**
+	 * 
+	 * @param _qur
+	 */
+	public void sortQueryWithModule(Query[] _qur) {
+	    int in, out;
+
+	    for (out = 1; out < _qur.length; out++) {
+	      Query temp = _qur[out]; // out is dividing line
+	      in = out; // start shifting at out
+
+	      while (in > 0 && // until smaller one found,
+	    		  _qur[in - 1].get_module().compareTo(temp.get_module())>0) {
+	    	  _qur[in] = _qur[in - 1]; // shift item to the right
+	        --in; // go left one position
+	      }
+	      _qur[in] = temp; // insert marked item
+	    }	    	    	  	 	    
+	}
+	
+	
 	/**
 	 * Lay Query tu queryid
 	 * @param _queryid
@@ -417,7 +455,19 @@ public class MainCommon {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param _qur
+	 */
+	public void logTimeQuery (Query[] _qur){
+		for (int i=0; i<_qur.length;i++){
+			logger.info(_qur[i].get_queryid()+"_"+_qur[i].get_querynm()+" P["+_qur[i].get_priority()+"]S["+_qur[i].get_status()+"] #"+_qur[i].get_times());
+		}
+	}
 	
+	/**
+	 * 
+	 */
 	public void logQueryServer(){
 		for (int i = 0; i<_queryser.length;i++){
 			logger.info("["+i+"]-------------------------------");
@@ -425,7 +475,9 @@ public class MainCommon {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public void logQueryCron(){
 		for (int i = 0; i<_querycron.length;i++){
 			logger.info("["+i+"]-------------------------------");
@@ -618,14 +670,33 @@ public class MainCommon {
 			}
 		}
 		
-		if (_count+1 == _query.length)
+		if (_count == _query.length)
 			_count = 1;
 		else
-			_count = 0;
-		
+			_count = 0;		
 		return _count;
 	}
 	
+	/**
+	 * 
+	 * @param _query
+	 * @return
+	 */
+	public int chekFinishFailQuery(Query[] _query){
+		//Co chay het chua
+		int _count = 0;
+		for (int i=0; i<_query.length;i++){		
+			if (_query[i].get_status().equals("7") || _query[i].get_status().equals("8")){
+				_count ++;			
+			}
+		}
+		
+		if (_count == _query.length)
+			_count = 1;
+		else
+			_count = 0;		
+		return _count;
+	}
 	
 	/**
 	 * 
