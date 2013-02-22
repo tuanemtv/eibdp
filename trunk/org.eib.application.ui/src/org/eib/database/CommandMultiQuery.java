@@ -51,7 +51,7 @@ public class CommandMultiQuery extends Thread{
         	//Bat dau chay set status = 1
         	query.set_status("1");
         	//System.out.println(" >>Run script= "+query.get_queryid()+", name="+query.get_querynm()+", status= "+query.get_status());
-        	
+        	logger.info("Run ["+query.get_queryid()+"] - "+query.get_querynm());
         	Date date1, date2;
     		DateFormat dateFormat, dateFormat2;
     		
