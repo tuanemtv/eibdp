@@ -1,5 +1,22 @@
 package org.eib.common;
 
+import java.util.Properties;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
 import org.apache.log4j.Logger;
 
 public class MailUtil {
@@ -14,6 +31,8 @@ public class MailUtil {
 	private String _bodyKind; //='0': Dang text, '1': Dang HTML
 	private String _fileUrl; //Duong dan luu file
 	private String _fileName; //Ten file co phan duoi
+	
+	
 	public String get_smtpServer() {
 		return _smtpServer;
 	}
@@ -70,6 +89,100 @@ public class MailUtil {
 	}
 	
 	
-	
+	public void sendMail() throws Exception
+	{
+		// java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+		Properties props = System.getProperties();
+		// –
+		props.put("mail.smtp.host", this._smtpServer);
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable","true");
+		final String login = this._frMail;//”nth001@gmail.com”;//usermail
+		final String pwd = this._passFrMail;//”password cua ban o day”;
+		
+		Authenticator pa = null; //default: no authentication
+			
+		if (login != null && pwd != null) { //authentication required?
+			props.put("mail.smtp.auth", "true");
+			pa = new Authenticator (){
+				public PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(login, pwd);
+				}
+			};
+		}//else: no authentication
+		
+		Session session = Session.getInstance(props, pa);
+		/*
+		// — Create a new message –
+		Message msg = new MimeMessage(session);
+		// — Set the FROM and TO fields –
+		msg.setFrom(new InternetAddress(from));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+		// — Set the subject and body text –
+		msg.setSubject(subject);
+		
+		//Neu muon dinh dang thi dung cai nay. Bo setText
+		//msg.setContent("<h1>This is actual message</h1>","text/html" );		
+		msg.setText(body);
+		
+		// — Set some other header information –
+		msg.setHeader("X-Mailer", "LOTONtechEmail");
+		msg.setSentDate(new Date());
+		msg.saveChanges();
+		
+		*/
+		
+		 // Create a default MimeMessage object.
+        MimeMessage msg = new MimeMessage(session);
+
+        // Set From: header field of the header.
+        msg.setFrom(new InternetAddress(this._frMail));
+
+        // Set To: header field of the header.
+        msg.addRecipient(Message.RecipientType.TO,new InternetAddress(this._toMail));
+
+        // Set Subject: header field
+        msg.setSubject(this._subject);
+
+        // Create the message part 
+        BodyPart messageBodyPart = new MimeBodyPart();
+
+        // Fill the message
+        if (this._bodyKind.equals("0")){ //text
+        	messageBodyPart.setText(this._ContMail);
+        }else{
+        	messageBodyPart.setContent(this._ContMail,"text/html");
+        }
+        //   
+        
+        // Create a multipar message
+        Multipart multipart = new MimeMultipart();
+
+        // Set text message part
+        multipart.addBodyPart(messageBodyPart);
+
+        // Part two is attachment
+        messageBodyPart = new MimeBodyPart();
+        
+        String filename = this._fileUrl;
+        
+        DataSource source = new FileDataSource(filename);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        
+        messageBodyPart.setFileName(this._fileName);
+        multipart.addBodyPart(messageBodyPart);
+
+        // Send the complete message parts
+        msg.setContent(multipart );        
+				
+		// — Send the message –
+		Transport.send(msg);
+		//logger.info("Message sent OK.");
+		//System.out.println("Message sent OK.");
+
+	}
+	public MailUtil() {
+		super();
+	}
 	
 }
