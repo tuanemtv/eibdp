@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<MailManager>
+	<Mail id='01'>
+		<id></id>
+		<smtpServer>smtp.gmail.com</smtpServer>
+		<toMail>tuanemtv@gmail.com</toMail>
+		<passFrMail>e9K6Sk3ufzHviaqPthgCfstRO+5IiP+w</passFrMail>
+		<frMail>tuanemtv.gogo@gmail.com</frMail>
+		<fileUrl>D:\\test.txt</fileUrl>
+	</Mail>	
+</MailManager>
+

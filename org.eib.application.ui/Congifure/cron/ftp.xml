@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<FTPManager>
+	<Ftp id='01'>
+		<ftpServer></ftpServer>
+		<user> </user>
+		<password> </password>
+		<filename> </filename>
+		<ftpurl> </ftpurl>
+		<inturl> </inturl>	
+	</Ftp>	
+</FTPManager>
