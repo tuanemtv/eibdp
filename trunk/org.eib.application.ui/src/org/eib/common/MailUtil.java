@@ -23,6 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -36,14 +37,22 @@ public class MailUtil {
 	
 	private String _id;	
 	private String _smtpServer;
-	private String _toMail;
-	private String _passFrMail;
 	private String _frMail; //Mat khau cua nguoi gui mail
+	private String _passFrMail;
+	private String[] _toMail;		
 	private String _subject; //Tieu de mail
 	private String _ContMail; //Noi dung trong mail
 	private String _bodyKind; //='0': Dang text, '1': Dang HTML
 	private String _fileUrl; //Duong dan luu file
 	private String _fileName; //Ten file co phan duoi
+	private int _cntArray;
+		
+	public int get_cntArray() {
+		return _cntArray;
+	}
+	public void set_cntArray(int _cntArray) {
+		this._cntArray = _cntArray;
+	}
 	
 	public String get_id() {
 		return _id;
@@ -57,11 +66,11 @@ public class MailUtil {
 	}
 	public void set_smtpServer(String _smtpServer) {
 		this._smtpServer = _smtpServer;
-	}
-	public String get_toMail() {
+	}	
+	public String[] get_toMail() {
 		return _toMail;
 	}
-	public void set_toMail(String _toMail) {
+	public void set_toMail(String[] _toMail) {
 		this._toMail = _toMail;
 	}
 	public String get_passFrMail() {
@@ -117,7 +126,11 @@ public class MailUtil {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.starttls.enable","true");
 		final String login = this._frMail;//”nth001@gmail.com”;//usermail
-		final String pwd = this._passFrMail;//”password cua ban o day”;
+		//final String pwd = this._passFrMail;//”password cua ban o day”;
+		
+		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+		textEncryptor.setPassword("smilesunny");
+		final String pwd = textEncryptor.decrypt(this._passFrMail);
 		
 		Authenticator pa = null; //default: no authentication
 			
@@ -158,8 +171,16 @@ public class MailUtil {
         msg.setFrom(new InternetAddress(this._frMail));
 
         // Set To: header field of the header.
+        /*
         msg.addRecipient(Message.RecipientType.TO,new InternetAddress(this._toMail));
-
+        msg.addRecipient(Message.RecipientType.TO,new InternetAddress("tuanemtv.java@gmail.com"));
+        msg.addRecipient(Message.RecipientType.TO,new InternetAddress("tuanemtv.web@gmail.com"));
+        */
+        if (this._toMail != null){
+        	for (int i=0; i<this._toMail.length; i++){
+        		msg.addRecipient(Message.RecipientType.TO,new InternetAddress(this._toMail[i]));
+        	}
+        }
         // Set Subject: header field
         msg.setSubject(this._subject);
 
@@ -183,7 +204,7 @@ public class MailUtil {
         // Part two is attachment
         messageBodyPart = new MimeBodyPart();
         
-        String filename = this._fileUrl;
+        String filename = this._fileUrl + this._fileName;
         
         DataSource source = new FileDataSource(filename);
         messageBodyPart.setDataHandler(new DataHandler(source));
@@ -196,17 +217,40 @@ public class MailUtil {
 				
 		// — Send the message –
 		Transport.send(msg);
-		//logger.info("Message sent OK.");
+		logger.info("Message sent OK.");
 		//System.out.println("Message sent OK.");
 
 	}
-	
 	
 	public MailUtil() {
 		super();
 	}
 	
-	public void getXMLToScript(String fileurl, MailUtil _mail[]) {
+	public MailUtil(String _filepath) {	
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(_filepath);
+			NodeList list = doc.getElementsByTagName("Mail");
+			this._cntArray = list.getLength();
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}	
+	}
+	
+	public void getXMLToMail(String fileurl, MailUtil _mail[]) {
 		File f = new File(fileurl);
 		 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
 		 DocumentBuilder db;
@@ -225,49 +269,51 @@ public class MailUtil {
 					 NodeList nodelist = element.getElementsByTagName("id");
 					 Element element1 = (Element) nodelist.item(0);
 					 NodeList fstNm = element1.getChildNodes();
-					 //_mail[i].set_id((fstNm.item(0)).getNodeValue());
+					 _mail[i].set_id((fstNm.item(0)).getNodeValue());
 									 
-					 nodelist = element.getElementsByTagName("driver");
+					 nodelist = element.getElementsByTagName("smtpServer");
 					 element1 = (Element) nodelist.item(0);
-					 fstNm = element1.getChildNodes();
-					 //this.driver = (fstNm.item(0)).getNodeValue();
-					 //_mail[i].setDriver((fstNm.item(0)).getNodeValue());
-					 //System.out.println("driver : " + (fstNm.item(0)).getNodeValue());
+					 fstNm = element1.getChildNodes();					 
+					 _mail[i].set_smtpServer((fstNm.item(0)).getNodeValue());
+					
+					 //System.out.println("(fstNm.item(0)).getNodeValue() : " + (fstNm.item(0)).getNodeValue());
 					 
-					 nodelist = element.getElementsByTagName("host");
+					 nodelist = element.getElementsByTagName("frMail");
 					 element1 = (Element) nodelist.item(0);
 					 fstNm = element1.getChildNodes();
-					 //this.host = (fstNm.item(0)).getNodeValue();
-					 //_mail[i].setHost((fstNm.item(0)).getNodeValue());
-					 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());
-					 				 
-					 nodelist = element.getElementsByTagName("port");
-					 element1 = (Element) nodelist.item(0);
-					 fstNm = element1.getChildNodes();
-					 //this.port = Integer.parseInt((fstNm.item(0)).getNodeValue());
-					 //_mail[i].setPort(Integer.parseInt((fstNm.item(0)).getNodeValue()));
+					 _mail[i].set_frMail((fstNm.item(0)).getNodeValue());
 					 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
 					 
-					 nodelist = element.getElementsByTagName("database");
+					 nodelist = element.getElementsByTagName("passFrMail");
 					 element1 = (Element) nodelist.item(0);
 					 fstNm = element1.getChildNodes();
-					 //this.database = (fstNm.item(0)).getNodeValue();
-					 //_mail[i].setDatabase((fstNm.item(0)).getNodeValue());
+					 _mail[i].set_passFrMail((fstNm.item(0)).getNodeValue());
+					 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());					 				 				
+					 
+					 NodeList qlist = doc.getElementsByTagName("toMail");
+					 _mail[i]._toMail = new String[qlist.getLength()];
+					 for (int j = 0; j < qlist.getLength(); j++) {	
+						 //_queryid[j] = new String();
+						 if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element qelement1 = (Element) qlist.item(j);
+							NodeList qfstNm = qelement1.getChildNodes();							
+							//System.out.println("ID : " +qelement1.getAttribute("id")+" Query : " + (qfstNm.item(0)).getNodeValue());
+							_mail[i]._toMail[j] = (qfstNm.item(0)).getNodeValue();//(qelement1.getAttribute("id"));
+						 }
+					 }
+					 
+					 /*
+					 nodelist = element.getElementsByTagName("toMail");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_toMail((fstNm.item(0)).getNodeValue());
 					//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
+					 */
 					 
-					 nodelist = element.getElementsByTagName("user");
+					 nodelist = element.getElementsByTagName("fileUrl");
 					 element1 = (Element) nodelist.item(0);
-					 fstNm = element1.getChildNodes();
-					 //this.user = (fstNm.item(0)).getNodeValue();
-					 //_mail[i].setUser((fstNm.item(0)).getNodeValue());
-					 //System.out.println("user : " + (fstNm.item(0)).getNodeValue());
-					 
-					 nodelist = element.getElementsByTagName("password");
-					 element1 = (Element) nodelist.item(0);
-					 fstNm = element1.getChildNodes();
-					 //this.password = (fstNm.item(0)).getNodeValue().trim();
-					 //_mail[i].setPassword((fstNm.item(0)).getNodeValue().trim());
-					 //System.out.println("password : " + (fstNm.item(0)).getNodeValue());				 
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_fileUrl((fstNm.item(0)).getNodeValue());					 				 
 				  }
 			  }	
 		} catch (ParserConfigurationException e) {
@@ -282,8 +328,33 @@ public class MailUtil {
 			// TODO Auto-generated catch block
 			logger.error(e.getMessage());	
 			e.printStackTrace();
-		}
-			
-	}
+		}			
+	}	
 	
+	public void log(){		
+		if (this.get_id() != null)
+			logger.info("id: "+this.get_id());
+		if (this.get_smtpServer() != null)
+			logger.info("_smtpServer: "+this.get_smtpServer());
+		if (this.get_frMail() != null)
+			logger.info("_frMail: "+this.get_frMail());
+		if (this.get_passFrMail() != null)
+			logger.info("_passFrMail: "+this.get_passFrMail());
+		
+		if (this.get_toMail() != null){
+			for (int l=0; l<this.get_toMail().length; l++)
+				logger.info("_toMail["+l+"]=" + this.get_toMail()[l]);
+		}
+		
+		if (this.get_subject() != null)
+			logger.info("_subject: "+this.get_subject());
+		if (this.get_ContMail() != null)
+			logger.info("_ContMail: "+this.get_ContMail());
+		if (this.get_bodyKind() != null)
+			logger.info("_bodyKind: "+this.get_bodyKind());
+		if (this.get_fileUrl() != null)
+			logger.info("_fileUrl: "+this.get_fileUrl());
+		if (this.get_fileName() != null)
+			logger.info("filename: "+this.get_fileName());
+	}
 }
