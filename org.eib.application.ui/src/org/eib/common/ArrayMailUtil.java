@@ -33,10 +33,17 @@ public class ArrayMailUtil {
 		super();
 		this._fileXMLUrl = _fileXMLUrl;
 		
-		QueryCron qurcron = new QueryCron(_fileXMLUrl+"cron.xml","Cron");
-		//this._querycron = new QueryCron[qurcron.get_countcron()];		
-		//qurcron.getXMLToCron(_fileXMLUrl+"cron.xml","Cron",this._querycron);												
+		MailUtil _mail = new MailUtil(_fileXMLUrl+"mail.xml");
+		this._mailUtil = new MailUtil[_mail.get_cntArray()];		
+		_mail.getXMLToMail(_fileXMLUrl+"mail.xml",this._mailUtil);												
 
+	}
+	
+	public void log(){
+		for (int i=0; i< _mailUtil.length; i++){
+			logger.info("i: "+i);
+			_mailUtil[i].log();
+		}
 	}
 	
 }
