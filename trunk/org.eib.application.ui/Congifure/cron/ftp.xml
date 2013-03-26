@@ -2,11 +2,21 @@
 
 <FTPManager>
 	<Ftp id='01'>
-		<ftpServer></ftpServer>
-		<user> </user>
-		<password> </password>
+		<id>ftp01</id>
+		<ftpServer>127.0.0.1</ftpServer>
+		<user>tuanemtv</user>
+		<password>123456</password>
 		<filename> </filename>
-		<ftpurl> </ftpurl>
-		<inturl> </inturl>	
+		<ftpurl>GG Tran\</ftpurl>
+		<inturl>D:\Query to Excel\Result\20120608\</inturl>	
+	</Ftp>
+	<Ftp id='xempc'>
+		<id>xempc</id>
+		<ftpServer>127.0.0.1</ftpServer>
+		<user>tuanemtv</user>
+		<password>123456</password>
+		<filename> </filename>
+		<ftpurl>GG Tran\</ftpurl>
+		<inturl>D:\Query to Excel\Result\20120608\</inturl>	
 	</Ftp>	
 </FTPManager>
