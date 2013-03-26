@@ -11,7 +11,7 @@ public class TestMailUtil {
 		// TODO Auto-generated method stub
 		MailUtil mail = new MailUtil();
 		mail.set_smtpServer("smtp.gmail.com");
-		mail.set_toMail("tuanemtv@gmail.com");
+		//mail.set_toMail("tuanemtv@gmail.com");
 		mail.set_frMail("tuanemtv.gogo@gmail.com");
 		mail.set_passFrMail("tuan1985em");
 		mail.set_subject("Tieu de mail");
