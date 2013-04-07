@@ -285,7 +285,10 @@ public class CommandMultiQuery extends Thread{
         		
         		//Tao file		
         		//book.write(new FileOutputStream(_app.get_outurl_excel(query.get_module(), query.get_startDate()+ " - "+query.get_querynm()+" _"+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s")));
-        		book.write(new FileOutputStream(_app.get_outurl_excel(query.get_module(), query.get_querynm()+" _"+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s")));
+        		FileOutputStream fileOut = new FileOutputStream(_app.get_outurl_excel(query.get_module(), query.get_querynm()+" _"+ String.valueOf(Math.abs(date2.getTime() - date1.getTime())/1000)+"s"));
+        		book.write(fileOut);
+        		fileOut.close();
+        		        		
             } else {
                 stmt.getUpdateCount();
             }  

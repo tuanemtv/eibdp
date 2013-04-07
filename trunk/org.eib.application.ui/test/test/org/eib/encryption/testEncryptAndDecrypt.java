@@ -13,7 +13,7 @@ public class testEncryptAndDecrypt {
 		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
 		textEncryptor.setPassword("smilesunny");
 		
-		String myEncryptedText = textEncryptor.encrypt("tuan1985em");
+		String myEncryptedText = textEncryptor.encrypt("123456");
 		
 		System.out.println("myEncryptedText= "+myEncryptedText);
 		

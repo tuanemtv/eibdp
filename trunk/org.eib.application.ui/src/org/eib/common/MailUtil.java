@@ -45,6 +45,7 @@ public class MailUtil {
 	private String _bodyKind; //='0': Dang text, '1': Dang HTML
 	private String _fileUrl; //Duong dan luu file
 	private String _fileName; //Ten file co phan duoi
+	private String _keyPass;
 	private int _cntArray;
 		
 	public int get_cntArray() {
@@ -54,6 +55,12 @@ public class MailUtil {
 		this._cntArray = _cntArray;
 	}
 	
+	public String get_keyPass() {
+		return _keyPass;
+	}
+	public void set_keyPass(String _keyPass) {
+		this._keyPass = _keyPass;
+	}
 	public String get_id() {
 		return _id;
 	}
@@ -121,19 +128,21 @@ public class MailUtil {
 	{
 		// java.security.Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		Properties props = System.getProperties();
-		// –
 		props.put("mail.smtp.host", this._smtpServer);
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.starttls.enable","true");
 		final String login = this._frMail;//”nth001@gmail.com”;//usermail
-		//final String pwd = this._passFrMail;//”password cua ban o day”;
+		final String pwd;
 		
-		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-		textEncryptor.setPassword("smilesunny");
-		final String pwd = textEncryptor.decrypt(this._passFrMail);
+		if ((this._keyPass == null) || (this._keyPass.trim().equals(""))){
+			pwd = this._passFrMail;//”password cua ban o day”;
+		}else{
+			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+			textEncryptor.setPassword(this._keyPass);
+			pwd = textEncryptor.decrypt(this._passFrMail);
+		}
 		
-		Authenticator pa = null; //default: no authentication
-			
+		Authenticator pa = null; //default: no authentication			
 		if (login != null && pwd != null) { //authentication required?
 			props.put("mail.smtp.auth", "true");
 			pa = new Authenticator (){

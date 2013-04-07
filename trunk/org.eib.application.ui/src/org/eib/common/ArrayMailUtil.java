@@ -46,4 +46,20 @@ public class ArrayMailUtil {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param _mailID
+	 * @return
+	 */
+	public MailUtil getMailFromID(String _mailID){
+		MailUtil _mail = new MailUtil();
+		
+		for (int i = 0; i<this._mailUtil.length;i++){
+			if (_mailUtil[i].get_id().equals(_mailID)){
+				_mail = _mailUtil[i];				
+			}
+		}		
+		return _mail;
+	}
+	
 }

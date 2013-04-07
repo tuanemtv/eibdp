@@ -30,9 +30,35 @@ public class ArrayFTPUtil {
 		super();
 		this._fileXMLUrl = _fileXMLUrl;
 		
-		QueryCron qurcron = new QueryCron(_fileXMLUrl+"cron.xml","Cron");
-		//this._querycron = new QueryCron[qurcron.get_countcron()];		
-		//qurcron.getXMLToCron(_fileXMLUrl+"cron.xml","Cron",this._querycron);												
+		FTPUtil _ftp = new FTPUtil(_fileXMLUrl+"ftp.xml");
+		this._ftpUtil = new FTPUtil[_ftp.get_cntArray()];		
+		_ftp.getXMLToFTP(_fileXMLUrl+"ftp.xml",this._ftpUtil);											
 
 	}
+	
+	/**
+	 * 
+	 * @param _ftpID
+	 * @return
+	 */
+	public FTPUtil getFTPFromID(String _ftpID){
+		FTPUtil _ftp = new FTPUtil();
+		
+		for (int i = 0; i<this._ftpUtil.length;i++){
+			if (_ftpUtil[i].get_id().equals(_ftpID)){
+				_ftp = _ftpUtil[i];				
+			}
+		}		
+		//queryser.logQueryServer();
+		return _ftp;
+	}
+	
+	
+	public void log(){
+		for (int i=0; i< _ftpUtil.length; i++){
+			logger.info("i: "+i);
+			_ftpUtil[i].log();
+		}
+	}
+	
 }

@@ -4,7 +4,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
  
  
-class Processor implements Runnable {
+//class Processor implements Runnable {
+class Processor	extends Thread{
      
     private int id;
      
@@ -16,12 +17,12 @@ class Processor implements Runnable {
         System.out.println("Starting: " + id);
          
         try {
-            //Thread.sleep(5000);
-        	Thread.sleep(1000);
+            Thread.sleep(5000);
+        	//Thread.sleep(1000);
         } catch (InterruptedException e) {
         }
          
-        System.out.println("Completed: " + id);
+        System.out.println("--> Completed: " + id);
     }
 }
 
@@ -32,7 +33,7 @@ public class Test1 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+		ExecutorService executor = Executors.newFixedThreadPool(4);
         
         for(int i=0; i<5; i++) {
             executor.submit(new Processor(i));

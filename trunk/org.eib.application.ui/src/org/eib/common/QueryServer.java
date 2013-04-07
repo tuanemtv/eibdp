@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 import org.eib.database.JDBCURLHelper;
 import org.eib.database.Query;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -375,7 +376,14 @@ public class QueryServer {
 		this.setUrl(JDBCURLHelper.generateURL(this.getDriver(), this.getHost(), this.getPort(), this.getDatabase()));
 		try {						
 			Class.forName(this.getDriver()).newInstance();
-			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPassword());	
+			
+			//Gian nen
+			String _pass="";
+			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+			textEncryptor.setPassword("smilesunny");
+			_pass =textEncryptor.decrypt(this.getPassword());
+			
+			_conn = DriverManager.getConnection(this.getUrl(), this.getUser(), _pass);	
 			
 			logger.info("Connect "+this.get_id()+" Database Successful");
         } catch (Exception e2) {
