@@ -31,9 +31,12 @@ import org.eclipse.swt.widgets.Composite;
 
 import org.eclipse.ui.part.ViewPart;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eib.common.FolderUtil;
@@ -54,6 +57,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.jface.viewers.TableViewer;
 
 public class AllScriptView extends ViewPart {
 
@@ -80,6 +84,8 @@ public class AllScriptView extends ViewPart {
 	private Scheduler scheduler;
 	private Button btnShow;
 	private List listShow;
+	private Table table;
+
 	
 	public AllScriptView() {
 	}
@@ -91,7 +97,7 @@ public class AllScriptView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
-		container.setLayout(null);
+		container.setLayout(null);		
 		
 		Label lblDatabase = new Label(container, SWT.NONE);
 		lblDatabase.setBounds(10, 10, 48, 15);
@@ -114,7 +120,7 @@ public class AllScriptView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			
-				logger.info("numScript= "+numScript);
+				//logger.info("numScript= "+numScript);
 				if (numScript ==0){ //Chua thuc hien					
 					
 					ResourceBundle rb = ResourceBundle.getBundle("/resource/app");				
@@ -164,24 +170,36 @@ public class AllScriptView extends ViewPart {
 			        _qur = main.getQueryFromID(cboDefine.getText()); //DEF002: Ngay he thong, DEF003 test
 			        _qur.queryToAppDefine(main.get_appcommon(), _qurser);        
 			        //main.get_appcommon().logAppCommon();
-			        											
+			        
+			        //show ra cac script
+			        for(int k=0; k<main.get_query().length;k++){
+			        	logger.info("["+k+"]="+main.get_query()[k].get_queryid()+" - "+main.get_query()[k].get_querynm());
+			        }
+			        
 					//Sort lai query theo thu tu uu tien
 					main.sortQueryWithPriority();				
 	
+					
 			        //set cac thong tin cua Query
 			        for (int j=0; j<main.get_query().length;j++)
-			        {        	
-			        	main.get_query()[j].set_querynm(main.get_appcommon().get_define().get("01h_trdt")+"_"+main.get_query()[j].get_querynm());
-			        	main.get_query()[j].set_fileurl(main.get_appcommon().get_scriptUrl()+main.get_query()[j].get_fileurl());
-			    		//doc file
-			        	main.get_query()[j].readScript();    	
-			    		//this.logQuery();
-			        	main.get_query()[j].set_define(main.get_appcommon().get_define());
-			        	main.get_query()[j].setquery();        	
-			        	//main.get_query()[j].logQuery();
+			        {        
+			        	if (main.get_query()[j].get_module().equals("AA")){
+			        		
+			        	}else{
+			        		main.get_query()[j].set_querynm(main.get_appcommon().get_define().get("01h_trdt")+"_"+main.get_query()[j].get_querynm());
+				        	main.get_query()[j].set_fileurl(main.get_appcommon().get_scriptUrl()+main.get_query()[j].get_fileurl());
+				    		//doc file
+				        	main.get_query()[j].readScript();    	
+				    		//this.logQuery();
+				        	main.get_query()[j].set_define(main.get_appcommon().get_define());
+				        	main.get_query()[j].setquery();        	
+				        	//main.get_query()[j].logQuery();
+			        	}			        	
 			        }        
 			        
 			       // main.logQuery();
+			        
+			       
 			        
 			        //Thoi gian bat dau			        
 			       	_dateFormat1 = new SimpleDateFormat("yyyyMMdd_HHmmss");	        	
@@ -209,34 +227,47 @@ public class AllScriptView extends ViewPart {
 						protected IStatus run(IProgressMonitor monitor) {
 							// Set total number of work units
 							monitor.beginTask("Total script: "+(_runQuery.length), _runQuery.length);
-							//for (int i = 0; i < main.get_query().length; i++) {
-							
-							monitor.worked(_runQuery.length/2);
-							// Sleep a second
-							//TimeUnit.SECONDS.sleep(1);	
-							//while((numScript + 1) != main.get_query().length){
-							while (main.chekFinishQuery(_runQuery) != 1){
-								//logger.info("numScript = "+numScript);
-								monitor.subTask(" Run scriptID: " + (numScript+1)+ " with name= "+_runQuery[numScript].get_querynm());				     
-								// Report that 20 units are done
-								//if (numScript>2)
-									//monitor.worked(numScript);									
-								//monitor.worked(20);
-								//txtCnt.setText(String.valueOf(numScript));
-							}
-							
-							//Doi 2s
 							try {
-								Thread.sleep(3000);//3s
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							
-							showResult();
-							monitor.done();
-							return Status.OK_STATUS;
-					  }
+								//for (int i = 0; i < main.get_query().length; i++) {
+								
+								//monitor.worked(_runQuery.length/2);
+								// Sleep a second
+								//TimeUnit.SECONDS.sleep(1);	
+								//while((numScript + 1) != main.get_query().length){
+								monitor.worked(numScript);
+								//for (int i=0; i<1000;i++){
+								while (main.chekFinishQuery(_runQuery) != 1){
+								//while (numScript != _runQuery.length){
+									//logger.info("numScript = "+numScript);
+									monitor.subTask(" Run scriptID: " + (numScript+1)+ " with name= "+_runQuery[numScript].get_querynm());				     
+									// Report that 20 units are done
+									//if (numScript>2)
+									/*
+									try {
+										Thread.sleep(2000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}*/
+									monitor.internalWorked(numScript);									
+									//monitor.worked(1);
+									//txtCnt.setText(String.valueOf(numScript));
+								}
+								//monitor.subTask(" Run scriptID: " + (numScript+1)+ " with name= "+_runQuery[numScript].get_querynm());	
+								//monitor.worked(1);
+								//Doi 2s
+								try {
+									Thread.sleep(3000);//3s
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} finally {
+						         monitor.done();						        
+						    }
+							showResult();							
+							return Status.OK_STATUS;							
+						}
 					 };
 					job.schedule();
 					
@@ -331,7 +362,7 @@ public class AllScriptView extends ViewPart {
 				}			
 			}
 		});
-		btnStart.setBounds(10, 377, 75, 25);
+		btnStart.setBounds(10, 293, 75, 25);
 		btnStart.setText("Start");
 		
 		btnShutdown = new Button(container, SWT.NONE);
@@ -349,7 +380,7 @@ public class AllScriptView extends ViewPart {
 				}
 			}
 		});
-		btnShutdown.setBounds(87, 377, 75, 25);
+		btnShutdown.setBounds(91, 293, 75, 25);
 		btnShutdown.setText("Shutdown");
 		
 		btnShow = new Button(container, SWT.NONE);
@@ -358,8 +389,33 @@ public class AllScriptView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				listShow.removeAll();
 				String[] show = main.getStatusQuery(_runQuery);
-				for (int i=0; i <show.length; i++)
+				for (int i=0; i <show.length; i++){
 					listShow.add(show[i]);
+					//table.setT
+					
+				}
+				
+				//Table
+				table.removeAll();
+				//Tao ten cot
+				String[] titles = { "No", "Query Name"};
+				
+				for (int i = 0; i < titles.length; i++) {
+					TableColumn column = new TableColumn(table, SWT.NONE);
+					column.setText(titles[i]);
+				}
+			    
+			    //add du lieu
+			    for (int i=0; i <show.length; i++){
+			    	TableItem item = new TableItem(table, SWT.NONE);
+				     item.setText(0, String.valueOf(i+1));
+				     item.setText(1, show[i]);
+			    }
+			      
+			    
+			    for (int i = 0; i < 2; i++) {
+				      table.getColumn(i).pack();
+				}
 			}
 		});
 		
@@ -368,8 +424,76 @@ public class AllScriptView extends ViewPart {
 		btnShow.setText("Show");
 		
 		listShow = new List(container, SWT.BORDER);
-		listShow.setBounds(10, 131, 253, 240);
-
+		listShow.setBounds(10, 131, 253, 156);
+		
+		Button btnNewButton = new Button(container, SWT.NONE);
+		btnNewButton.addSelectionListener(new SelectionAdapter() {			
+			
+				public void widgetSelected(SelectionEvent e) {
+					Job job1 = new Job("Run All Scripts") {
+						@Override
+						
+						
+					public IStatus run(IProgressMonitor monitor) {
+					      //final int ticks = 6000;
+					      //monitor.beginTask("Doing some work", ticks);
+					      
+							 try {
+									Thread.sleep(5000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+					      try {
+					    	 /* 
+					         //for (int i = 0; i < ticks; i++) {
+					        	 try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+					            if (monitor.isCanceled())
+					               return Status.CANCEL_STATUS;
+					            //monitor.subTask("Processing tick #" + i);
+					            //... do some work ...
+					            monitor.worked(3000);
+					            
+					            try {
+									Thread.sleep(5000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+					         //}*/
+					    	  /*
+					    	  Display.getDefault().asyncExec(new Runnable() {
+					    	      @Override
+					    	      public void run() {
+					    	        // Do something in the user interface
+					    	        // e.g. set a text field123
+					    	    	
+					    	      }
+					    	    });*/
+					      } finally {
+					         monitor.done();
+					      }
+					      return Status.OK_STATUS;
+					   }
+					};
+					job1.schedule();
+				}
+			 
+		});
+		btnNewButton.setBounds(170, 293, 75, 25);
+		btnNewButton.setText("New Button");
+		
+		table = new Table(container, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setBounds(10, 324, 253, 134);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		
+		
 		createActions();
 		initializeToolBar();
 		initializeMenu();
@@ -439,8 +563,7 @@ public class AllScriptView extends ViewPart {
  		            	   
  		            	   logger.info(">> Run " + num+" = "+_runQuery[l].get_querynm());
  		            	   //txtCnt.setText(String.valueOf(num + 1));
- 		            	   runScript();
- 		            	  		 		            	  
+ 		            	   runScript(); 		            	  		 		            	 
                     	}
                     }		                                        
                     available.release();
@@ -475,13 +598,15 @@ public class AllScriptView extends ViewPart {
         logger.info("");
         logger.info("Chi tiet Thoi gian -------------------");
         main.logQuerySumReport(_runQuery);
-        main.logQuerySumReport(_runQuery,"DP");
-        main.logQuerySumReport(_runQuery,"LN");
-        main.logQuerySumReport(_runQuery,"GL");
-        main.logQuerySumReport(_runQuery,"TF");
-        main.logQuerySumReport(_runQuery,"DL");
-        main.logQuerySumReport(_runQuery,"EI");
         main.logQuerySumReport(_runQuery,"CS");
+        main.logQuerySumReport(_runQuery,"DL");                        
+        main.logQuerySumReport(_runQuery,"DP");
+        main.logQuerySumReport(_runQuery,"EI");
+        main.logQuerySumReport(_runQuery,"FX");
+        main.logQuerySumReport(_runQuery,"GL");
+        main.logQuerySumReport(_runQuery,"LN");
+        main.logQuerySumReport(_runQuery,"LR");
+        main.logQuerySumReport(_runQuery,"TF");     
         logger.info("");
         logger.info("Chi tiet Script -------------------");
         main.logShowScript(_runQuery);               

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.eib.common.FolderUtil;
 import org.eib.common.MainCommon;
 import org.eib.common.QueryServer;
+import org.eib.database.CommandMultiFailQuery;
 import org.eib.database.CommandMultiQuery;
 import org.eib.database.Query;
 import org.quartz.Job;
@@ -24,6 +25,9 @@ public class QueryToExcelJob implements Job{
 	private String _databaseID;
 	private MainCommon main;
 	private Query[] _runQuery;
+	private Query[] _runFailQuery;
+		
+	
 	private Query _query;
 	private Date _date1, _date2;
 	private DateFormat _dateFormat1, _dateFormat2;
@@ -74,15 +78,19 @@ public class QueryToExcelJob implements Job{
 		
 		//set cac thong tin cua Query
         for (int j=0; j<main.get_query().length;j++)
-        {        	
-        	main.get_query()[j].set_querynm(main.get_appcommon().get_define().get("01h_trdt")+"_"+main.get_query()[j].get_querynm());
-        	main.get_query()[j].set_fileurl(main.get_appcommon().get_scriptUrl()+main.get_query()[j].get_fileurl());
-    		//doc file
-        	main.get_query()[j].readScript();    	
-    		//this.logQuery();
-        	main.get_query()[j].set_define(main.get_appcommon().get_define());
-        	main.get_query()[j].setquery();        	
-        	//main.get_query()[j].logQuery();
+        {        
+        	if (main.get_query()[j].get_module().equals("AA")){
+        		
+        	}else{
+	        	main.get_query()[j].set_querynm(main.get_appcommon().get_define().get("01h_trdt")+"_"+main.get_query()[j].get_querynm());
+	        	main.get_query()[j].set_fileurl(main.get_appcommon().get_scriptUrl()+main.get_query()[j].get_fileurl());
+	    		//doc file
+	        	main.get_query()[j].readScript();    	
+	    		//this.logQuery();
+	        	main.get_query()[j].set_define(main.get_appcommon().get_define());
+	        	main.get_query()[j].setquery();        	
+	        	//main.get_query()[j].logQuery();
+        	}
         } 
         
             	
@@ -130,7 +138,7 @@ public class QueryToExcelJob implements Job{
                     	_dateFormat2 = new SimpleDateFormat("yyyyMMdd_HHmmss");	
                         _date2= new Date();
                         
-                        Thread.sleep(30000);//30s
+                        //Thread.sleep(30000);//30s
                         
                         logger.info("");
                         logger.info("Thoi gian chay -------------------");
@@ -141,16 +149,32 @@ public class QueryToExcelJob implements Job{
                         logger.info("");
                         logger.info("Chi tiet Thoi gian -------------------");
                         main.logQuerySumReport(_runQuery);
-                        main.logQuerySumReport(_runQuery,"DP");
-                        main.logQuerySumReport(_runQuery,"LN");
-                        main.logQuerySumReport(_runQuery,"GL");
-                        main.logQuerySumReport(_runQuery,"TF");
-                        main.logQuerySumReport(_runQuery,"DL");
-                        main.logQuerySumReport(_runQuery,"EI");
                         main.logQuerySumReport(_runQuery,"CS");
+                        main.logQuerySumReport(_runQuery,"DL");                        
+                        main.logQuerySumReport(_runQuery,"DP");
+                        main.logQuerySumReport(_runQuery,"EI");
+                        main.logQuerySumReport(_runQuery,"FX");
+                        main.logQuerySumReport(_runQuery,"GL");
+                        main.logQuerySumReport(_runQuery,"LN");
+                        main.logQuerySumReport(_runQuery,"LR");
+                        main.logQuerySumReport(_runQuery,"TF");                                                                        
                         logger.info("");
                         logger.info("Chi tiet Script -------------------");
-                        main.logShowScript(_runQuery);   
+                        main.sortQueryWithModule(_runQuery);
+                        main.logTimeQuery(_runQuery);
+                        //main.logShowScript(_runQuery);   
+                        
+                        //Chay lai neu bi fail
+                        if ( main.coutRunFailQuery(_runQuery)>0) {
+                        	 logger.info("");
+                             logger.info("Run script fail -------------------");
+                        	_runFailQuery =new Query[main.coutRunFailQuery(_runQuery)];
+                        	_runFailQuery =  main.getRunFailQuery(_runQuery);
+                        	
+                        	 main.sortQueryWithModule(_runFailQuery);
+                             main.logTimeQuery(_runFailQuery);
+                        	 runFailScript();
+                        }
                         
                         return;
 					}
@@ -170,5 +194,86 @@ public class QueryToExcelJob implements Job{
 		
                 
 		
+	}
+	
+	
+	public void runFailScript(){
+		
+		Runnable limitedFailCall = new Runnable() {		
+            final Semaphore failavailable = new Semaphore(1); //main.get_appcommon().get_scriptnums()
+            int count = 0;	
+            
+            public void run()
+            {               
+                int num = count++; //Dung cho mang		                
+                try
+                {
+                	failavailable.acquire();                    
+                    for (int l=0; l<_runFailQuery.length;l++){
+                    	if (l == num){
+                    	   //numScript = num;
+                    		  
+                    	   QueryServer _qurser = new QueryServer();						
+ 		            	  _qurser = main.getQueryServerFromID(_databaseID);
+ 		            	  //_qurser.connectDatabase();
+ 		            	  
+ 		            	  _query = new Query();
+ 		            	  _query = _runFailQuery[l];
+ 		            	   
+ 		            	   logger.info(">> Run Fail: " + num+" = "+_runFailQuery[l].get_querynm());
+ 		            	   //txtCnt.setText(String.valueOf(num + 1));
+ 		            	   
+ 		            	   CommandMultiFailQuery cq1 = new CommandMultiFailQuery(_qurser,_query,main.get_appcommon());
+ 		            	   cq1.run(); 		            	  		 		            	  
+                    	}
+                    }
+                    
+                    
+                    //Kiem khi nao xong
+                    
+                    while (main.chekFinishFailQuery(_runFailQuery) == 1){
+                    	_dateFormat2 = new SimpleDateFormat("yyyyMMdd_HHmmss");	
+                        _date2= new Date();
+                        
+                        //Thread.sleep(30000);//30s
+                        
+                        logger.info("");
+                        logger.info("Thoi gian chay -------------------");
+                        logger.info("Bat dau : " +_dateFormat1.format(_date1));
+                        logger.info("Ket thuc: " +_dateFormat2.format(_date2));
+                        logger.info("Tong tg : " + String.valueOf(Math.abs(_date2.getTime() - _date1.getTime())/1000)+"s");
+                        //Thong tin
+                        logger.info("");
+                        logger.info("Chi tiet Thoi gian -------------------");
+                        main.logQuerySumReport(_runFailQuery);
+                        main.logQuerySumReport(_runFailQuery,"CS");
+                        main.logQuerySumReport(_runFailQuery,"DL");                        
+                        main.logQuerySumReport(_runFailQuery,"DP");
+                        main.logQuerySumReport(_runFailQuery,"EI");
+                        main.logQuerySumReport(_runFailQuery,"FX");
+                        main.logQuerySumReport(_runFailQuery,"GL");
+                        main.logQuerySumReport(_runFailQuery,"LN");
+                        main.logQuerySumReport(_runFailQuery,"LR");
+                        main.logQuerySumReport(_runFailQuery,"TF");                                                                        
+                        logger.info("");
+                        logger.info("Chi tiet Script -------------------");
+                        //main.logShowScript(_runFailQuery);
+                        main.sortQueryWithModule(_runFailQuery);
+                        main.logTimeQuery(_runFailQuery);
+                                                                       
+                        return;
+					}
+                    
+                    failavailable.release();
+                }
+                catch (InterruptedException intEx)
+                {
+                    intEx.printStackTrace();
+                }
+            }		            		           
+        };
+        
+        for (int i=0; i<_runFailQuery.length; i++)
+            new Thread(limitedFailCall).start();
 	}
 }
