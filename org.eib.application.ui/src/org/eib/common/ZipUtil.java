@@ -1,10 +1,12 @@
 package org.eib.common;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -42,6 +44,27 @@ public class ZipUtil {
 		//System.out.println("> Zip Done.");
 	}
 	
+	/**
+	 * 
+	 * @param _rarUrl
+	 * @param _fileNameUrl
+	 * @param _folderUrl
+	 */
+	public static void createRARFolder(String _rarUrl, String _fileNameUrl, String _folderUrl){
+		try {
+			Process pros = Runtime.getRuntime().exec(new String[]{_rarUrl, "a","-r",_fileNameUrl,_folderUrl});
+			/*BufferedReader in = new BufferedReader(new InputStreamReader(pros.getInputStream()));
+			
+			String inputLine;
+			while ((inputLine = in.readLine()) != null) 
+			logger.info(inputLine);
+			in.close();
+        */
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public static void creatZipFoler(String _folderurl, String _outUrl, String _fileName){
 		File directoryToZip = new File(_folderurl);

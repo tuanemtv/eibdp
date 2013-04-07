@@ -6,7 +6,7 @@ public class ArrayCronUtil {
 	
 	private static Logger logger =Logger.getLogger("ArrayCronUtil");
 	
-	private String _fileXMLUrl; //Duong dan cua file cron.xmlhyb 
+	private String _fileXMLUrl; //Duong dan cua file cron.xml
 	private QueryCron[] _querycron;
 	
 	public String get_fileXMLUrl() {		

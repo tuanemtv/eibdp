@@ -34,6 +34,9 @@ public class QueryCron {
 	private String _databaseID;
 	private String _defineScript;
 	private int _countcron;
+	private String _ftpID;
+	private String _mailID;
+	private String _folderUrl;
 	private String[] _queryid;
 	
 	
@@ -103,8 +106,25 @@ public class QueryCron {
 	public void set_defineScript(String _defineScript) {
 		this._defineScript = _defineScript;
 	}
-	
-	
+		
+	public String get_ftpID() {
+		return _ftpID;
+	}
+	public void set_ftpID(String _ftpID) {
+		this._ftpID = _ftpID;
+	}
+	public String get_mailID() {
+		return _mailID;
+	}
+	public void set_mailID(String _mailID) {
+		this._mailID = _mailID;
+	}
+	public String get_folderUrl() {
+		return _folderUrl;
+	}
+	public void set_folderUrl(String _folderUrl) {
+		this._folderUrl = _folderUrl;
+	}
 	public QueryCron() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -228,6 +248,21 @@ public class QueryCron {
 					 for (int k = 0; k < _querycron[i]._queryid.length; k++) {						
 						 logger.info("k["+k+"]= "+_querycron[i]._queryid[k]);
 					 }*/
+					 
+					 nodelist = element.getElementsByTagName("ftpID");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_ftpID((fstNm.item(0)).getNodeValue());	
+					 
+					 nodelist = element.getElementsByTagName("mailID");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_mailID((fstNm.item(0)).getNodeValue());	
+					 
+					 nodelist = element.getElementsByTagName("folderUrl");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_folderUrl((fstNm.item(0)).getNodeValue());	
 				  }
 			  }
 		} catch (ParserConfigurationException e) {
@@ -263,8 +298,15 @@ public class QueryCron {
 			logger.info("_triggerGroup: "+this.get_triggerGroup());
 		if (this.get_databaseID() != null)
 			logger.info("_databaseID: "+this.get_databaseID());
+		if (this.get_ftpID() != null)
+			logger.info("_ftpID: "+this.get_ftpID());
+		if (this.get_mailID() != null)
+			logger.info("_mailID: "+this.get_mailID());
+		if (this.get_folderUrl() != null)
+			logger.info("_folderUrl: "+this.get_folderUrl());
 		if (this.get_defineScript() != null)
 			logger.info("_defineScript: "+this.get_defineScript());
+		
 		
 		/*
 		if (_queryid.length != null){

@@ -10,14 +10,25 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
+import org.jasypt.util.text.BasicTextEncryptor;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class FTPUtil {
 	
 	private static Logger logger =Logger.getLogger("FTPUtil");
-	
+	private int _cntArray;
+	private String _id;	
 	private String _ftpServer;
 	private String _user;
 	private String _password;
@@ -26,6 +37,20 @@ public class FTPUtil {
 	private String _inturl;
 	private int _port = 21;
 	
+		
+	public int get_cntArray() {
+		return _cntArray;
+	}
+	public void set_cntArray(int _cntArray) {
+		this._cntArray = _cntArray;
+	}
+	
+	public String get_id() {
+		return _id;
+	}
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 	public int get_port() {
 		return _port;
 	}
@@ -69,6 +94,33 @@ public class FTPUtil {
 		this._inturl = _inturl;
 	}
 	
+	public FTPUtil(){		
+		super();
+	}
+	
+	public FTPUtil(String _filepath) {	
+		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder;
+		try {
+			docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.parse(_filepath);
+			NodeList list = doc.getElementsByTagName("Ftp");
+			this._cntArray = list.getLength();
+			
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}	
+	}
 	
 	 public void sendUpload() {
 		 //String ftpServer="127.0.0.1";
@@ -81,7 +133,13 @@ public class FTPUtil {
 		
 		try {
 			//upload(this._ftpServer,this._user,this._password,fileName,source);
-			upload(this._ftpServer,this._user,this._password,this._ftpurl+this._filename,source);
+			//Giai ma pass
+			String _pass="";
+			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+			textEncryptor.setPassword("smilesunny");
+			_pass =textEncryptor.decrypt(this._password);
+			
+			upload(this._ftpServer,this._user,_pass,this._ftpurl+this._filename,source);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +168,12 @@ public class FTPUtil {
 	         String fileName, File source ) throws MalformedURLException,
 	         IOException
 	   {
+		
+		   //Giai ma
+			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+			textEncryptor.setPassword("smilesunny");
+			password =textEncryptor.decrypt(password);
+			
 	      if (ftpServer != null && fileName != null && source != null)
 	      {
 	         StringBuffer sb = new StringBuffer( "ftp://" );
@@ -197,6 +261,11 @@ public class FTPUtil {
 	         String fileName, File destination ) throws MalformedURLException,
 	         IOException
 	   {
+		   //Giai ma
+			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+			textEncryptor.setPassword("smilesunny");
+			password =textEncryptor.decrypt(password);
+			
 	      if (ftpServer != null && fileName != null && destination != null)
 	      {
 	         StringBuffer sb = new StringBuffer( "ftp://" );
@@ -279,7 +348,13 @@ public class FTPUtil {
 	                return;
 	            }
 	            
-	            boolean success = ftpClient.login(this._user, this._password);
+	            //Giai nen
+	            String _pass="";
+	    		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+	    		textEncryptor.setPassword("smilesunny");
+	    		_pass =textEncryptor.decrypt(this._password);
+	    		
+	            boolean success = ftpClient.login(this._user, _pass);
 	            //showServerReply(ftpClient);
 	            if (!success) {
 	            	logger.info("Could not login to the server");
@@ -314,4 +389,91 @@ public class FTPUtil {
 	            }
 	        }
 	    }
+	   
+	   public void log(){
+			if (this.get_ftpServer() != null)
+				logger.info("_ftpServer: "+this.get_ftpServer());
+			if (this.get_user() != null)
+				logger.info("_user: "+this.get_user());
+			if (this.get_password() != null)
+				logger.info("_password: "+this.get_password());
+			if (this.get_filename() != null)
+				logger.info("_filename: "+this.get_filename());
+			if (this.get_ftpurl() != null)
+				logger.info("_ftpurl: "+this.get_ftpurl());
+			if (this.get_inturl() != null)
+				logger.info("_inturl: "+this.get_inturl());			
+	   }
+	   
+	   public void getXMLToFTP(String fileurl, FTPUtil _ftp[]) {
+			File f = new File(fileurl);
+			 DocumentBuilderFactory dbf =  DocumentBuilderFactory.newInstance();
+			 DocumentBuilder db;
+			try {
+				db = dbf.newDocumentBuilder();
+				 Document doc = db.parse(f);
+
+				  //Element root = doc.getDocumentElement();		  
+				  NodeList list = doc.getElementsByTagName("Ftp");
+				  for (int i = 0; i < list.getLength(); i++) {
+					  _ftp[i] = new FTPUtil();	
+					  Node node = list.item(i);			  
+					  if (node.getNodeType() == Node.ELEMENT_NODE) {
+						 Element element = (Element) node;
+						 
+						 NodeList nodelist = element.getElementsByTagName("id");
+						 Element element1 = (Element) nodelist.item(0);
+						 NodeList fstNm = element1.getChildNodes();
+						 _ftp[i].set_id((fstNm.item(0)).getNodeValue());
+										 
+						 nodelist = element.getElementsByTagName("ftpServer");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();					 
+						 _ftp[i].set_ftpServer((fstNm.item(0)).getNodeValue());
+						
+						 //System.out.println("(fstNm.item(0)).getNodeValue() : " + (fstNm.item(0)).getNodeValue());
+						 
+						 nodelist = element.getElementsByTagName("user");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();
+						 _ftp[i].set_user((fstNm.item(0)).getNodeValue());
+						 //System.out.println("port : " + (fstNm.item(0)).getNodeValue());
+						 
+						 nodelist = element.getElementsByTagName("password");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();
+						 _ftp[i].set_password((fstNm.item(0)).getNodeValue());
+						 //System.out.println("host : " + (fstNm.item(0)).getNodeValue());					 				 				
+						 
+						 nodelist = element.getElementsByTagName("filename");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();
+						 _ftp[i].set_filename((fstNm.item(0)).getNodeValue());
+						 						
+						 nodelist = element.getElementsByTagName("ftpurl");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();				
+						 _ftp[i].set_ftpurl((fstNm.item(0)).getNodeValue());
+						 
+						 nodelist = element.getElementsByTagName("inturl");
+						 element1 = (Element) nodelist.item(0);
+						 fstNm = element1.getChildNodes();				
+						 _ftp[i].set_inturl((fstNm.item(0)).getNodeValue());	
+					  }
+				  }	
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				logger.error(e.getMessage());	
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				logger.error(e.getMessage());	
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				logger.error(e.getMessage());	
+				e.printStackTrace();
+			}			
+		}	
+		
 }

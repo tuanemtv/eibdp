@@ -13,7 +13,7 @@ public class GetFileList {
 	public static void main(String args[]){
 		 //File file = new File("D:\\20090610_SVN Client\\Local Project\\Script\\DP\\");  
 
-		 File file = new File("K:\\Temp\\1LN\\"); //LN
+		 File file = new File("D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\GG  Report to Excel\\Script\\6h00Report\\"); //LN
 		
 		 //File file = new File("D:\\FTP Server Url\\dp\\src\\dpsa\\");
 
@@ -48,9 +48,10 @@ public class GetFileList {
 			*/ 
 
 			 //System.out.println(files[fileInList].toString() + "thuoc tinh: ");  
-
-			 System.out.println(files[fileInList].toString());  
-
+			 System.out.println("No: "+Integer.valueOf(files[fileInList].getName().substring(0, 3)));
+			 System.out.println("Name: "+files[fileInList].getName().substring(4,files[fileInList].getName().length()-4));//Bo 001_ va .sql
+			 System.out.println("Url: "+files[fileInList].toString());  
+			// System.out.println(files[fileInList].getName());
 			 
 		 }  
 	}
