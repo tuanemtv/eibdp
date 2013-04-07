@@ -5,7 +5,7 @@
 		<inurl>D:\</inurl>
 		<outurl>D:\Query Result\</outurl>  <!--D:\Query Result\  -->
 		<excelrows>65000</excelrows>
-		<scriptnums>3</scriptnums> <!-- max 5 script-->
+		<scriptnums>10</scriptnums> <!-- max 5 script-->
 		<servernm>Oralce-ALONE29</servernm>
 		<!--<configureurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\</configureurl>  -->
 		<configureurl>D:\Report to Excel\Result\</configureurl> 
@@ -39,16 +39,16 @@
 	</Common1>
 	<Common2>
 		<inurl>D:\</inurl>
-		<outurl>D:\TEST\</outurl>
+		<outurl>D:\TEST\</outurl> <!-- Query Result -->
 		<excelrows>65000</excelrows>
-		<scriptnums>30</scriptnums> <!-- max 5 script-->
+		<scriptnums>10</scriptnums> <!-- max 5 script-->
 		<servernm>Oralce-AReport</servernm>
 		<!--<configureurl>E:\BACKUP\DROPBOX\Dropbox\WORK\Project\</configureurl>  -->
-		<configureurl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Congifure\</configureurl> 
+		<configureurl>D:\\Project\\Report to Excel\\Workplace\\Report to Excel\\Query To Excel Cron\\cron\\</configureurl> 
 		<scriptcount>8</scriptcount> <!-- Tong so script chay-->
 		<multiserver>0</multiserver> <!-- 0:chay chi 1 server, chay nhieu server-->
-		<defscripturl>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate.sql</defscripturl> <!-- Duong dan lay tham so file cau hình - lay ngay he thong-->
-		<defscripturl2>\\10.1.97.14\2012\06\20120601\Report to Excel Congifure\Script\Configure\QueryDate2.sql</defscripturl2> <!-- Duong dan lay tham so file cau hình - lay ngay chon vao-->
+		<defscripturl> </defscripturl> <!-- Duong dan lay tham so file cau hình - lay ngay he thong-->
+		<defscripturl2> </defscripturl2> <!-- Duong dan lay tham so file cau hình - lay ngay chon vao-->
 		<define1 id='01h_trdt' name='Ngay query du lieu'>20120615</define1>
 		<define2 id='02h_startdt' name='Ngay dau thang'>20120601</define2>
 		<define3 id='03h_enddt' name='Ngay cuoi thang truoc'>20120531</define3>

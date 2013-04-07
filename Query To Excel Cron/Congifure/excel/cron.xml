@@ -6,10 +6,13 @@
 		<jobClass>Job1</jobClass>
 		<jobGroup>group1</jobGroup>
 		<triggerNM>dummyTriggerName</triggerNM>
-		<triggerSchedule>0 15 17 * * ?</triggerSchedule> <!-- 30 11 -->
+		<triggerSchedule>0 25 11 * * ?</triggerSchedule> <!-- 30 11 -->
 		<triggerGroup>group1</triggerGroup>
 		<databaseID>Oralce-ALONE29</databaseID>
-		<defineScript>DEF003</defineScript>  
+		<ftpID>01</ftpID>
+		<mailID>01</mailID>
+		<folderUrl>D:\\</folderUrl>
+		<defineScript>DEF003</defineScript> 
 		<Query id='Cron01.G001'>Cron01.G001</Query>
 		<Query id='Cron01.G002'>Cron01.G002</Query>    
 		<Query id='Cron01.S001'>Cron01.S001</Query>		
@@ -20,5 +23,68 @@
 		<Query id='Cron01.S007'>Cron01.S007</Query>
 		<Query id='Cron01.S008'>Cron01.S008</Query>
 		<Query id='Cron01.S009'>Cron01.S009</Query>					
+	</Cron>
+	<Cron id='02'> <!-- Chay cac phien trong ngay -->
+		<cronNM>Cron02</cronNM>
+		<jobNM>dummyJobName2</jobNM>
+		<jobClass>Job2</jobClass>
+		<jobGroup>group2</jobGroup>
+		<triggerNM>dummyTriggerName2</triggerNM>
+		<triggerSchedule>0 0 9,10,11,14,15,16,17 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<ftpID>01</ftpID>
+		<mailID>01</mailID>
+		<folderUrl>D:\\</folderUrl>
+		<defineScript>DEF003</defineScript>  			
+		<Query id='Cron02.G002'>Cron02.G002</Query>		
+		<Query id='Cron02.G001'>Cron02.G001</Query>				
+		<Query id='Cron02.S001'>Cron02.S001</Query>
+		<Query id='Cron02.S002'>Cron02.S002</Query>
+		<Query id='Cron02.S003'>Cron02.S003</Query>
+		<Query id='Cron02.S004'>Cron02.S004</Query>
+		<Query id='Cron02.S006'>Cron02.S006</Query>
+		<Query id='Cron02.S007'>Cron02.S007</Query>
+		<Query id='Cron02.S008'>Cron02.S008</Query>
+		<Query id='Cron02.S009'>Cron02.S009</Query>				
+	</Cron>
+	<!--  Chay phien luc 7h00 lay ngay hom truoc-->	
+	<Cron id='04'>
+		<cronNM>Cron04</cronNM>
+		<jobNM>dummyJobName4</jobNM>
+		<jobClass>Job4</jobClass>
+		<jobGroup>group4</jobGroup>
+		<triggerNM>dummyTriggerName4</triggerNM>
+		<triggerSchedule>0 0 7 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>Oralce-ALONE29</databaseID> 
+		<ftpID>01</ftpID>
+		<mailID>01</mailID>
+		<folderUrl>D:\\</folderUrl>
+		<defineScript>DEF002</defineScript>  	
+		<Query id='Cron04.P001'>Cron04.P001</Query>
+		<Query id='Cron04.P002'>Cron04.P002</Query>
+		<Query id='Cron04.P003'>Cron04.P003</Query>
+		<Query id='Cron04.P004'>Cron04.P004</Query>
+		<Query id='Cron04.P006'>Cron04.P006</Query>
+		<Query id='Cron04.P007'>Cron04.P007</Query>
+		<Query id='Cron04.P008'>Cron04.P008</Query>
+		<Query id='Cron04.P009'>Cron04.P009</Query>
+		<Query id='Cron04.G001'>Cron04.G001</Query>
+		<Query id='Cron04.G002'>Cron04.G002</Query>			
 	</Cron>	
+	<Cron id='07'> 
+		<cronNM>Cron07</cronNM>
+		<jobNM>dummyJobName7</jobNM>
+		<jobClass>Job7</jobClass>
+		<jobGroup>group7</jobGroup>
+		<triggerNM>dummyTriggerName7</triggerNM>
+		<triggerSchedule>50 28 00 * * ?</triggerSchedule>
+		<triggerGroup>group1</triggerGroup>			
+		<databaseID>MySQL-test</databaseID> 
+		<ftpID>01</ftpID>
+		<mailID> </mailID>
+		<folderUrl>D:\\Project\\Report to Excel\Workplace\\Report to Excel\\GG  Report to Excel\\Script\\6h00Report\\</folderUrl>  <!-- Duong dan folder Script -->
+		<defineScript>DEF002</defineScript>		
+	</Cron> 
 </CronManager>
