@@ -1,7 +1,6 @@
 package org.eib.cron.application.views;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.IDocument;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
@@ -61,7 +60,7 @@ public class ConsoleDisplayMgr
 		/* display message on console */	
 		getNewMessageConsoleStream(msgKind).println(msg);				
 	}
-	
+	/*
 	public void clear()
 	{		
 		IDocument document = getMessageConsole().getDocument();
@@ -69,7 +68,7 @@ public class ConsoleDisplayMgr
 			document.set("");
 		}			
 	}	
-		
+		*/
 	private boolean displayConsoleView()
 	{
 		try
