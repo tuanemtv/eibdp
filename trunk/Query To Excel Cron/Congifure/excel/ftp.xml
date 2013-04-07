@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<FTPManager>
+	<Ftp id='01'>
+		<id>01</id>
+		<ftpServer>127.0.0.1</ftpServer>
+		<user>tuanemtv</user>
+		<password>h74Cb7sh/Nru3fM2Shy0pw==</password> <!-- 123456-->
+		<filename> </filename>
+		<ftpurl>GG Tran 1\</ftpurl>
+		<inturl>D:\Query to Excel\Result\20120608\</inturl>	
+	</Ftp>
+	<Ftp id='02'>
+		<id>02</id>
+		<ftpServer>127.0.0.1</ftpServer>
+		<user>copy</user>
+		<password>j0ahC5hXtFJ7KhelSCLQFw==</password>
+		<filename> </filename>
+		<ftpurl>GG Tran\</ftpurl>
+		<inturl>D:\Query to Excel\Result\20120608\</inturl>	
+	</Ftp>
+	<Ftp id='xempc'>
+		<id>xempc</id>
+		<ftpServer>127.0.0.1</ftpServer>
+		<user>tuanemtv</user>
+		<password>123456</password>
+		<filename> </filename>
+		<ftpurl>GG Tran\</ftpurl>
+		<inturl>D:\Query to Excel\Result\20120608\</inturl>	
+	</Ftp>	
+</FTPManager>
