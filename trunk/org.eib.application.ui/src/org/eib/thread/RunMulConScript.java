@@ -6,6 +6,7 @@ import org.eib.common.DateTimeUtil;
 import org.eib.common.QueryServer;
 import org.eib.database.CommandMultiQuery;
 import org.eib.database.Query;
+import org.eib.database.commandMultiQueryExcel;
 
 /*
  * Khoi tao nhieu connect
@@ -23,6 +24,90 @@ public class RunMulConScript {
 		//So luong script chay. Nam trong app
 		private static Logger logger =Logger.getLogger("RunMulConScript");
 		
+		/**
+		 * 
+		 * @param queryser
+		 * @param _query
+		 * @param _app
+		 */
+		public static void commandMulQuery(QueryServer queryser, Query[] _query, AppCommon _app)
+		{
+			boolean bcheck =false;
+			int i=0;//
+			while (bcheck !=true){
+				//Kiem tra trang thai bang 0 cua tat ca cac script
+				//if (checkStatus8(_query) == _query.length){//Ko con trang thai 0
+				if ((checkStatus0(_query) == 0) && (checkStatus1(_query) == 0)){//Ko con trang thai 0
+					//ko con trang thai 0 va 1
+					bcheck = true;				
+					logger.info("");
+					logger.info(">>> Run all script succesfull");
+															
+				}			
+							
+				if (i < _query.length){					
+					//Kiem tra lan chay dau tien bang cach diem TT = 0 bang so luong mang
+					//Chay so luong
+					if (checkStatus0(_query) == _query.length){//Moi bang dau chay					
+						if (_app.get_scriptnums()>_query.length){
+							_app.set_scriptnums(_query.length);
+						}
+						logger.info("App scriptnums: "+_app.get_scriptnums());
+						
+						for (int l=0; l <_app.get_scriptnums();l++){//so script dang ky chay							
+							try {
+								//Class.forName(queryser.getDriver()).newInstance();
+								//conn = DriverManager.getConnection(queryser.getUrl(), queryser.getUser(), queryser.getPassword());																
+								queryser.connectDatabase();
+								//_query[l].logQuery();
+								
+								//da dong connect trong script
+								CommandMultiQuery cq1 = new CommandMultiQuery(queryser.get_conn(),_query[l],_app);
+								//Trang thai bat dau
+								_query[l].set_status("1");
+								
+								//Set thoi gian chay
+								_query[l].set_startDate(DateTimeUtil.getDateTime());
+								
+								cq1.start();								
+					        } catch (Exception e2) {				           
+					            logger.error( e2.getMessage());			        
+					        }																																	
+							logger.info("Run >>> ["+(i+1)+"] "+_query[l].get_queryid()+", name= "+_query[l].get_querynm());							
+							i=i+1;
+						}																
+					}
+					else{//Ko phai lan dau chay
+						if (_app.get_scriptnums()>_query.length){
+							_app.set_scriptnums(_query.length);
+						}
+						if (checkStatus1(_query) < _app.get_scriptnums()){							
+							try {								
+								queryser.connectDatabase();
+								_query[i].set_status("1");								
+								//Set thoi gian chay
+								_query[i].set_startDate(DateTimeUtil.getDateTime());								
+								CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
+								cq3.start();																														
+					        } catch (Exception e2) {
+					            logger.error(e2.getMessage());		        
+					        }													
+							logger.info("NEXT Run==> ["+(i+1)+"] "+_query[i].get_queryid()+", name= "+_query[i].get_querynm());														
+							i=i+1;						
+							//Truong hop 2 script ket thuc cung luc thi lam sao???																								
+						}
+					}
+				}
+					
+			}		
+	    }
+		
+		/**
+		 * 
+		 * @param queryser
+		 * @param _query
+		 * @param _app
+		 */
 		public static void commandMulQueryExcel(QueryServer queryser,
 												Query[] _query,
 												AppCommon _app)
@@ -70,7 +155,7 @@ public class RunMulConScript {
 								//_query[l].logQuery();
 								
 								//da dong connect trong script
-								CommandMultiQuery cq1 = new CommandMultiQuery(queryser.get_conn(),_query[l],_app);
+								commandMultiQueryExcel cq1 = new commandMultiQueryExcel(queryser.get_conn(),_query[l],_app);
 								//Trang thai bat dau
 								_query[l].set_status("1");
 								
@@ -122,8 +207,8 @@ public class RunMulConScript {
 									//CommandMultiQueryStr cq2 = new CommandMultiQueryStr(queryser.get_conn(),_query[i],_app);
 									//cq2.start();
 								//}else{
-									CommandMultiQuery cq3 = new CommandMultiQuery(queryser.get_conn(),_query[i],_app);
-									cq3.start();				
+								commandMultiQueryExcel cq3 = new commandMultiQueryExcel(queryser.get_conn(),_query[i],_app);
+								cq3.start();				
 								//}																											
 					        } catch (Exception e2) {
 					            //System.out.println("Unable to load driver " + queryser.getDriver());
@@ -159,6 +244,8 @@ public class RunMulConScript {
 				}*/			
 			}		
 	    }
+		
+		
 		
 		//Function, dem status = 0
 		static int checkStatus0 (Query[] _query){

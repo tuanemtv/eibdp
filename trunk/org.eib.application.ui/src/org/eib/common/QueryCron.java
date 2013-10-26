@@ -38,6 +38,7 @@ public class QueryCron {
 	private String _mailID;
 	private String _folderUrl;
 	private String[] _queryid;
+	private String _knd;
 	
 	
 	public String get_databaseID() {
@@ -124,6 +125,13 @@ public class QueryCron {
 	}
 	public void set_folderUrl(String _folderUrl) {
 		this._folderUrl = _folderUrl;
+	}
+	
+	public String get_knd() {
+		return _knd;
+	}
+	public void set_knd(String _knd) {
+		this._knd = _knd;
 	}
 	public QueryCron() {
 		super();
@@ -263,6 +271,11 @@ public class QueryCron {
 					 element1 = (Element) nodelist.item(0);
 					 fstNm = element1.getChildNodes();
 					 _querycron[i].set_folderUrl((fstNm.item(0)).getNodeValue());	
+					 
+					 nodelist = element.getElementsByTagName("knd");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();
+					 _querycron[i].set_knd((fstNm.item(0)).getNodeValue());	
 				  }
 			  }
 		} catch (ParserConfigurationException e) {
@@ -306,7 +319,8 @@ public class QueryCron {
 			logger.info("_folderUrl: "+this.get_folderUrl());
 		if (this.get_defineScript() != null)
 			logger.info("_defineScript: "+this.get_defineScript());
-		
+		if (this.get_knd() != null)
+			logger.info("_knd: "+this.get_knd());
 		
 		/*
 		if (_queryid.length != null){

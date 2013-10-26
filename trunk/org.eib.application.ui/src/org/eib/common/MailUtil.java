@@ -134,13 +134,23 @@ public class MailUtil {
 		final String login = this._frMail;//”nth001@gmail.com”;//usermail
 		final String pwd;
 		
+		/*
 		if ((this._keyPass == null) || (this._keyPass.trim().equals(""))){
 			pwd = this._passFrMail;//”password cua ban o day”;
 		}else{
 			BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-			textEncryptor.setPassword(this._keyPass);
+			//textEncryptor.setPassword(this._keyPass);
+			textEncryptor.setPassword("smilesunny");
 			pwd = textEncryptor.decrypt(this._passFrMail);
-		}
+			
+			System.out.println(pwd);
+			
+		}*/
+		
+		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();		
+		textEncryptor.setPassword("smilesunny");
+		pwd = textEncryptor.decrypt(this._passFrMail);
+	
 		
 		Authenticator pa = null; //default: no authentication			
 		if (login != null && pwd != null) { //authentication required?
@@ -317,12 +327,32 @@ public class MailUtil {
 					 fstNm = element1.getChildNodes();				
 					 _mail[i].set_toMail((fstNm.item(0)).getNodeValue());
 					//System.out.println("database : " + (fstNm.item(0)).getNodeValue());
-					 */
+					 */					 				
+					 
+					 nodelist = element.getElementsByTagName("subject");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_subject((fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("contMail");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_ContMail((fstNm.item(0)).getNodeValue());
+					 
+					 nodelist = element.getElementsByTagName("bodyKind");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_bodyKind((fstNm.item(0)).getNodeValue());
 					 
 					 nodelist = element.getElementsByTagName("fileUrl");
 					 element1 = (Element) nodelist.item(0);
 					 fstNm = element1.getChildNodes();				
-					 _mail[i].set_fileUrl((fstNm.item(0)).getNodeValue());					 				 
+					 _mail[i].set_fileUrl((fstNm.item(0)).getNodeValue());
+					 					 
+					 nodelist = element.getElementsByTagName("fileName");
+					 element1 = (Element) nodelist.item(0);
+					 fstNm = element1.getChildNodes();				
+					 _mail[i].set_fileName((fstNm.item(0)).getNodeValue());
 				  }
 			  }	
 		} catch (ParserConfigurationException e) {
