@@ -53,6 +53,16 @@ public class ZipUtil {
 	public static void createRARFolder(String _rarUrl, String _fileNameUrl, String _folderUrl){
 		try {
 			Process pros = Runtime.getRuntime().exec(new String[]{_rarUrl, "a","-r",_fileNameUrl,_folderUrl});
+			
+			try {         	   
+         	   pros.waitFor();
+         	   logger.info("rar --> OK");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				logger.error(e.getMessage());
+				e.printStackTrace();								
+			}
+			
 			/*BufferedReader in = new BufferedReader(new InputStreamReader(pros.getInputStream()));
 			
 			String inputLine;
@@ -62,6 +72,7 @@ public class ZipUtil {
         */
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			logger.error(e.getMessage());
 			e.printStackTrace();
 		}
 	}

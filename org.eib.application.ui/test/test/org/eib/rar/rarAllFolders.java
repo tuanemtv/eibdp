@@ -28,7 +28,17 @@ public class rarAllFolders
                
                //Process pros = Runtime.getRuntime().exec(new String[]{"C:\\Program Files (x86)\\WinRAR\\WinRAR.exe", "e","D:\\TEST\\"});
                
-               Process pros = Runtime.getRuntime().exec(new String[]{"C:\\Program Files (x86)\\WinRAR\\WinRAR.exe", "a","-r","d:\\yourfiles2.rar","D:\\TEST\\20130407\\"});
+               Process pros = Runtime.getRuntime().exec(new String[]{"C:\\Program Files (x86)\\WinRAR\\WinRAR.exe", "a","-r","d:\\yourfiles2.rar","D:\\TEMP\\DP Manager 2\\"});
+               
+               try {
+            	   System.out.println("Chay...");
+            	   pros.waitFor();
+            	   System.out.println("Thanh cong");
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+               
                //rar a -r d:\yourfiles.rar d:\test
                
                 /* BufferedReader in = new BufferedReader(

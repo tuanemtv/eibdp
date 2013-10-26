@@ -1,8 +1,11 @@
 package org.eib.database;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -10,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.TreeMap;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -17,6 +21,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.eib.common.JavaUtil;
+
+import com.ibatis.common.jdbc.ScriptRunner;
+
 
 public class CommandQuery {
        
@@ -169,6 +176,21 @@ public class CommandQuery {
      * @param conn
      * @param query
      */
+    public static void commandFile(Connection conn, String queryUrl) {
+        try {        	
+        	ScriptRunner sr = new ScriptRunner(conn, false, false);            
+        	Reader reader = new BufferedReader( new FileReader(queryUrl));
+			// Exctute script
+			sr.runScript(reader);
+                        
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+           
+        }
+    }
+   
     public static void commandFunctions(Connection conn, String query) {
         Statement stmt = null;
         try {
@@ -191,8 +213,6 @@ public class CommandQuery {
             }
         }
     }
-   
-
     /*
     public static void commandQueryExcel(Connection conn, String query,
             boolean showHeaders, boolean showMetaData, String filename) {
