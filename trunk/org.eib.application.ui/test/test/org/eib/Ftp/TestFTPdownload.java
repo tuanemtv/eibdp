@@ -17,6 +17,7 @@ public class TestFTPdownload {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/*
 		AppCommon _app;
 		_app = new AppCommon();
 		//ResourceBundle rb = ResourceBundle.getBundle("/resource/app");
@@ -48,7 +49,39 @@ public class TestFTPdownload {
 	    //File f = new File(_app.get_srcFTPCliUrl());	      
 		//upload.copyFile(_app);
 		//upload.showModifyFile(_app);		
-		upload.downloadModifyFile(_app);	       	       
+		upload.downloadModifyFile(_app);	  */
+		
+		 String server = "127.0.0.1" ;
+	     String user = "tuanemtv"; ;
+	     String pass = "1"; 
+	     String serverDir = "";;
+	     String clientDir = "C:\\B";
+
+	       FTPdownload ftpDownload = null;
+		try {
+			ftpDownload = new FTPdownload (server,user, pass);
+			
+			//ftpDownload.filecopy("/","C:\\B");
+			File f = new File(clientDir);
+			ftpDownload.copyOneFile(f, "/","monitor_20131026","_28");
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// upload.copyFile(f,_app.get_srcFTPSerUrl());
+		
+		
+	    //File f = new File(_app.get_srcFTPCliUrl());	      
+		//upload.copyFile(_app);
+		//upload.showModifyFile(_app);		
+		//upload.downloadModifyFile(_app);
+		
+		
 	}
 
 }
